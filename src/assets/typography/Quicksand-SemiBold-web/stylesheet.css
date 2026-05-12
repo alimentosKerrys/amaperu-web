@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('subset-Quicksand-SemiBold.woff2') format('woff2'),
+        url('subset-Quicksand-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
