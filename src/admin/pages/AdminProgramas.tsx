@@ -6,7 +6,7 @@ import { storageService } from '../../application/storageService'
 import type { Proyecto } from '../../domain/entities'
 import Button from '../../components/ui/Button'
 
-export default function AdminProyectos() {
+export default function AdminProgramas() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([])
   const [loading, setLoading] = useState(true)
   const [editingProyecto, setEditingProyecto] = useState<Partial<Proyecto> | null>(null)
@@ -61,7 +61,7 @@ export default function AdminProyectos() {
 
     setUploadingImage(true)
     const { data, error } = await storageService.subirImagenEnCarpeta('proyectos', file)
-    
+
     if (error) {
       alert(error)
     } else if (data) {
@@ -80,7 +80,7 @@ export default function AdminProyectos() {
         await cargarProyectos()
         cancelarEdicion()
       } else {
-        alert('Error al crear el proyecto')
+        alert('Error al crear el programa')
       }
     } else {
       const { error } = await proyectosService.editar(editingProyecto.id!, editingProyecto)
@@ -95,7 +95,7 @@ export default function AdminProyectos() {
   }
 
   const eliminarProyecto = async (id: string) => {
-    if (window.confirm('¿Estás seguro de eliminar este proyecto?')) {
+    if (window.confirm('¿Estás seguro de eliminar este programa?')) {
       const { error } = await proyectosService.eliminar(id)
       if (!error) {
         await cargarProyectos()
@@ -109,11 +109,11 @@ export default function AdminProyectos() {
     <div className="p-8 pb-24">
       <div className="mb-8 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Módulo Proyectos</h1>
-          <p className="text-white/60">Gestiona los proyectos de los programas Construye, Conecta y Asiste.</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Módulo Programas</h1>
+          <p className="text-white/60">Gestiona los contenidos de los programas Construye, Conecta y Asiste.</p>
         </div>
         <Button onClick={iniciarCreacion} variant="primary">
-          <Plus size={18} /> Nuevo Proyecto
+          <Plus size={18} /> Nuevo Programa
         </Button>
       </div>
 
@@ -124,8 +124,8 @@ export default function AdminProyectos() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {proyectos.map(proyecto => (
-            <div 
-              key={proyecto.id} 
+            <div
+              key={proyecto.id}
               className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden flex flex-col group"
             >
               <div className="aspect-video relative bg-black/40">
@@ -147,11 +147,11 @@ export default function AdminProyectos() {
                   )}
                 </div>
               </div>
-              
+
               <div className="p-5 flex-1 flex flex-col">
                 <h3 className="text-white font-bold text-lg leading-tight mb-2">{proyecto.nombre}</h3>
                 <p className="text-white/60 text-sm line-clamp-2 mb-4 flex-1">{proyecto.descripcion}</p>
-                
+
                 <div className="bg-black/20 rounded-lg p-3 mb-4 text-xs font-medium text-white/70">
                   <div className="flex justify-between mb-1">
                     <span>Recaudado:</span>
@@ -162,7 +162,7 @@ export default function AdminProyectos() {
                     <span>S/ {proyecto.meta_financiera}</span>
                   </div>
                 </div>
-                
+
                 <div className="mt-auto flex gap-2 pt-4 border-t border-white/5">
                   <Button size="sm" variant="outline" className="flex-1" onClick={() => iniciarEdicion(proyecto)}>
                     <Edit2 size={14} /> Editar
@@ -181,28 +181,28 @@ export default function AdminProyectos() {
       <AnimatePresence>
         {editingProyecto && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-black/80 backdrop-blur-sm"
               onClick={cancelarEdicion}
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-              animate={{ opacity: 1, scale: 1, y: 0 }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-4xl bg-[#1A1D20] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
               <div className="p-6 border-b border-white/5 flex justify-between items-center">
                 <h3 className="text-xl font-bold text-white">
-                  {isNew ? 'Nuevo Proyecto' : 'Editando Proyecto'}
+                  {isNew ? 'Nuevo Programa' : 'Editando Programa'}
                 </h3>
                 <button onClick={cancelarEdicion} className="text-white/40 hover:text-white transition-colors">
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="p-6 overflow-y-auto custom-scrollbar">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Columna 1 */}
@@ -230,11 +230,11 @@ export default function AdminProyectos() {
                             </Button>
                           </>
                         )}
-                        <input 
-                          type="file" 
-                          ref={fileInputRef} 
-                          className="hidden" 
-                          accept="image/jpeg, image/png, image/webp" 
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          className="hidden"
+                          accept="image/jpeg, image/png, image/webp"
                           onChange={handleImageUpload}
                         />
                       </div>
@@ -245,7 +245,7 @@ export default function AdminProyectos() {
                         <label className="block text-sm font-semibold text-white/80 mb-1">Programa</label>
                         <select
                           value={editingProyecto.programa}
-                          onChange={e => setEditingProyecto({...editingProyecto, programa: e.target.value as 'construye' | 'conecta' | 'asiste'})}
+                          onChange={e => setEditingProyecto({ ...editingProyecto, programa: e.target.value as 'construye' | 'conecta' | 'asiste' })}
                           className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
                         >
                           <option value="construye">Construye</option>
@@ -257,7 +257,7 @@ export default function AdminProyectos() {
                         <label className="block text-sm font-semibold text-white/80 mb-1">Estado</label>
                         <select
                           value={editingProyecto.estado}
-                          onChange={e => setEditingProyecto({...editingProyecto, estado: e.target.value as 'activo' | 'completado' | 'pausado'})}
+                          onChange={e => setEditingProyecto({ ...editingProyecto, estado: e.target.value as 'activo' | 'completado' | 'pausado' })}
                           className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
                         >
                           <option value="activo">Activo</option>
@@ -268,11 +268,11 @@ export default function AdminProyectos() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-white/80 mb-1">Nombre del Proyecto</label>
-                      <input 
-                        type="text" 
+                      <label className="block text-sm font-semibold text-white/80 mb-1">Nombre del Programa</label>
+                      <input
+                        type="text"
                         value={editingProyecto.nombre}
-                        onChange={e => setEditingProyecto({...editingProyecto, nombre: e.target.value})}
+                        onChange={e => setEditingProyecto({ ...editingProyecto, nombre: e.target.value })}
                         className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
                       />
                     </div>
@@ -282,10 +282,10 @@ export default function AdminProyectos() {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-semibold text-white/80 mb-1">Ubicación</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={editingProyecto.ubicacion || ''}
-                        onChange={e => setEditingProyecto({...editingProyecto, ubicacion: e.target.value})}
+                        onChange={e => setEditingProyecto({ ...editingProyecto, ubicacion: e.target.value })}
                         className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
                         placeholder="Ej: Lomas de San Juan, Lima"
                       />
@@ -294,19 +294,19 @@ export default function AdminProyectos() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-semibold text-white/80 mb-1">Meta Financiera (S/)</label>
-                        <input 
-                          type="number" 
+                        <input
+                          type="number"
                           value={editingProyecto.meta_financiera}
-                          onChange={e => setEditingProyecto({...editingProyecto, meta_financiera: Number(e.target.value)})}
+                          onChange={e => setEditingProyecto({ ...editingProyecto, meta_financiera: Number(e.target.value) })}
                           className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-semibold text-white/80 mb-1">Recaudado (S/)</label>
-                        <input 
-                          type="number" 
+                        <input
+                          type="number"
                           value={editingProyecto.recaudado}
-                          onChange={e => setEditingProyecto({...editingProyecto, recaudado: Number(e.target.value)})}
+                          onChange={e => setEditingProyecto({ ...editingProyecto, recaudado: Number(e.target.value) })}
                           className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
                         />
                       </div>
@@ -314,9 +314,9 @@ export default function AdminProyectos() {
 
                     <div>
                       <label className="block text-sm font-semibold text-white/80 mb-1">Descripción</label>
-                      <textarea 
+                      <textarea
                         value={editingProyecto.descripcion || ''}
-                        onChange={e => setEditingProyecto({...editingProyecto, descripcion: e.target.value})}
+                        onChange={e => setEditingProyecto({ ...editingProyecto, descripcion: e.target.value })}
                         rows={5}
                         className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors resize-none custom-scrollbar"
                       />
@@ -324,11 +324,11 @@ export default function AdminProyectos() {
 
                     <div className="flex items-center gap-3 pt-2">
                       <label className="relative inline-flex items-center cursor-pointer">
-                        <input 
-                          type="checkbox" 
+                        <input
+                          type="checkbox"
                           className="sr-only peer"
                           checked={editingProyecto.activo}
-                          onChange={e => setEditingProyecto({...editingProyecto, activo: e.target.checked})}
+                          onChange={e => setEditingProyecto({ ...editingProyecto, activo: e.target.checked })}
                         />
                         <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-ama-green"></div>
                         <span className="ml-3 text-sm font-medium text-white/80">Mostrar en la web</span>

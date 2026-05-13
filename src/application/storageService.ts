@@ -171,15 +171,33 @@ export const storageService = {
 
     console.log('[storage] Subiendo:', filepath)
 
-    // Intento principal: REST con admin key
-    const result = await uploadViaAdminREST(file, filepath)
-    if (result) {
-      console.log('[storage] ✅ Upload exitoso:', result.url)
-      return { data: result, error: null }
+    // Intento 1: Edge Function Proxy (Recomendado para evitar 403)
+    try {
+      console.log('[storage] Intentando via Edge Function proxy...')
+      const { insforge } = await import('../lib/insforge')
+      
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('folder', carpeta)
+
+      const { data, error } = await insforge.functions.invoke('upload-image', formData)
+
+      if (!error && data?.success) {
+        console.log('[storage] ✅ Upload exitoso via Edge Function:', data.url)
+        return { data: { url: data.url, key: data.key }, error: null }
+      }
+      console.warn('[storage] Edge Function falló o no retornó éxito:', error || data?.error)
+    } catch (e) {
+      console.error('[storage] Error al invocar Edge Function:', e)
     }
 
-    // Fallback: SDK directo con sesión del usuario
-    console.warn('[storage] Intentando SDK como fallback...')
+    // Intento 2: REST directo con admin key (Solo si la Edge Function falla)
+    console.log('[storage] Intentando via REST Admin fallback...')
+    const result = await uploadViaAdminREST(file, filepath)
+    if (result) {
+      console.log('[storage] ✅ Upload exitoso via REST:', result.url)
+      return { data: result, error: null }
+    }
     try {
       const { insforge } = await import('../lib/insforge')
       const { data, error } = await insforge.storage

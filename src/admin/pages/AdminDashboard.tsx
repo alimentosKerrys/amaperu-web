@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const MODULES = [
   { to: '/admin/noticias', label: 'Noticias', desc: 'Publicar, editar y eliminar noticias', icon: Newspaper, color: '#3b82f6' },
-  { to: '/admin/proyectos', label: 'Proyectos', desc: 'Gestionar programas Construye / Conecta / Asiste', icon: FolderKanban, color: '#8b5cf6' },
+  { to: '/admin/programas', label: 'Programas', desc: 'Gestionar programas Construye / Conecta / Asiste', icon: FolderKanban, color: '#8b5cf6' },
   { to: '/admin/equipo', label: 'Equipo', desc: 'Miembros, cargos y fotos del equipo', icon: Users, color: '#ec4899' },
   { to: '/admin/estadisticas', label: 'Estadísticas', desc: 'Actualizar números del home (voluntarios, familias...)', icon: BarChart3, color: '#f59e0b' },
   { to: '/admin/productos', label: 'Tienda', desc: 'Productos, stock y precios de la Tienda Solidaria', icon: ShoppingBag, color: '#10b981' },

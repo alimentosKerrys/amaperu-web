@@ -24,8 +24,9 @@ import AdminLogin from './admin/pages/AdminLogin'
 import AdminDashboard from './admin/pages/AdminDashboard'
 import AdminHeroSlider from './admin/pages/AdminHeroSlider'
 import AdminEquipo from './admin/pages/AdminEquipo'
-import AdminProyectos from './admin/pages/AdminProyectos'
+import AdminProgramas from './admin/pages/AdminProgramas'
 import AdminNoticias from './admin/pages/AdminNoticias'
+import AdminProductos from './admin/pages/AdminProductos'
 import AdminEstadisticas from './admin/pages/AdminEstadisticas'
 import AdminAjustes from './admin/pages/AdminAjustes'
 
@@ -82,11 +83,11 @@ function AdminRoutes() {
           <Route index element={<AdminDashboard />} />
           {/* Módulos — se irán añadiendo aquí */}
           <Route path="noticias" element={<AdminNoticias />} />
-          <Route path="proyectos" element={<AdminProyectos />} />
+          <Route path="programas" element={<AdminProgramas />} />
           <Route path="equipo" element={<AdminEquipo />} />
+          <Route path="tienda" element={<AdminProductos />} />
           <Route path="estadisticas" element={<AdminEstadisticas />} />
           <Route path="ajustes" element={<AdminAjustes />} />
-          <Route path="productos" element={<div className="p-8 text-white/50">Módulo Productos — próximamente</div>} />
           <Route path="testimonios" element={<div className="p-8 text-white/50">Módulo Testimonios — próximamente</div>} />
           <Route path="alianzas" element={<div className="p-8 text-white/50">Módulo Alianzas — próximamente</div>} />
           <Route path="slider" element={<AdminHeroSlider />} />
