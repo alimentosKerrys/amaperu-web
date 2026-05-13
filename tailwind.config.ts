@@ -22,8 +22,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        barlow: ['Barlow', 'sans-serif'],
-        'barlow-condensed': ['Barlow Condensed', 'sans-serif'],
+        opensans: ['"Open Sans"', 'sans-serif'],
+        'opensans-condensed': ['"Open Sans Condensed"', 'sans-serif'],
+        quicksand: ['Quicksand', 'sans-serif'],
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

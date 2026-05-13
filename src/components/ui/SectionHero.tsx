@@ -30,7 +30,7 @@ export default function SectionHero({
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">
-        <h1 className="font-barlow-condensed font-black text-white uppercase tracking-widest"
+        <h1 className="font-opensans-condensed font-black text-white uppercase tracking-widest"
           style={{ fontSize: 'clamp(2.5rem, 7vw, 5rem)' }}
         >
           {title}
@@ -42,14 +42,14 @@ export default function SectionHero({
                 <>
                   <Link
                     to={i === 0 ? '/' : '#'}
-                    className="text-white/80 hover:text-ama-green transition-colors text-sm font-barlow font-medium"
+                    className="text-white/80 hover:text-ama-green transition-colors text-sm font-opensans font-medium"
                   >
                     {item}
                   </Link>
                   <ChevronRight size={14} className="text-white/60" />
                 </>
               ) : (
-                <span className="text-ama-green text-sm font-barlow font-semibold">{item}</span>
+                <span className="text-ama-green text-sm font-opensans font-semibold">{item}</span>
               )}
             </span>
           ))}

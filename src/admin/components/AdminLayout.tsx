@@ -3,7 +3,7 @@ import { useAdminAuth } from '../context/AdminAuthContext'
 import {
   LayoutDashboard, Newspaper, FolderKanban, Users,
   BarChart3, ShoppingBag, MessageSquare, Handshake,
-  Images, LogOut, Leaf, ChevronRight
+  Images, LogOut, Leaf, ChevronRight, Settings
 } from 'lucide-react'
 
 const NAV_ITEMS = [
@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { to: '/admin/testimonios', label: 'Testimonios', icon: MessageSquare },
   { to: '/admin/alianzas', label: 'Alianzas', icon: Handshake },
   { to: '/admin/slider', label: 'Hero Slider', icon: Images },
+  { to: '/admin/ajustes', label: 'Ajustes Generales', icon: Settings },
 ]
 
 export default function AdminLayout() {

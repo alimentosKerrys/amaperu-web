@@ -56,7 +56,7 @@ export default function ModalPago() {
             </button>
 
             {/* Lang toggle */}
-            <div className="absolute top-5 left-5 flex items-center gap-1.5 text-xs font-barlow font-semibold text-gray-400">
+            <div className="absolute top-5 left-5 flex items-center gap-1.5 text-xs font-opensans font-semibold text-gray-400">
               <button
                 onClick={() => setLang('ENG')}
                 className={lang === 'ENG' ? 'text-ama-green' : 'hover:text-gray-600 transition-colors'}
@@ -79,22 +79,22 @@ export default function ModalPago() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h2 className="font-barlow-condensed font-black text-2xl text-ama-green mb-2">¡GRACIAS!</h2>
-                <p className="font-barlow text-gray-600 text-sm">Tu donación ha sido procesada exitosamente. ¡Juntos construimos futuros!</p>
+                <h2 className="font-opensans-condensed font-black text-2xl text-ama-green mb-2">¡GRACIAS!</h2>
+                <p className="font-opensans text-gray-600 text-sm">Tu donación ha sido procesada exitosamente. ¡Juntos construimos futuros!</p>
               </motion.div>
             ) : (
               <>
                 {/* Logo */}
                 <div className="text-center mt-6 mb-5">
-                  <div className="font-barlow-condensed font-black text-5xl" style={{ color: 'var(--ama-green)' }}>
+                  <div className="font-opensans-condensed font-black text-5xl" style={{ color: 'var(--ama-green)' }}>
                     AMA
                   </div>
-                  <div className="font-barlow-condensed font-bold text-ama-green text-sm tracking-wider">
+                  <div className="font-opensans-condensed font-bold text-ama-green text-sm tracking-wider">
                     ¡CONSTRUYENDO FUTUROS!
                   </div>
                 </div>
 
-                <p className="text-center text-gray-500 text-xs font-barlow mb-6">
+                <p className="text-center text-gray-500 text-xs font-opensans mb-6">
                   <span className="font-bold text-gray-700">Recuerda</span> activar{' '}
                   <span className="font-bold text-gray-700">compras por internet</span> con tu banco
                 </p>
@@ -150,7 +150,7 @@ export default function ModalPago() {
                   />
                   <button
                     type="submit"
-                    className="w-full bg-ama-green text-white font-barlow-condensed font-black text-xl py-4 rounded-full hover:bg-ama-green-dark transition-colors tracking-wider mt-2"
+                    className="w-full bg-ama-green text-white font-opensans-condensed font-black text-xl py-4 rounded-full hover:bg-ama-green-dark transition-colors tracking-wider mt-2"
                   >
                     PAGAR&nbsp;&nbsp;S/{amount}.00
                   </button>

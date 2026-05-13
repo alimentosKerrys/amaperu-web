@@ -45,12 +45,12 @@ export default function StatCard({ icon, number, suffix = '', label }: StatCardP
     >
       <div className="text-white mb-3 opacity-90">{icon}</div>
       <div
-        className="font-barlow-condensed font-black text-white mb-2"
+        className="font-opensans-condensed font-black text-white mb-2"
         style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1 }}
       >
         <AnimatedNumber target={number} />{suffix}
       </div>
-      <p className="text-white/80 font-barlow text-sm font-medium leading-snug">{label}</p>
+      <p className="text-white/80 font-opensans text-sm font-medium leading-snug">{label}</p>
     </motion.div>
   )
 }

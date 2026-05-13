@@ -3,6 +3,9 @@ import { motion } from 'framer-motion'
 import { MapPin, Mail, Phone, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
 import { useModal } from '../../context/ModalContext'
 
+// Logos
+import logoBlanco from '../../assets/LOGO/LOGO AMA BLANCO.avif'
+
 const socialLinks = [
   { icon: Facebook, href: '#', label: 'Facebook' },
   { icon: Instagram, href: '#', label: 'Instagram' },
@@ -30,23 +33,25 @@ export default function Footer() {
   const isHome = location.pathname === '/'
 
   return (
-    <footer style={{ background: isHome ? 'var(--ama-black)' : 'var(--ama-green)' }}>
+    <footer style={{ background: 'var(--ama-green)' }}>
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Col 1: Logo + Mission */}
           <div>
-            <div className="mb-5">
-              <div className="font-barlow-condensed font-black text-5xl text-white tracking-tight leading-none">AMA</div>
-              <div className="font-barlow text-white/80 text-xs tracking-widest mt-0.5">PERÚ — CONSTRUYENDO FUTUROS</div>
+            <div className="mb-5 flex items-center gap-3">
+              <img src={logoBlanco} alt="AMA PERÚ" className="h-14 w-auto" />
+              <span className="font-opensans-condensed font-black text-4xl text-white tracking-tighter">
+                PERÚ
+              </span>
             </div>
-            <p className="font-barlow text-white/85 text-sm leading-relaxed mb-6">
+            <p className="font-opensans text-white/85 text-sm leading-relaxed mb-6">
               Estamos comprometidos con la construcción de campos deportivos y parques funcionales en las zonas más vulnerables de Lima y Perú.
             </p>
             <button
               onClick={() => openModal()}
               className={isHome 
-                ? "bg-ama-green text-white font-barlow-condensed font-bold px-6 py-3 rounded-full hover:bg-white hover:text-ama-green transition-all duration-200 tracking-wider text-sm"
-                : "border-2 border-white text-white font-barlow-condensed font-bold px-6 py-3 rounded-full hover:bg-white hover:text-ama-green transition-all duration-200 tracking-wider text-sm"
+                ? "bg-white text-ama-green font-quicksand font-bold px-6 py-3 rounded-full hover:bg-black hover:text-white transition-all duration-200 tracking-wider text-sm"
+                : "border-2 border-white text-white font-quicksand font-bold px-6 py-3 rounded-full hover:bg-white hover:text-ama-green transition-all duration-200 tracking-wider text-sm"
               }
             >
               ¡DONA AHORA!
@@ -55,25 +60,25 @@ export default function Footer() {
 
           {/* Col 2: Contacto */}
           <div>
-            <h3 className="font-barlow-condensed font-bold text-white text-xl tracking-wider mb-6 uppercase">
+            <h3 className="font-opensans-condensed font-bold text-white text-xl tracking-wider mb-6 uppercase">
               Contacto
             </h3>
             <div className="flex flex-col gap-4">
               <div className="flex items-start gap-3">
-                <MapPin size={18} className={isHome ? "text-ama-green mt-0.5 flex-shrink-0" : "text-white/70 mt-0.5 flex-shrink-0"} />
-                <span className="font-barlow text-white/85 text-sm leading-relaxed">
+                <MapPin size={18} className="text-white/70 mt-0.5 flex-shrink-0" />
+                <span className="font-opensans text-white/85 text-sm leading-relaxed">
                   Av. Guardía Civil 1321, Surquillo, Lima - Perú
                 </span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail size={18} className={isHome ? "text-ama-green flex-shrink-0" : "text-white/70 flex-shrink-0"} />
-                <a href="mailto:aventura.ama@gmail.com" className="font-barlow text-white/85 text-sm hover:text-white transition-colors">
+                <Mail size={18} className="text-white/70 flex-shrink-0" />
+                <a href="mailto:aventura.ama@gmail.com" className="font-opensans text-white/85 text-sm hover:text-white transition-colors">
                   aventura.ama@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-3">
-                <Phone size={18} className={isHome ? "text-ama-green flex-shrink-0" : "text-white/70 flex-shrink-0"} />
-                <a href="tel:+51939412966" className="font-barlow text-white/85 text-sm hover:text-white transition-colors">
+                <Phone size={18} className="text-white/70 flex-shrink-0" />
+                <a href="tel:+51939412966" className="font-opensans text-white/85 text-sm hover:text-white transition-colors">
                   939 412 966
                 </a>
               </div>
@@ -112,7 +117,7 @@ export default function Footer() {
 
           {/* Col 3: AMA PERÚ links */}
           <div>
-            <h3 className="font-barlow-condensed font-bold text-white text-xl tracking-wider mb-6 uppercase">
+            <h3 className="font-opensans-condensed font-bold text-white text-xl tracking-wider mb-6 uppercase">
               AMA PERÚ
             </h3>
             <ul className="flex flex-col gap-3">
@@ -127,7 +132,7 @@ export default function Footer() {
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="font-barlow text-white/85 text-sm hover:text-white hover:pl-1 transition-all duration-150"
+                    className="font-opensans text-white/85 text-sm hover:text-white hover:pl-1 transition-all duration-150"
                   >
                     {l.label}
                   </Link>
@@ -142,15 +147,15 @@ export default function Footer() {
       <div className="border-t border-white/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-4">
-            <a href="#" className="font-barlow text-white/70 text-xs hover:text-white transition-colors">
+            <a href="#" className="font-opensans text-white/70 text-xs hover:text-white transition-colors">
               Términos de uso
             </a>
             <span className="text-white/30 text-xs">|</span>
-            <a href="#" className="font-barlow text-white/70 text-xs hover:text-white transition-colors">
+            <a href="#" className="font-opensans text-white/70 text-xs hover:text-white transition-colors">
               Políticas de Privacidad
             </a>
           </div>
-          <p className="font-barlow text-white/60 text-xs text-center">
+          <p className="font-opensans text-white/60 text-xs text-center">
             Copyright 2021 AMA PERÚ. Todos los Derechos Reservados
           </p>
         </div>

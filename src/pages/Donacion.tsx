@@ -47,12 +47,12 @@ export default function Donacion() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2
-              className="font-barlow-condensed font-black text-ama-black uppercase"
+              className="font-opensans-condensed font-black text-ama-black uppercase"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
             >
               APOYA NUESTRA <span style={{ color: 'var(--ama-green)' }}>MISIÓN</span>
             </h2>
-            <p className="font-barlow text-ama-gray-mid mt-3 max-w-lg mx-auto">
+            <p className="font-opensans text-ama-gray-mid mt-3 max-w-lg mx-auto">
               Con tu donación podremos seguir construyendo espacios recreativos y llevando ayuda en beneficio de las poblaciones más vulnerables.
             </p>
           </div>
@@ -67,7 +67,7 @@ export default function Donacion() {
               className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100"
             >
               <h3
-                className="font-barlow-condensed font-black text-2xl uppercase mb-6"
+                className="font-opensans-condensed font-black text-2xl uppercase mb-6"
                 style={{ color: 'var(--ama-green)' }}
               >
                 Método de Pago
@@ -86,7 +86,7 @@ export default function Donacion() {
                       )}
                     </div>
                     <input type="radio" className="sr-only" checked={payType === type} onChange={() => setPayType(type)} />
-                    <span className="font-barlow text-sm font-medium capitalize text-ama-gray-dark">
+                    <span className="font-opensans text-sm font-medium capitalize text-ama-gray-dark">
                       Tarjeta de {type === 'credito' ? 'Crédito' : 'Débito'}
                     </span>
                   </label>
@@ -95,14 +95,14 @@ export default function Donacion() {
 
               {/* Amount selector */}
               <div className="mb-6">
-                <p className="font-barlow font-semibold text-ama-black text-sm mb-3">Deseo donar:</p>
+                <p className="font-opensans font-semibold text-ama-black text-sm mb-3">Deseo donar:</p>
                 <div className="relative mb-4">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-barlow font-bold text-ama-gray-mid">S/.</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-opensans font-bold text-ama-gray-mid">S/.</span>
                   <input
                     type="number"
                     value={customAmount ? customVal : selectedAmount}
                     onChange={e => { setCustomAmount(true); setCustomVal(e.target.value) }}
-                    className="ama-input pl-10 text-2xl font-barlow-condensed font-black"
+                    className="ama-input pl-10 text-2xl font-opensans-condensed font-black"
                     min={1}
                   />
                 </div>
@@ -111,7 +111,7 @@ export default function Donacion() {
                     <button
                       key={a}
                       onClick={() => { setSelectedAmount(a); setCustomAmount(false) }}
-                      className="flex-1 py-2 px-3 rounded-full font-barlow-condensed font-bold text-sm transition-all"
+                      className="flex-1 py-2 px-3 rounded-full font-opensans-condensed font-bold text-sm transition-all"
                       style={{
                         background: !customAmount && selectedAmount === a ? 'var(--ama-green)' : 'white',
                         color: !customAmount && selectedAmount === a ? 'white' : 'var(--ama-gray-dark)',
@@ -123,7 +123,7 @@ export default function Donacion() {
                   ))}
                   <button
                     onClick={() => { setCustomAmount(true); setCustomVal('') }}
-                    className="flex-1 py-2 px-3 rounded-full font-barlow-condensed font-bold text-sm transition-all"
+                    className="flex-1 py-2 px-3 rounded-full font-opensans-condensed font-bold text-sm transition-all"
                     style={{
                       background: customAmount ? 'var(--ama-green)' : 'white',
                       color: customAmount ? 'white' : 'var(--ama-gray-dark)',
@@ -137,7 +137,7 @@ export default function Donacion() {
 
               {/* Personal info */}
               <div className="mb-6">
-                <p className="font-barlow font-semibold text-ama-black text-sm mb-3">Información Personal:</p>
+                <p className="font-opensans font-semibold text-ama-black text-sm mb-3">Información Personal:</p>
                 <div className="flex flex-col gap-3">
                   <input className="ama-input" placeholder="Nombres *" value={nombre} onChange={e => setNombre(e.target.value)} required />
                   <input className="ama-input" placeholder="Apellidos *" value={apellidos} onChange={e => setApellidos(e.target.value)} required />
@@ -147,13 +147,13 @@ export default function Donacion() {
 
               <button
                 onClick={() => openModal(finalAmount)}
-                className="w-full py-4 rounded-full font-barlow-condensed font-black text-xl text-white transition-colors"
+                className="w-full py-4 rounded-full font-opensans-condensed font-black text-xl text-white transition-colors"
                 style={{ background: 'var(--ama-green)' }}
               >
                 DONA AHORA — S/{finalAmount}.00
               </button>
 
-              <p className="font-barlow text-ama-gray-mid text-xs text-center mt-4 leading-relaxed">
+              <p className="font-opensans text-ama-gray-mid text-xs text-center mt-4 leading-relaxed">
                 Con tu donación podremos seguir construyendo espacios recreativos y llevando ayuda en beneficio de las poblaciones más vulnerable.
               </p>
             </motion.div>
@@ -167,7 +167,7 @@ export default function Donacion() {
               className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100"
             >
               <h3
-                className="font-barlow-condensed font-black text-2xl uppercase mb-6"
+                className="font-opensans-condensed font-black text-2xl uppercase mb-6"
                 style={{ color: 'var(--ama-green)' }}
               >
                 Depósitos y transferencias
@@ -195,12 +195,12 @@ export default function Donacion() {
                 <div key={bank.name} className="flex flex-col gap-2 mb-5 p-4 bg-gray-50 rounded-xl border border-gray-100">
                   <div className="flex items-center gap-3">
                     <img src={bank.logo} alt={bank.name} className="h-8 w-auto object-contain" />
-                    <span className="font-barlow font-bold text-sm text-ama-black">{bank.name}</span>
+                    <span className="font-opensans font-bold text-sm text-ama-black">{bank.name}</span>
                   </div>
                   {bank.details.map(d => (
                     <div key={d.label} className="flex justify-between items-center">
-                      <span className="font-barlow text-xs text-ama-gray-mid">{d.label}:</span>
-                      <span className="font-barlow-condensed font-bold text-sm text-ama-black">{d.value}</span>
+                      <span className="font-opensans text-xs text-ama-gray-mid">{d.label}:</span>
+                      <span className="font-opensans-condensed font-bold text-sm text-ama-black">{d.value}</span>
                     </div>
                   ))}
                 </div>
@@ -208,15 +208,15 @@ export default function Donacion() {
 
               {/* Yape */}
               <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 mb-5">
-                <p className="font-barlow font-bold text-sm text-ama-black mb-1">Yape</p>
-                <p className="font-barlow-condensed font-bold text-lg" style={{ color: 'var(--ama-green)' }}>941 157 372</p>
+                <p className="font-opensans font-bold text-sm text-ama-black mb-1">Yape</p>
+                <p className="font-opensans-condensed font-bold text-lg" style={{ color: 'var(--ama-green)' }}>941 157 372</p>
               </div>
 
               {/* QR Izipay */}
               <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 mb-5">
                 <div className="flex items-center gap-2 mb-3">
                   <QrCode size={18} style={{ color: 'var(--ama-green)' }} />
-                  <p className="font-barlow font-bold text-sm text-ama-black">Izipay — QR Universal</p>
+                  <p className="font-opensans font-bold text-sm text-ama-black">Izipay — QR Universal</p>
                 </div>
                 <div className="flex justify-center mb-4">
                   <img src={qrDonacion} alt="QR código donación" className="w-32 h-32 object-contain" />
@@ -227,8 +227,8 @@ export default function Donacion() {
                     'Escanea el código Universal QR.',
                     'Ingresar el monto de tu donación y acepta.',
                   ].map((s, i) => (
-                    <li key={i} className="flex items-start gap-2 font-barlow text-xs text-ama-gray-mid">
-                      <span className="font-barlow-condensed font-bold text-ama-green flex-shrink-0">{i + 1}.</span>
+                    <li key={i} className="flex items-start gap-2 font-opensans text-xs text-ama-gray-mid">
+                      <span className="font-opensans-condensed font-bold text-ama-green flex-shrink-0">{i + 1}.</span>
                       {s}
                     </li>
                   ))}
@@ -244,7 +244,7 @@ export default function Donacion() {
               {/* Warning */}
               <div className="flex items-start gap-3 p-4 rounded-xl" style={{ background: 'rgba(141,198,63,0.1)', border: '1.5px solid var(--ama-green)' }}>
                 <AlertCircle size={18} style={{ color: 'var(--ama-green)', flexShrink: 0 }} />
-                <p className="font-barlow text-xs font-medium" style={{ color: 'var(--ama-green)' }}>
+                <p className="font-opensans text-xs font-medium" style={{ color: 'var(--ama-green)' }}>
                   * No olvides enviar la foto de tu comprobante a nuestro WhatsApp.
                 </p>
               </div>

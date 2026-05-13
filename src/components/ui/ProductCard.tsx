@@ -38,7 +38,7 @@ export default function ProductCard({ image, name, price }: ProductCardProps) {
         >
           <button
             onClick={() => addItem()}
-            className="flex items-center gap-2 bg-ama-green text-white px-5 py-2.5 rounded-full font-barlow-condensed font-bold text-sm hover:bg-ama-green-dark transition-colors"
+            className="flex items-center gap-2 bg-ama-green text-white px-5 py-2.5 rounded-full font-opensans-condensed font-bold text-sm hover:bg-ama-green-dark transition-colors"
           >
             <ShoppingBag size={16} />
             Agregar
@@ -48,8 +48,8 @@ export default function ProductCard({ image, name, price }: ProductCardProps) {
 
       {/* Info */}
       <div className="p-4">
-        <h3 className="font-barlow font-semibold text-ama-black text-sm mb-1 leading-snug">{name}</h3>
-        <p className="font-barlow-condensed font-bold text-ama-green text-lg mb-3">
+        <h3 className="font-opensans font-semibold text-ama-black text-sm mb-1 leading-snug">{name}</h3>
+        <p className="font-opensans-condensed font-bold text-ama-green text-lg mb-3">
           s/{price.toFixed(2)}
         </p>
         {/* Qty selector */}
@@ -60,7 +60,7 @@ export default function ProductCard({ image, name, price }: ProductCardProps) {
           >
             <Minus size={14} />
           </button>
-          <span className="font-barlow font-semibold text-ama-black w-6 text-center">{qty}</span>
+          <span className="font-opensans font-semibold text-ama-black w-6 text-center">{qty}</span>
           <button
             onClick={() => setQty(q => q + 1)}
             className="w-8 h-8 rounded-full border-2 border-ama-green text-ama-green flex items-center justify-center hover:bg-ama-green hover:text-white transition-colors"

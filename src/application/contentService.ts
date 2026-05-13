@@ -159,14 +159,14 @@ export const estadisticasService = {
     return insforge.database.from('estadisticas').select('*')
   },
 
-  async actualizar(clave: string, valor: number) {
+  async actualizar(clave: string, data: Partial<Estadistica>) {
     const result = await insforge.database
       .from('estadisticas')
-      .update({ valor, updated_at: new Date().toISOString() })
+      .update({ ...data, updated_at: new Date().toISOString() })
       .eq('clave', clave)
       .select()
       .single()
-    if (result.data) await logAuditoria('editar', 'estadisticas', clave, { valor })
+    if (result.data) await logAuditoria('editar', 'estadisticas', clave, data)
     return result
   },
 }
@@ -280,5 +280,36 @@ export const alianzasService = {
 
   async eliminar(id: string) {
     return insforge.database.from('alianzas').delete().eq('id', id)
+  },
+}
+
+// =============================================
+// CONFIGURACIÓN GLOBAL
+// =============================================
+export const configuracionService = {
+  async getAll() {
+    return insforge.database.from('configuracion_global').select('*')
+  },
+
+  async getValor(clave: string) {
+    const result = await insforge.database
+      .from('configuracion_global')
+      .select('valor')
+      .eq('clave', clave)
+      .single()
+    return result.data?.valor || null
+  },
+
+  async actualizar(clave: string, valor: string) {
+    const result = await insforge.database
+      .from('configuracion_global')
+      .update({ valor, updated_at: new Date().toISOString() })
+      .eq('clave', clave)
+      .select()
+      .single()
+    
+    // Si no existe y da error, podríamos intentar hacer un upsert, pero asumimos que las claves existen
+    if (result.data) await logAuditoria('editar', 'configuracion_global', clave, { valor })
+    return result
   },
 }

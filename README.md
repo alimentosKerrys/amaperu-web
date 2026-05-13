@@ -224,7 +224,7 @@ API Key:      ik_75394fbc88a389cece40e6e545ff7226
 Este proyecto usa esta arquitectura porque:
 - **Frontend y Backend completamente desacoplados** — se puede cambiar uno sin tocar el otro
 - **Admin Panel puede editar el frontend sin un programador**
-- **Seguridad blindada** — el frontend nunca toca la BD directamente
+- **Seguridad blindada** — el frontend nunca toca la BD directamente 
 - **Intercambiable** — si mañana cambiamos de InsForge a Supabase, solo cambia el adaptador
 
 #### Estructura de carpetas del Backend (InsForge + Edge Functions)

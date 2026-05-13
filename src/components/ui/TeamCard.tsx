@@ -24,12 +24,12 @@ export default function TeamCard({ image, name, role }: TeamCardProps) {
         />
       </div>
       <h3
-        className="font-barlow-condensed font-bold text-lg mb-1"
+        className="font-opensans-condensed font-bold text-lg mb-1"
         style={{ color: 'var(--ama-green)' }}
       >
         {name}
       </h3>
-      <p className="font-barlow text-sm text-ama-gray-mid leading-snug">{role}</p>
+      <p className="font-opensans text-sm text-ama-gray-mid leading-snug">{role}</p>
     </motion.div>
   )
 }

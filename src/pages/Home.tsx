@@ -7,21 +7,9 @@ import StatCard from '../components/ui/StatCard'
 import { useModal } from '../context/ModalContext'
 
 // Images
-import heroSlide1 from '../assets/images/IMAGENES_LISTAS/hero-slide-1.png'
-import heroSlide2 from '../assets/images/IMAGENES_LISTAS/herosection-imag2.png'
-import heroSlide3 from '../assets/images/IMAGENES_LISTAS/herosection-imag3.png'
-import aboutThumb from '../assets/images/IMAGENES_LISTAS/about-thumb.png'
-import programaConstruye from '../assets/images/IMAGENES_LISTAS/programa-construye.png'
-import programaConecta from '../assets/images/IMAGENES_LISTAS/programa-conecta.png'
-import programaAsiste from '../assets/images/IMAGENES_LISTAS/programa-asiste.png'
-import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.png'
-import statsBg from '../assets/images/IMAGENES_LISTAS/stats-bg.png'
-
-const slides = [
-  { image: heroSlide1, number: '01' },
-  { image: heroSlide2, number: '02' },
-  { image: heroSlide3, number: '03' },
-]
+import { useHeroSlides } from '../application/hooks/useHeroSlides'
+import { useProyectos } from '../application/hooks/useProyectos'
+import { useEstadisticas } from '../application/hooks/useEstadisticas'
 
 const colaborar = [
   { icon: Package, label: 'Materiales de construcción' },
@@ -32,16 +20,18 @@ const colaborar = [
   { icon: Wrench, label: 'Herramientas de construcción' },
 ]
 
-const programas = [
-  { image: programaConstruye, title: 'Construye', desc: 'Construimos espacios recreativos y deportivos en zonas vulnerables.' },
-  { image: programaAsiste, title: 'Asiste', desc: 'Asistimos directamente los casos de emergencia social.' },
-  { image: programaConecta, title: 'Conecta', desc: 'Conectamos comunidades con oportunidades de desarrollo.' },
-]
+import aboutThumb from '../assets/images/IMAGENES_LISTAS/about-thumb.png'
+import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.png'
+import statsBg from '../assets/images/IMAGENES_LISTAS/stats-bg.png'
+import programaAsiste from '../assets/images/IMAGENES_LISTAS/programa-asiste.png'
 
 export default function Home() {
   const [current, setCurrent] = useState(0)
   const { openModal } = useModal()
-  const total = slides.length
+  const { slides } = useHeroSlides()
+  const { proyectos } = useProyectos()
+  const { estadisticas } = useEstadisticas()
+  const total = slides.length || 1
 
   const next = useCallback(() => setCurrent(c => (c + 1) % total), [total])
   const prev = () => setCurrent(c => (c - 1 + total) % total)
@@ -59,15 +49,14 @@ export default function Home() {
             transition={{ duration: 0.7, ease: 'easeInOut' }}
             className="absolute inset-0"
           >
-            <img src={slides[current].image} alt={`Slide ${slides[current].number}`} className="w-full h-full object-cover" />
+            <img src={slides[current]?.imagen_url} alt={`Slide ${slides[current]?.orden}`} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
           </motion.div>
         </AnimatePresence>
 
-        {/* Slide counter */}
         <div className="absolute top-8 left-8 z-20">
-          <span className="font-barlow-condensed font-black text-white/60 text-5xl leading-none">
-            <span className="text-white">{slides[current].number}</span>/0{total}
+          <span className="font-opensans-condensed font-black text-white/60 text-5xl leading-none">
+            <span className="text-white">0{slides[current]?.orden || 1}</span>/0{total}
           </span>
         </div>
 
@@ -78,10 +67,13 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-barlow-condensed font-black text-white uppercase mb-8"
+            className="font-opensans-condensed font-black text-white uppercase mb-8"
             style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)', lineHeight: 1.05, maxWidth: '800px' }}
           >
-            FORMA PARTE DE AMA PERÚ
+            {slides[current]?.titulo || 'FORMA PARTE DE AMA PERÚ'}
+            <div className="text-2xl mt-4 font-opensans font-medium text-white/80" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
+              {slides[current]?.subtitulo || 'Transformando el Perú desde adentro.'}
+            </div>
           </motion.h1>
           <motion.div
             key={`btns-${current}`}
@@ -153,8 +145,8 @@ export default function Home() {
             </button>
             {/* Logo overlay */}
             <div className="absolute bottom-6 left-6">
-              <div className="font-barlow-condensed font-black text-white text-3xl leading-none">AMA</div>
-              <div className="font-barlow text-white/70 text-xs tracking-widest">CONSTRUYENDO FUTURO</div>
+              <div className="font-opensans font-black text-white text-3xl leading-none">AMA</div>
+              <div className="font-opensans text-white/70 text-xs tracking-widest font-bold">CONSTRUYENDO FUTURO</div>
             </div>
           </motion.div>
 
@@ -166,24 +158,24 @@ export default function Home() {
             transition={{ duration: 0.7 }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-barlow-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
+              <div className="w-12 h-[3px]" style={{ background: 'var(--ama-green)' }} />
+              <span className="font-quicksand font-bold text-lg tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
                 Quiénes Somos
               </span>
             </div>
             <h2
-              className="font-barlow-condensed font-black text-ama-black uppercase mb-6"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', lineHeight: 1.05 }}
+              className="font-opensans font-black text-ama-green uppercase mb-6"
+              style={{ fontSize: 'clamp(3rem, 6vw, 4.5rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}
             >
-              AMA PERÚ
+              AMA<br />PERÚ
             </h2>
-            <p className="font-barlow text-ama-gray-mid text-base leading-relaxed mb-6">
+            <p className="font-opensans text-ama-gray-dark font-medium text-[1.1rem] leading-[1.8] mb-8">
               Somos una asociación multidisciplinaria sin fines de lucro, conformada por un grupo de jóvenes profesionales de diferentes carreras con la finalidad de aportar en el desarrollo integral del Perú; a través de la construcción de infraestructura social sostenible.
             </p>
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap items-center">
               <Button onClick={() => openModal()} size="md" pill>¡DONA AHORA!</Button>
-              <Link to="/quienes-somos">
-                <Button variant="text" size="md">CONOCE MÁS →</Button>
+              <Link to="/quienes-somos" className="font-quicksand font-bold text-ama-green hover:text-ama-green-dark transition-colors uppercase tracking-wider text-[15px] flex items-center gap-1">
+                CONOCE MÁS <span className="text-xl leading-none">&rarr;</span>
               </Link>
             </div>
           </motion.div>
@@ -194,9 +186,9 @@ export default function Home() {
       <section className="pb-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {programas.map((prog, i) => (
+            {proyectos.slice(0, 3).map((prog, i) => (
               <motion.div
-                key={prog.title}
+                key={prog.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -205,12 +197,15 @@ export default function Home() {
                 className="relative rounded-2xl overflow-hidden group cursor-pointer"
                 style={{ aspectRatio: '3/4' }}
               >
-                <img src={prog.image} alt={prog.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                {prog.imagen_url
+                  ? <img src={prog.imagen_url} alt={prog.nombre} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  : <div className="w-full h-full bg-gradient-to-br from-green-900 to-green-700" />
+                }
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 transition-all duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="font-barlow-condensed font-black text-white text-3xl uppercase mb-2">{prog.title}</h3>
-                  <p className="font-barlow text-white/70 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 max-h-0 group-hover:max-h-20 overflow-hidden">
-                    {prog.desc}
+                  <h3 className="font-opensans-condensed font-black text-white text-3xl uppercase mb-2">{prog.nombre}</h3>
+                  <p className="font-opensans font-medium text-white/80 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 max-h-0 group-hover:max-h-20 overflow-hidden">
+                    {prog.descripcion}
                   </p>
                 </div>
               </motion.div>
@@ -235,7 +230,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2
-              className="font-barlow-condensed font-black uppercase mb-6"
+              className="font-opensans-condensed font-black uppercase mb-6"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--ama-green)', lineHeight: 1.1 }}
             >
               Otras formas de colaborar y aportar con tu granito de arena.
@@ -265,7 +260,7 @@ export default function Home() {
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(141,198,63,0.15)' }}>
                     <Icon size={20} style={{ color: 'var(--ama-green)' }} />
                   </div>
-                  <span className="font-barlow font-medium text-ama-black text-sm leading-snug">{label}</span>
+                  <span className="font-opensans font-semibold text-ama-black text-sm leading-snug">{label}</span>
                 </motion.div>
               ))}
             </div>
@@ -281,26 +276,19 @@ export default function Home() {
         </div>
         <div className="relative z-10 max-w-6xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard
-              icon={<Users size={36} />}
-              number={30}
-              label="Voluntarios participantes"
-            />
-            <StatCard
-              icon={<CheckCircle size={36} />}
-              number={10}
-              label="Actividades Realizadas"
-            />
-            <StatCard
-              icon={<Building2 size={36} />}
-              number={2}
-              label="Proyectos entregados"
-            />
-            <StatCard
-              icon={<Heart size={36} />}
-              number={2158}
-              label="Familias beneficiadas"
-            />
+            {estadisticas.map(stat => (
+              <StatCard
+                key={stat.id}
+                icon={
+                  stat.icono === 'Users' ? <Users size={36} /> :
+                    stat.icono === 'CheckCircle' ? <CheckCircle size={36} /> :
+                      stat.icono === 'Building2' ? <Building2 size={36} /> :
+                        <Heart size={36} />
+                }
+                number={stat.valor}
+                label={stat.etiqueta}
+              />
+            ))}
           </div>
         </div>
       </section>

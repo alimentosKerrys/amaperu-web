@@ -22,6 +22,12 @@ import AdminGuard from './admin/components/AdminGuard'
 import AdminLayout from './admin/components/AdminLayout'
 import AdminLogin from './admin/pages/AdminLogin'
 import AdminDashboard from './admin/pages/AdminDashboard'
+import AdminHeroSlider from './admin/pages/AdminHeroSlider'
+import AdminEquipo from './admin/pages/AdminEquipo'
+import AdminProyectos from './admin/pages/AdminProyectos'
+import AdminNoticias from './admin/pages/AdminNoticias'
+import AdminEstadisticas from './admin/pages/AdminEstadisticas'
+import AdminAjustes from './admin/pages/AdminAjustes'
 
 // ---- Sitio Público ----
 function AnimatedRoutes() {
@@ -75,14 +81,15 @@ function AdminRoutes() {
         <Route element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           {/* Módulos — se irán añadiendo aquí */}
-          <Route path="noticias" element={<div className="p-8 text-white/50">Módulo Noticias — próximamente</div>} />
-          <Route path="proyectos" element={<div className="p-8 text-white/50">Módulo Proyectos — próximamente</div>} />
-          <Route path="equipo" element={<div className="p-8 text-white/50">Módulo Equipo — próximamente</div>} />
-          <Route path="estadisticas" element={<div className="p-8 text-white/50">Módulo Estadísticas — próximamente</div>} />
+          <Route path="noticias" element={<AdminNoticias />} />
+          <Route path="proyectos" element={<AdminProyectos />} />
+          <Route path="equipo" element={<AdminEquipo />} />
+          <Route path="estadisticas" element={<AdminEstadisticas />} />
+          <Route path="ajustes" element={<AdminAjustes />} />
           <Route path="productos" element={<div className="p-8 text-white/50">Módulo Productos — próximamente</div>} />
           <Route path="testimonios" element={<div className="p-8 text-white/50">Módulo Testimonios — próximamente</div>} />
           <Route path="alianzas" element={<div className="p-8 text-white/50">Módulo Alianzas — próximamente</div>} />
-          <Route path="slider" element={<div className="p-8 text-white/50">Módulo Hero Slider — próximamente</div>} />
+          <Route path="slider" element={<AdminHeroSlider />} />
         </Route>
       </Route>
     </Routes>

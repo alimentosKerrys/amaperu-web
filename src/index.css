@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== FONTS ===== */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('./assets/typography/OpenSans/subset-OpenSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('./assets/typography/open-sans-semi-bold-web/subset-OpenSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('./assets/typography/OpenSans-ExtraBold-web/subset-OpenSans-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Open Sans Condensed';
+  src: url('./assets/typography/OpenSans_Condensed-ExtraBold-web/subset-OpenSansCondensed-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('./assets/typography/Quicksand-SemiBold-web/subset-Quicksand-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('./assets/typography/Quicksand-Bold-web/subset-Quicksand-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== CSS CUSTOM PROPERTIES — AMA PERÚ BRAND ===== */
 :root {
   --ama-green: #8DC63F;
@@ -11,8 +55,9 @@
   --ama-gray-dark: #2D2D2D;
   --ama-gray-mid: #4A4A4A;
   --ama-gray-light: #F5F5F5;
-  --font-display: 'Barlow Condensed', sans-serif;
-  --font-body: 'Barlow', sans-serif;
+  --font-display: 'Open Sans', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+  --font-cta: 'Quicksand', sans-serif;
 }
 
 /* ===== RESET & BASE ===== */

@@ -47,17 +47,17 @@ export default function Contactanos() {
 
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-                <span className="font-barlow-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
+                <span className="font-opensans-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
                   Información
                 </span>
               </div>
               <h2
-                className="font-barlow-condensed font-black text-ama-black uppercase mb-2"
+                className="font-opensans-condensed font-black text-ama-black uppercase mb-2"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}
               >
                 CONTÁCTO
               </h2>
-              <p className="font-barlow text-ama-gray-mid mb-6">Ponerse en contacto</p>
+              <p className="font-opensans text-ama-gray-mid mb-6">Ponerse en contacto</p>
 
               <div className="flex flex-col gap-5">
                 <div className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
@@ -65,8 +65,8 @@ export default function Contactanos() {
                     <MapPin size={20} style={{ color: 'var(--ama-green)' }} />
                   </div>
                   <div>
-                    <p className="font-barlow font-bold text-ama-black text-sm mb-0.5">Ubícanos</p>
-                    <p className="font-barlow text-ama-gray-mid text-sm">Av. Guardía Civil 1321, Surquillo, Lima - Perú</p>
+                    <p className="font-opensans font-bold text-ama-black text-sm mb-0.5">Ubícanos</p>
+                    <p className="font-opensans text-ama-gray-mid text-sm">Av. Guardía Civil 1321, Surquillo, Lima - Perú</p>
                   </div>
                 </div>
 
@@ -75,8 +75,8 @@ export default function Contactanos() {
                     <Mail size={20} style={{ color: 'var(--ama-green)' }} />
                   </div>
                   <div>
-                    <p className="font-barlow font-bold text-ama-black text-sm mb-0.5">Envíanos un correo</p>
-                    <a href="mailto:aventura.ama@gmail.com" className="font-barlow text-ama-gray-mid text-sm hover:text-ama-green transition-colors">
+                    <p className="font-opensans font-bold text-ama-black text-sm mb-0.5">Envíanos un correo</p>
+                    <a href="mailto:aventura.ama@gmail.com" className="font-opensans text-ama-gray-mid text-sm hover:text-ama-green transition-colors">
                       aventura.ama@gmail.com
                     </a>
                   </div>
@@ -87,8 +87,8 @@ export default function Contactanos() {
                     <MessageCircle size={20} style={{ color: 'var(--ama-green)' }} />
                   </div>
                   <div>
-                    <p className="font-barlow font-bold text-ama-black text-sm mb-0.5">Envíanos un WhatsApp</p>
-                    <a href="https://wa.me/51939421966" className="font-barlow text-ama-gray-mid text-sm hover:text-ama-green transition-colors">
+                    <p className="font-opensans font-bold text-ama-black text-sm mb-0.5">Envíanos un WhatsApp</p>
+                    <a href="https://wa.me/51939421966" className="font-opensans text-ama-gray-mid text-sm hover:text-ama-green transition-colors">
                       +51 939 421 966
                     </a>
                   </div>
@@ -108,18 +108,18 @@ export default function Contactanos() {
                   <div className="w-8 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
                 </div>
                 <h3
-                  className="font-barlow-condensed font-black text-ama-black uppercase mb-1"
+                  className="font-opensans-condensed font-black text-ama-black uppercase mb-1"
                   style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)' }}
                 >
                   Envíanos un <span style={{ color: 'var(--ama-green)' }}>mensaje</span>
                 </h3>
-                <p className="font-barlow text-ama-gray-mid text-xs mb-6">Los campos obligatorios están marcados *</p>
+                <p className="font-opensans text-ama-gray-mid text-xs mb-6">Los campos obligatorios están marcados *</p>
 
                 {sent && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 p-4 rounded-xl font-barlow text-sm font-semibold text-white"
+                    className="mb-4 p-4 rounded-xl font-opensans text-sm font-semibold text-white"
                     style={{ background: 'var(--ama-green)' }}
                   >
                     ✅ ¡Mensaje enviado con éxito! Te responderemos pronto.
@@ -129,7 +129,7 @@ export default function Contactanos() {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="font-barlow text-xs font-semibold text-ama-gray-mid mb-1.5 block">
+                      <label className="font-opensans text-xs font-semibold text-ama-gray-mid mb-1.5 block">
                         Nombres y Apellidos *
                       </label>
                       <input
@@ -141,7 +141,7 @@ export default function Contactanos() {
                       />
                     </div>
                     <div>
-                      <label className="font-barlow text-xs font-semibold text-ama-gray-mid mb-1.5 block">
+                      <label className="font-opensans text-xs font-semibold text-ama-gray-mid mb-1.5 block">
                         Correo electrónico *
                       </label>
                       <input
@@ -156,7 +156,7 @@ export default function Contactanos() {
                   </div>
 
                   <div>
-                    <label className="font-barlow text-xs font-semibold text-ama-gray-mid mb-1.5 block">
+                    <label className="font-opensans text-xs font-semibold text-ama-gray-mid mb-1.5 block">
                       Mensaje *
                     </label>
                     <textarea

@@ -36,7 +36,7 @@ export default function Button({
       whileTap={{ scale: 0.97 }}
       whileHover={{ scale: 1.02 }}
       className={[
-        'inline-flex items-center justify-center gap-2 transition-all duration-200 font-barlow-condensed tracking-wider cursor-pointer',
+        'inline-flex items-center justify-center gap-2 transition-all duration-200 font-quicksand tracking-wider cursor-pointer uppercase',
         variantClasses[variant],
         sizeClasses[size],
         pill ? 'rounded-full' : 'rounded-lg',

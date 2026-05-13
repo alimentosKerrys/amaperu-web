@@ -104,10 +104,10 @@ export default function Programas() {
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-barlow-condensed font-black text-ama-black uppercase" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
+            <h2 className="font-opensans-condensed font-black text-ama-black uppercase" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
               NUESTROS <span style={{ color: 'var(--ama-green)' }}>PROGRAMAS</span>
             </h2>
-            <p className="font-barlow text-ama-gray-mid mt-2">Contamos con 3 programas</p>
+            <p className="font-opensans text-ama-gray-mid mt-2">Contamos con 3 programas</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -125,7 +125,7 @@ export default function Programas() {
                   <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? 'bg-black/75' : 'bg-black/45 hover:bg-black/60'}`} />
                   <div className="absolute inset-0 flex flex-col justify-end p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-barlow-condensed font-black text-white text-2xl uppercase">{prog.title}</h3>
+                      <h3 className="font-opensans-condensed font-black text-white text-2xl uppercase">{prog.title}</h3>
                       <button
                         className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-white flex-shrink-0"
                       >
@@ -138,7 +138,7 @@ export default function Programas() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="font-barlow text-white/85 text-sm leading-relaxed"
+                          className="font-opensans text-white/85 text-sm leading-relaxed"
                         >
                           {prog.desc}
                         </motion.p>
@@ -153,7 +153,7 @@ export default function Programas() {
       </section>
 
       {/* ===== NUEVOS PROYECTOS ===== */}
-      <section className="py-16 px-4" style={{ background: 'var(--ama-gray-light)' }}>
+      <section className="py-20 px-4" style={{ background: 'var(--ama-gray-light)' }}>
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -161,19 +161,24 @@ export default function Programas() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
+            {/* Label igual al Home */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-barlow-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
+              <div className="w-12 h-[3px]" style={{ background: 'var(--ama-green)' }} />
+              <span className="font-quicksand font-bold text-lg tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
                 Iniciativas
               </span>
             </div>
-            <h2 className="font-barlow-condensed font-black text-ama-black uppercase mb-6" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}>
-              NUEVOS <span style={{ color: 'var(--ama-green)' }}>PROYECTOS</span>
+            {/* Título con misma escala que AMA/PERÚ del Home */}
+            <h2
+              className="font-opensans font-black text-ama-black uppercase mb-6"
+              style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}
+            >
+              NUEVOS<br/><span style={{ color: 'var(--ama-green)' }}>PROYECTOS</span>
             </h2>
-            <p className="font-barlow text-ama-gray-mid text-base leading-relaxed mb-4">
+            <p className="font-opensans text-ama-gray-dark font-medium text-[1.05rem] leading-[1.8] mb-4">
               Debido a la carencia de espacios recreativos nace el programa &quot;Parques Multifuncionales&quot;, para promover la construcción de campos deportivos y parques para incentivar el deporte, arte y cultura en los niños, jóvenes y sus familias generando una sociedad con mayor igualdad de oportunidades.
             </p>
-            <p className="font-barlow text-ama-gray-mid text-base leading-relaxed">
+            <p className="font-opensans text-ama-gray-dark font-medium text-[1.05rem] leading-[1.8]">
               Estamos en el proceso de construcción de parques que cuenten con espacios para impulsar el deporte, espacios recreativos, espacios para actividades culturales y una biblioteca.
             </p>
           </motion.div>
@@ -207,24 +212,24 @@ export default function Programas() {
               <div className="relative">
                 <img src={proj.image} alt={proj.title} className="w-full h-52 object-cover" />
                 <div className="absolute top-4 left-4">
-                  <span className="bg-ama-green text-white font-barlow-condensed font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
+                  <span className="bg-ama-green text-white font-opensans-condensed font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
                     {proj.badge}
                   </span>
                 </div>
               </div>
 
               <div className="p-6">
-                <h3 className="font-barlow-condensed font-black text-xl mb-4 uppercase" style={{ color: 'var(--ama-green)' }}>
+                <h3 className="font-opensans-condensed font-black text-xl mb-4 uppercase" style={{ color: 'var(--ama-green)' }}>
                   {proj.title}
                 </h3>
                 <div className="flex flex-col gap-2 mb-5">
                   <div className="flex items-start gap-2">
                     <MapPin size={15} className="text-ama-gray-mid mt-0.5 flex-shrink-0" />
-                    <span className="font-barlow text-sm text-ama-gray-mid">{proj.location}</span>
+                    <span className="font-opensans text-sm text-ama-gray-mid">{proj.location}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Users size={15} className="text-ama-gray-mid flex-shrink-0" />
-                    <span className="font-barlow text-sm text-ama-gray-mid">
+                    <span className="font-opensans text-sm text-ama-gray-mid">
                       Beneficiarios: <strong className="text-ama-black">{proj.beneficiarios}</strong>
                     </span>
                   </div>
@@ -232,7 +237,7 @@ export default function Programas() {
 
                 {/* Progress */}
                 <div className="mb-5">
-                  <div className="flex justify-between text-xs font-barlow mb-1.5">
+                  <div className="flex justify-between text-xs font-opensans mb-1.5">
                     <span className="text-ama-gray-mid">Avance del proyecto</span>
                     <span className="font-bold" style={{ color: 'var(--ama-green)' }}>{proj.progress}%</span>
                   </div>
@@ -255,8 +260,8 @@ export default function Programas() {
                     { label: 'Pendiente', val: proj.pendiente },
                   ].map(row => (
                     <div key={row.label} className="text-center">
-                      <p className="font-barlow text-xs text-ama-gray-mid mb-1">{row.label}</p>
-                      <p className="font-barlow-condensed font-bold text-sm text-ama-black">{row.val}</p>
+                      <p className="font-opensans text-xs text-ama-gray-mid mb-1">{row.label}</p>
+                      <p className="font-opensans-condensed font-bold text-sm text-ama-black">{row.val}</p>
                     </div>
                   ))}
                 </div>
@@ -274,7 +279,7 @@ export default function Programas() {
       <section className="py-16 px-4" style={{ background: 'var(--ama-gray-light)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-barlow-condensed font-black text-ama-black uppercase" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+            <h2 className="font-opensans-condensed font-black text-ama-black uppercase" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
               ACTIVIDADES Y PROYECTOS <span style={{ color: 'var(--ama-green)' }}>REALIZADOS</span>
             </h2>
           </div>
@@ -294,16 +299,16 @@ export default function Programas() {
                     <div className="relative" style={{ aspectRatio: '4/3' }}>
                       <img src={act.image} alt={act.title} className="w-full h-full object-cover" />
                       <div className="absolute top-3 right-3">
-                        <span className="bg-ama-black/70 text-white text-xs font-barlow px-3 py-1 rounded-full backdrop-blur-sm">
+                        <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">
                           {act.date}
                         </span>
                       </div>
                     </div>
                     <div className="p-5">
-                      <h3 className="font-barlow-condensed font-bold text-lg mb-2" style={{ color: 'var(--ama-green)' }}>
+                      <h3 className="font-opensans-condensed font-bold text-lg mb-2" style={{ color: 'var(--ama-green)' }}>
                         {act.title}
                       </h3>
-                      <p className="font-barlow text-sm text-ama-gray-mid leading-relaxed mb-4">{act.desc}</p>
+                      <p className="font-opensans text-sm text-ama-gray-mid leading-relaxed mb-4">{act.desc}</p>
                       <Button variant="primary" size="sm" pill>GALERÍA</Button>
                     </div>
                   </div>

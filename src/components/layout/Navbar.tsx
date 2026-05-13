@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ShoppingCart, ChevronDown, MessageCircle } from 'lucide-react'
+import { Menu, X, ShoppingCart, ChevronDown, MessageCircle, Facebook, Instagram, Twitter, Linkedin, Heart } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { useModal } from '../../context/ModalContext'
+
+// Logos
+import logoVerde from '../../assets/LOGO/LOGO AMA VERDE.avif'
+import logoBlanco from '../../assets/LOGO/LOGO AMA BLANCO.avif'
 
 const NAV_LINKS = [
   { label: 'Inicio', to: '/' },
@@ -79,27 +83,26 @@ export default function Navbar() {
 
       {/* Main navbar */}
       <nav
-        className={`bg-white transition-shadow duration-300 ${scrolled ? 'shadow-lg' : 'shadow-sm'}`}
+        style={{ backgroundColor: 'var(--ama-green)' }}
+        className={`transition-shadow duration-300 ${scrolled ? 'shadow-lg' : 'shadow-sm'}`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex items-center h-16">
+        <div className="max-w-7xl mx-auto px-4 flex items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0 mr-8">
-            <div
-              className="font-barlow-condensed font-black text-3xl tracking-tight leading-none"
-              style={{ color: 'var(--ama-green)' }}
-            >
-              AMA
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-barlow text-[9px] font-semibold text-ama-gray-mid tracking-widest">PERÚ</span>
-              <span className="font-barlow text-[7px] text-ama-gray-mid/70 tracking-wider">CONSTRUYENDO FUTUROS</span>
-            </div>
+          <Link to="/" className="flex items-center gap-2 flex-shrink-0 pr-6 border-r border-white/30 group">
+            <img 
+              src={logoBlanco} 
+              alt="AMA PERÚ" 
+              className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+            />
+            <span className="font-opensans-condensed font-black text-2xl tracking-tighter text-white">
+              PERÚ
+            </span>
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden lg:flex items-center gap-1 flex-1">
+          <ul className="hidden lg:flex items-center justify-center flex-1 divide-x divide-white/30 mr-6">
             {NAV_LINKS.map(link => (
-              <li key={link.to + link.label} className="relative">
+              <li key={link.to + link.label} className="relative px-3 xl:px-5 flex items-center justify-center">
                 {link.sub ? (
                   <div
                     className="relative"
@@ -109,8 +112,8 @@ export default function Navbar() {
                     <NavLink
                       to={link.to}
                       className={({ isActive }) =>
-                        `flex items-center gap-1 px-3 py-2 font-barlow font-semibold text-sm transition-colors rounded-lg ${
-                          isActive ? 'text-ama-green' : 'text-ama-gray-dark hover:text-ama-green'
+                        `flex items-center gap-1 font-opensans font-semibold text-[13px] transition-colors ${
+                          isActive ? 'text-white' : 'text-white/90 hover:text-white'
                         }`
                       }
                     >
@@ -130,7 +133,7 @@ export default function Navbar() {
                             <Link
                               key={s.label}
                               to={s.to}
-                              className="block px-4 py-2.5 text-sm font-barlow text-ama-gray-dark hover:text-ama-green hover:bg-gray-50 transition-colors"
+                              className="block px-4 py-2.5 text-sm font-opensans text-ama-gray-dark hover:text-ama-green hover:bg-gray-50 transition-colors"
                               onClick={() => setOpenDropdown(null)}
                             >
                               {s.label}
@@ -144,8 +147,8 @@ export default function Navbar() {
                   <NavLink
                     to={link.to}
                     className={({ isActive }) =>
-                      `flex items-center px-3 py-2 font-barlow font-semibold text-sm transition-colors rounded-lg ${
-                        isActive ? 'text-ama-green' : 'text-ama-gray-dark hover:text-ama-green'
+                      `flex items-center font-opensans font-semibold text-[13px] transition-colors ${
+                        isActive ? 'text-white' : 'text-white/90 hover:text-white'
                       }`
                     }
                   >
@@ -157,30 +160,50 @@ export default function Navbar() {
           </ul>
 
           {/* Right actions */}
-          <div className="hidden lg:flex items-center gap-3 ml-4">
+          <div className="hidden lg:flex items-center gap-5 ml-auto pl-6 border-l border-white/30">
+            {/* Social Icons */}
+            <div className="flex items-center gap-2 text-white">
+              <a href="#" className="w-8 h-8 rounded-full border border-white/60 flex items-center justify-center hover:bg-white hover:text-ama-green transition-colors">
+                <Facebook size={14} />
+              </a>
+              <a href="#" className="w-8 h-8 rounded-full border border-white/60 flex items-center justify-center hover:bg-white hover:text-ama-green transition-colors">
+                <Instagram size={14} />
+              </a>
+              <a href="#" className="w-8 h-8 rounded-full border border-white/60 flex items-center justify-center hover:bg-white hover:text-ama-green transition-colors">
+                <Twitter size={14} />
+              </a>
+              <a href="#" className="w-8 h-8 rounded-full border border-white/60 flex items-center justify-center hover:bg-white hover:text-ama-green transition-colors">
+                <Linkedin size={14} />
+              </a>
+            </div>
+
+            <div className="h-6 w-px bg-white/30 hidden xl:block"></div>
+
             <Link
               to="/tienda"
-              className="relative p-2 text-ama-gray-dark hover:text-ama-green transition-colors"
+              className="relative text-white hover:opacity-80 transition-opacity"
               aria-label="Tienda"
             >
               <ShoppingCart size={20} />
               {count > 0 && (
-                <span className="absolute -top-1 -right-1 bg-ama-green text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-2 -right-2 bg-white text-ama-green text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                   {count}
                 </span>
               )}
             </Link>
+            
             <button
               onClick={() => openModal()}
-              className="bg-ama-green text-white font-barlow-condensed font-bold text-sm px-5 py-2.5 rounded-full hover:bg-ama-green-dark transition-colors tracking-wider"
+              className="bg-white text-ama-green font-opensans font-bold text-xs px-5 py-2.5 rounded-full hover:bg-gray-100 transition-colors tracking-wider flex items-center gap-2 ml-1"
             >
+              <Heart size={14} className="fill-ama-green" />
               DONA AHORA
             </button>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden ml-auto p-2 text-ama-gray-dark"
+            className="lg:hidden ml-auto p-2 text-white"
             onClick={() => setMobileOpen(o => !o)}
             aria-label="Menu"
           >
@@ -204,7 +227,7 @@ export default function Navbar() {
                     <NavLink
                       to={link.to}
                       className={({ isActive }) =>
-                        `block px-3 py-3 font-barlow font-semibold text-base rounded-lg transition-colors ${
+                        `block px-3 py-3 font-opensans font-semibold text-base rounded-lg transition-colors ${
                           isActive ? 'text-ama-green bg-green-50' : 'text-ama-gray-dark hover:text-ama-green'
                         }`
                       }
@@ -218,7 +241,7 @@ export default function Navbar() {
                           <Link
                             key={s.label}
                             to={s.to}
-                            className="block px-3 py-2 text-sm font-barlow text-ama-gray-mid hover:text-ama-green transition-colors"
+                            className="block px-3 py-2 text-sm font-opensans text-ama-gray-mid hover:text-ama-green transition-colors"
                             onClick={() => setMobileOpen(false)}
                           >
                             {s.label}
@@ -231,7 +254,7 @@ export default function Navbar() {
                 <div className="pt-3 border-t border-gray-100 flex flex-col gap-3 mt-2">
                   <Link
                     to="/tienda"
-                    className="flex items-center gap-2 px-3 py-3 font-barlow font-semibold text-ama-gray-dark"
+                    className="flex items-center gap-2 px-3 py-3 font-opensans font-semibold text-ama-gray-dark"
                     onClick={() => setMobileOpen(false)}
                   >
                     <ShoppingCart size={18} />
@@ -244,7 +267,7 @@ export default function Navbar() {
                   </Link>
                   <button
                     onClick={() => { openModal(); setMobileOpen(false) }}
-                    className="w-full bg-ama-green text-white font-barlow-condensed font-bold py-3 rounded-full hover:bg-ama-green-dark transition-colors tracking-wider"
+                    className="w-full bg-ama-green text-white font-opensans-condensed font-bold py-3 rounded-full hover:bg-ama-green-dark transition-colors tracking-wider"
                   >
                     DONA AHORA
                   </button>

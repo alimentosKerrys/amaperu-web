@@ -77,22 +77,22 @@ export default function Noticias() {
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-6 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-                  <span className="font-barlow text-xs text-ama-gray-mid uppercase tracking-widest">Noticia</span>
+                  <span className="font-opensans text-xs text-ama-gray-mid uppercase tracking-widest">Noticia</span>
                 </div>
                 <h2
-                  className="font-barlow-condensed font-black mb-4 leading-tight"
+                  className="font-opensans-condensed font-black mb-4 leading-tight"
                   style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)', color: 'var(--ama-green)' }}
                 >
                   {noticia.title}
                 </h2>
-                <p className="font-barlow text-ama-gray-mid text-sm leading-relaxed mb-5">
+                <p className="font-opensans text-ama-gray-mid text-sm leading-relaxed mb-5">
                   {noticia.excerpt}
                 </p>
                 <a
                   href={noticia.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-barlow text-xs font-semibold transition-colors hover:opacity-80"
+                  className="inline-flex items-center gap-2 font-opensans text-xs font-semibold transition-colors hover:opacity-80"
                   style={{ color: 'var(--ama-green)' }}
                 >
                   <ExternalLink size={13} />

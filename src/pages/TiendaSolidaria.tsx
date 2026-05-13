@@ -48,7 +48,7 @@ export default function TiendaSolidaria() {
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <div className="flex items-center gap-2 mb-5">
                 <SlidersHorizontal size={18} style={{ color: 'var(--ama-green)' }} />
-                <h3 className="font-barlow-condensed font-bold text-ama-black text-lg uppercase tracking-wider">Categorías</h3>
+                <h3 className="font-opensans-condensed font-bold text-ama-black text-lg uppercase tracking-wider">Categorías</h3>
               </div>
 
               <ul className="flex flex-col gap-1 mb-8">
@@ -58,9 +58,9 @@ export default function TiendaSolidaria() {
                       onClick={() => setExpandedCat(expandedCat === cat.label ? null : cat.label)}
                       className="w-full flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors text-left"
                     >
-                      <span className="font-barlow text-sm text-ama-gray-dark">{cat.label}</span>
+                      <span className="font-opensans text-sm text-ama-gray-dark">{cat.label}</span>
                       <div className="flex items-center gap-2">
-                        <span className="font-barlow text-xs text-ama-gray-mid bg-gray-100 px-2 py-0.5 rounded-full">{cat.count}</span>
+                        <span className="font-opensans text-xs text-ama-gray-mid bg-gray-100 px-2 py-0.5 rounded-full">{cat.count}</span>
                         {cat.sub && (
                           <ChevronRight
                             size={14}
@@ -78,7 +78,7 @@ export default function TiendaSolidaria() {
                       >
                         {cat.sub.map(s => (
                           <li key={s}>
-                            <button className="w-full text-left py-1.5 px-3 text-xs font-barlow text-ama-gray-mid hover:text-ama-green transition-colors">
+                            <button className="w-full text-left py-1.5 px-3 text-xs font-opensans text-ama-gray-mid hover:text-ama-green transition-colors">
                               {s}
                             </button>
                           </li>
@@ -91,9 +91,9 @@ export default function TiendaSolidaria() {
 
               {/* Price range */}
               <div className="border-t border-gray-100 pt-6">
-                <h3 className="font-barlow-condensed font-bold text-ama-black text-lg uppercase tracking-wider mb-4">Rango de Precio</h3>
+                <h3 className="font-opensans-condensed font-bold text-ama-black text-lg uppercase tracking-wider mb-4">Rango de Precio</h3>
                 <div className="mb-3">
-                  <span className="font-barlow text-sm text-ama-gray-mid">
+                  <span className="font-opensans text-sm text-ama-gray-mid">
                     Precio: <strong style={{ color: 'var(--ama-green)' }}>S/0 – S/{priceRange}</strong>
                   </span>
                 </div>
@@ -105,7 +105,7 @@ export default function TiendaSolidaria() {
                   onChange={e => setPriceRange(Number(e.target.value))}
                   className="w-full"
                 />
-                <div className="flex justify-between text-xs font-barlow text-ama-gray-mid mt-1">
+                <div className="flex justify-between text-xs font-opensans text-ama-gray-mid mt-1">
                   <span>S/0</span>
                   <span>S/100</span>
                 </div>
@@ -116,10 +116,10 @@ export default function TiendaSolidaria() {
           {/* ===== PRODUCTS GRID ===== */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-barlow-condensed font-black text-ama-black text-2xl uppercase">
+              <h2 className="font-opensans-condensed font-black text-ama-black text-2xl uppercase">
                 Productos <span style={{ color: 'var(--ama-green)' }}>Solidarios</span>
               </h2>
-              <span className="font-barlow text-sm text-ama-gray-mid">{products.length} productos</span>
+              <span className="font-opensans text-sm text-ama-gray-mid">{products.length} productos</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -130,10 +130,10 @@ export default function TiendaSolidaria() {
                 ))}
               {products.filter(p => p.price <= priceRange).length === 0 && (
                 <div className="col-span-3 py-16 text-center">
-                  <p className="font-barlow text-ama-gray-mid">No hay productos en ese rango de precio.</p>
+                  <p className="font-opensans text-ama-gray-mid">No hay productos en ese rango de precio.</p>
                   <button
                     onClick={() => setPriceRange(100)}
-                    className="mt-3 font-barlow text-sm font-semibold transition-colors"
+                    className="mt-3 font-opensans text-sm font-semibold transition-colors"
                     style={{ color: 'var(--ama-green)' }}
                   >
                     Ver todos los productos
@@ -154,7 +154,7 @@ export default function TiendaSolidaria() {
                 <button
                   key={n}
                   onClick={() => setPage(n)}
-                  className="w-9 h-9 rounded-lg font-barlow font-semibold text-sm transition-colors"
+                  className="w-9 h-9 rounded-lg font-opensans font-semibold text-sm transition-colors"
                   style={{
                     background: page === n ? 'var(--ama-green)' : 'white',
                     color: page === n ? 'white' : 'var(--ama-gray-dark)',

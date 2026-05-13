@@ -74,12 +74,12 @@ export default function Unete() {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-barlow-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
+              <span className="font-opensans-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
                 Voluntariado
               </span>
             </div>
             <h2
-              className="font-barlow-condensed font-black text-ama-black uppercase mb-6"
+              className="font-opensans-condensed font-black text-ama-black uppercase mb-6"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}
             >
               SÉ PARTE DEL <span style={{ color: 'var(--ama-green)' }}>VOLUNTARIADO</span>
@@ -118,12 +118,12 @@ export default function Unete() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2
-              className="font-barlow-condensed font-black uppercase"
+              className="font-opensans-condensed font-black uppercase"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--ama-green)' }}
             >
               TESTIMONIOS
             </h2>
-            <p className="font-barlow text-ama-gray-mid mt-2">Lo que dicen nuestros voluntarios acerca de AMA PERÚ</p>
+            <p className="font-opensans text-ama-gray-mid mt-2">Lo que dicen nuestros voluntarios acerca de AMA PERÚ</p>
           </div>
 
           <div className="relative max-w-3xl mx-auto">
@@ -137,26 +137,26 @@ export default function Unete() {
                 className="bg-white rounded-3xl p-10 shadow-lg text-center relative"
               >
                 <div
-                  className="font-barlow-condensed font-black text-8xl leading-none mb-4"
+                  className="font-opensans-condensed font-black text-8xl leading-none mb-4"
                   style={{ color: 'var(--ama-green)', lineHeight: 0.8 }}
                 >
                   ❝
                 </div>
-                <p className="font-barlow text-ama-gray-mid text-lg leading-relaxed italic mb-8">
+                <p className="font-opensans text-ama-gray-mid text-lg leading-relaxed italic mb-8">
                   "{testimonios[testSlide].quote}"
                 </p>
                 <div className="flex items-center justify-center gap-4">
                   <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center font-barlow-condensed font-black text-white text-lg"
+                    className="w-12 h-12 rounded-full flex items-center justify-center font-opensans-condensed font-black text-white text-lg"
                     style={{ background: 'var(--ama-green)' }}
                   >
                     {testimonios[testSlide].name[0]}
                   </div>
                   <div className="text-left">
-                    <p className="font-barlow font-bold" style={{ color: 'var(--ama-green)' }}>
+                    <p className="font-opensans font-bold" style={{ color: 'var(--ama-green)' }}>
                       {testimonios[testSlide].name}
                     </p>
-                    <p className="font-barlow text-xs text-ama-gray-mid tracking-widest">{testimonios[testSlide].role}</p>
+                    <p className="font-opensans text-xs text-ama-gray-mid tracking-widest">{testimonios[testSlide].role}</p>
                   </div>
                 </div>
               </motion.div>
@@ -189,12 +189,12 @@ export default function Unete() {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-barlow-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
+              <span className="font-opensans-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
                 Embajadores & Voceros
               </span>
             </div>
             <h2
-              className="font-barlow-condensed font-black text-ama-black uppercase mb-6"
+              className="font-opensans-condensed font-black text-ama-black uppercase mb-6"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}
             >
               EMBAJADORES <br />& <span style={{ color: 'var(--ama-green)' }}>VOCEROS</span>
@@ -251,12 +251,12 @@ export default function Unete() {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-barlow-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
+              <span className="font-opensans-condensed font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
                 Responsabilidad Social
               </span>
             </div>
             <h2
-              className="font-barlow-condensed font-black text-ama-black uppercase mb-6"
+              className="font-opensans-condensed font-black text-ama-black uppercase mb-6"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}
             >
               <span style={{ color: 'var(--ama-green)' }}>EMPRESAS</span>
@@ -292,7 +292,7 @@ export default function Unete() {
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h2
-            className="font-barlow-condensed font-black text-ama-black uppercase mb-12"
+            className="font-opensans-condensed font-black text-ama-black uppercase mb-12"
             style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}
           >
             ALIANZAS &amp; <span style={{ color: 'var(--ama-green)' }}>CONVENIOS</span>
@@ -307,7 +307,7 @@ export default function Unete() {
                 {a.logo ? (
                   <img src={a.logo} alt={a.name} className="h-16 w-auto object-contain" />
                 ) : (
-                  <div className="font-barlow-condensed font-black text-xl text-ama-gray-mid hover:text-ama-green transition-colors px-4">
+                  <div className="font-opensans-condensed font-black text-xl text-ama-gray-mid hover:text-ama-green transition-colors px-4">
                     {a.display}
                   </div>
                 )}

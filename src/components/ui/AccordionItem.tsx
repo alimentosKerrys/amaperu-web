@@ -20,7 +20,7 @@ export default function AccordionItem({ title, children, defaultOpen = false }: 
         aria-expanded={open}
       >
         <span
-          className="font-barlow font-semibold text-base transition-colors"
+          className="font-opensans font-semibold text-base transition-colors"
           style={{ color: open ? 'white' : 'var(--ama-black)' }}
         >
           {title}
@@ -39,7 +39,7 @@ export default function AccordionItem({ title, children, defaultOpen = false }: 
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="accordion-content"
           >
-            <div className="px-5 py-4 bg-gray-50 text-ama-gray-mid font-barlow text-sm leading-relaxed">
+            <div className="px-5 py-4 bg-gray-50 text-ama-gray-mid font-opensans text-sm leading-relaxed">
               {children}
             </div>
           </motion.div>

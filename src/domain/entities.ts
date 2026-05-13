@@ -113,3 +113,9 @@ export interface AuditoriaLog {
   detalle?: Record<string, unknown>
   created_at: string
 }
+
+export interface ConfiguracionGlobal {
+  clave: string
+  valor: string
+  updated_at: string
+}
