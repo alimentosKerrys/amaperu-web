@@ -83,13 +83,10 @@ export default function QuienesSomos() {
             transition={{ duration: 0.7 }}
             className="relative rounded-[20px] overflow-hidden shadow-xl h-[400px] lg:h-[550px]"
           >
-            {loadingQuienesImg && (
-              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
-            )}
             <img
-              src={quienesSomosImagen || aboutThumb}
+              src={loadingQuienesImg ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (quienesSomosImagen || aboutThumb)}
               alt="Voluntarios AMA PERÚ construyendo"
-              className="absolute inset-0 w-full h-full object-cover"
+              className={`absolute inset-0 w-full h-full object-cover ${loadingQuienesImg ? 'bg-gray-200 animate-pulse' : ''}`}
             />
             {/* Subtle dark gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/20 to-transparent" />

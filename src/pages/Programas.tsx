@@ -158,11 +158,10 @@ export default function Programas() {
                     layout
                     className={`relative ${isOpen ? 'w-full h-1/2 md:h-full md:w-1/2' : 'w-full h-full'}`}
                   >
-                    {prog.loading && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
                     <img 
-                      src={prog.image} 
+                      src={prog.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : prog.image} 
                       alt={prog.title} 
-                      className={`w-full h-full object-cover transition-all duration-500 relative z-0 ${isOpen ? 'grayscale' : ''}`} 
+                      className={`w-full h-full object-cover transition-all duration-500 relative z-0 ${prog.loading ? 'bg-gray-200 animate-pulse' : ''} ${isOpen ? 'grayscale' : ''}`} 
                     />
                     {!isOpen && <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors" />}
                     
@@ -267,8 +266,11 @@ export default function Programas() {
             className="rounded-2xl overflow-hidden shadow-xl relative"
             style={{ aspectRatio: '4/3' }}
           >
-            {lNuevoProy && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
-            <img src={imgNuevoProy || voluntarioCasco} alt="Voluntarios revisando planos" className="w-full h-full object-cover relative z-0" />
+            <img 
+              src={lNuevoProy ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgNuevoProy || voluntarioCasco)} 
+              alt="Voluntarios revisando planos" 
+              className={`w-full h-full object-cover relative z-0 ${lNuevoProy ? 'bg-gray-200 animate-pulse' : ''}`} 
+            />
           </motion.div>
         </div>
       </section>
@@ -287,8 +289,11 @@ export default function Programas() {
             >
               {/* Badge */}
               <div className="relative overflow-hidden rounded-t-2xl">
-                {proj.loading && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
-                <img src={proj.image} alt={proj.title} className="w-full h-52 object-cover relative z-0" />
+                <img 
+                  src={proj.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : proj.image} 
+                  alt={proj.title} 
+                  className={`w-full h-52 object-cover relative z-0 ${proj.loading ? 'bg-gray-200 animate-pulse' : ''}`} 
+                />
                 <div className="absolute top-4 left-4 z-20">
                   <span className="bg-ama-green text-white font-opensans-condensed font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
                     {proj.badge}
@@ -375,8 +380,11 @@ export default function Programas() {
                 {actividadesMerged.map((act, i) => (
                   <div key={act.title} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                     <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                      {act.loading && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
-                      <img src={act.image} alt={act.title} className="w-full h-full object-cover relative z-0" />
+                      <img 
+                        src={act.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : act.image} 
+                        alt={act.title} 
+                        className={`w-full h-full object-cover relative z-0 ${act.loading ? 'bg-gray-200 animate-pulse' : ''}`} 
+                      />
                       <div className="absolute top-3 right-3 z-20">
                         <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">
                           {act.date}
