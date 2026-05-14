@@ -60,6 +60,8 @@ export default function QuienesSomos() {
   const { openModal } = useModal()
   
   const { valor: portadaQuienes, loading: loadingPortada } = useConfiguracion('portada_quienes_somos')
+  const { valor: quienesSomosImagen, loading: loadingQuienesImg } = useConfiguracion('quienes_somos_imagen')
+  const { valor: quienesSomosTexto } = useConfiguracion('quienes_somos_texto')
 
   return (
     <main className="pt-[88px]">
@@ -81,8 +83,11 @@ export default function QuienesSomos() {
             transition={{ duration: 0.7 }}
             className="relative rounded-[20px] overflow-hidden shadow-xl h-[400px] lg:h-[550px]"
           >
+            {loadingQuienesImg && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
+            )}
             <img
-              src={aboutThumb}
+              src={quienesSomosImagen || aboutThumb}
               alt="Voluntarios AMA PERÚ construyendo"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -135,8 +140,8 @@ export default function QuienesSomos() {
             </div>
 
             {/* Description Text */}
-            <p className="font-opensans text-[#333333] font-normal text-[1.1rem] lg:text-[1.15rem] leading-[1.8] mb-8">
-              Somos una asociación multidisciplinaria sin fines de lucro, conformada por un grupo de jóvenes profesionales de diferentes carreras con la finalidad de aportar en el desarrollo integral del Perú; a través de la construcción de infraestructura social sostenible.
+            <p className="font-opensans text-[#333333] font-normal text-[1.1rem] lg:text-[1.15rem] leading-[1.8] mb-8 whitespace-pre-wrap">
+              {quienesSomosTexto || 'Somos una asociación multidisciplinaria sin fines de lucro, conformada por un grupo de jóvenes profesionales de diferentes carreras con la finalidad de aportar en el desarrollo integral del Perú; a través de la construcción de infraestructura social sostenible.'}
             </p>
 
           </motion.div>

@@ -93,6 +93,33 @@ export default function Programas() {
   
   const { valor: portadaProgramas, loading: loadingPortada } = useConfiguracion('portada_programas')
 
+  const { valor: imgProgConstruye, loading: l1 } = useConfiguracion('img_prog_construye')
+  const { valor: imgProgConecta, loading: l2 } = useConfiguracion('img_prog_conecta')
+  const { valor: imgProgAsiste, loading: l3 } = useConfiguracion('img_prog_asiste')
+  const { valor: imgNuevoProy, loading: lNuevoProy } = useConfiguracion('img_prog_nuevo_proy')
+  const { valor: imgParqueApu, loading: l4 } = useConfiguracion('img_prog_parque_apu')
+  const { valor: imgCampoQumir, loading: l5 } = useConfiguracion('img_prog_campo_qumir')
+  const { valor: imgActChoco, loading: l6 } = useConfiguracion('img_prog_act_choco')
+  const { valor: imgActPiedraApu, loading: l7 } = useConfiguracion('img_prog_act_piedra_apu')
+  const { valor: imgActPiedraQumir, loading: l8 } = useConfiguracion('img_prog_act_piedra_qumir')
+
+  const programasMerged = [
+    { ...programas[0], image: imgProgConstruye || programas[0].image, loading: l1 },
+    { ...programas[1], image: imgProgConecta || programas[1].image, loading: l2 },
+    { ...programas[2], image: imgProgAsiste || programas[2].image, loading: l3 },
+  ]
+
+  const proyectosMerged = [
+    { ...proyectos[0], image: imgParqueApu || proyectos[0].image, loading: l4 },
+    { ...proyectos[1], image: imgCampoQumir || proyectos[1].image, loading: l5 },
+  ]
+
+  const actividadesMerged = [
+    { ...actividades[0], image: imgActChoco || actividades[0].image, loading: l6 },
+    { ...actividades[1], image: imgActPiedraApu || actividades[1].image, loading: l7 },
+    { ...actividades[2], image: imgActPiedraQumir || actividades[2].image, loading: l8 },
+  ]
+
   const nextSlide = () => setActSlide(s => (s + 1) % actividades.length)
   const prevSlide = () => setActSlide(s => (s - 1 + actividades.length) % actividades.length)
 
@@ -115,41 +142,91 @@ export default function Programas() {
             <p className="font-opensans text-ama-gray-mid mt-2">Contamos con 3 programas</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {programas.map(prog => {
+          <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[450px] w-full">
+            {programasMerged.map(prog => {
               const isOpen = openProg === prog.key
               return (
                 <motion.div
                   key={prog.key}
                   layout
-                  className="relative rounded-2xl overflow-hidden cursor-pointer shadow-md"
-                  style={{ minHeight: 320 }}
-                  onClick={() => setOpenProg(isOpen ? '' : prog.key)}
+                  className={`relative rounded-xl overflow-hidden cursor-pointer shadow-lg flex flex-col md:flex-row ${isOpen ? 'md:w-1/2 h-[500px] md:h-auto' : 'md:w-1/4 h-[200px] md:h-auto'}`}
+                  onClick={() => { if (!isOpen) setOpenProg(prog.key) }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
-                  <img src={prog.image} alt={prog.title} className="w-full h-full object-cover absolute inset-0" />
-                  <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? 'bg-black/75' : 'bg-black/45 hover:bg-black/60'}`} />
-                  <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-opensans-condensed font-black text-white text-2xl uppercase">{prog.title}</h3>
-                      <button
-                        className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-white flex-shrink-0"
-                      >
-                        {isOpen ? <X size={16} /> : <Plus size={16} />}
-                      </button>
-                    </div>
+                  {/* Imagen */}
+                  <motion.div 
+                    layout
+                    className={`relative ${isOpen ? 'w-full h-1/2 md:h-full md:w-1/2' : 'w-full h-full'}`}
+                  >
+                    {prog.loading && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
+                    <img 
+                      src={prog.image} 
+                      alt={prog.title} 
+                      className={`w-full h-full object-cover transition-all duration-500 relative z-0 ${isOpen ? 'grayscale' : ''}`} 
+                    />
+                    {!isOpen && <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors" />}
+                    
+                    {/* Título en card inactivo */}
                     <AnimatePresence>
-                      {isOpen && (
-                        <motion.p
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="font-opensans text-white/85 text-sm leading-relaxed"
+                      {!isOpen && (
+                        <motion.h3 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="absolute inset-0 flex items-center justify-center font-opensans font-black text-white text-[32px] md:text-4xl capitalize z-10 pointer-events-none drop-shadow-md"
                         >
-                          {prog.desc}
-                        </motion.p>
+                          {prog.title.toLowerCase()}
+                        </motion.h3>
                       )}
                     </AnimatePresence>
-                  </div>
+
+                    {/* Botón Flotante (+ / x) */}
+                    <div 
+                      className={`absolute bottom-6 right-0 h-12 md:h-14 w-16 md:w-20 rounded-l-full flex items-center justify-start pl-2 md:pl-3 z-20 transition-colors duration-300 ${isOpen ? 'bg-[#85348b] cursor-pointer' : 'bg-ama-green'}`}
+                      onClick={(e) => {
+                        if (isOpen) {
+                          e.stopPropagation()
+                          setOpenProg('')
+                        }
+                      }}
+                    >
+                      <div className={`w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center ${isOpen ? 'text-[#85348b]' : 'text-ama-green'}`}>
+                        {isOpen ? <X size={24} strokeWidth={4} /> : <Plus size={24} strokeWidth={4} />}
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Panel de Texto */}
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div 
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="bg-white relative overflow-hidden flex flex-col justify-center px-6 md:px-10 py-6 w-full h-1/2 md:h-full md:w-1/2"
+                      >
+                        {/* Forma morada esquina superior derecha */}
+                        <svg
+                          className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 text-[#85348b]"
+                          viewBox="0 0 100 100"
+                          fill="currentColor"
+                          preserveAspectRatio="none"
+                        >
+                          <polygon points="100,0 100,60 90,65 85,50 70,60 65,40 50,45 40,20 20,25 0,0" />
+                        </svg>
+                        
+                        <h3 className="font-opensans font-black text-ama-black text-[32px] md:text-4xl mb-4 relative z-10 capitalize">
+                          {prog.title.toLowerCase()}
+                        </h3>
+                        <p className="font-opensans text-ama-gray-dark text-[15px] leading-relaxed relative z-10">
+                          {prog.desc}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                 </motion.div>
               )
             })}
@@ -166,13 +243,7 @@ export default function Programas() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {/* Label igual al Home */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-[3px]" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-quicksand font-bold text-lg tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
-                Iniciativas
-              </span>
-            </div>
+            {/* Label removed as requested */}
             {/* Título con misma escala que AMA/PERÚ del Home */}
             <h2
               className="font-opensans font-black text-ama-black uppercase mb-6"
@@ -193,10 +264,11 @@ export default function Programas() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-2xl overflow-hidden shadow-xl"
+            className="rounded-2xl overflow-hidden shadow-xl relative"
             style={{ aspectRatio: '4/3' }}
           >
-            <img src={voluntarioCasco} alt="Voluntarios revisando planos" className="w-full h-full object-cover" />
+            {lNuevoProy && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
+            <img src={imgNuevoProy || voluntarioCasco} alt="Voluntarios revisando planos" className="w-full h-full object-cover relative z-0" />
           </motion.div>
         </div>
       </section>
@@ -204,7 +276,7 @@ export default function Programas() {
       {/* ===== CARDS PROYECTOS ===== */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {proyectos.map((proj, i) => (
+          {proyectosMerged.map((proj, i) => (
             <motion.div
               key={proj.title}
               initial={{ opacity: 0, y: 30 }}
@@ -214,9 +286,10 @@ export default function Programas() {
               className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow"
             >
               {/* Badge */}
-              <div className="relative">
-                <img src={proj.image} alt={proj.title} className="w-full h-52 object-cover" />
-                <div className="absolute top-4 left-4">
+              <div className="relative overflow-hidden rounded-t-2xl">
+                {proj.loading && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
+                <img src={proj.image} alt={proj.title} className="w-full h-52 object-cover relative z-0" />
+                <div className="absolute top-4 left-4 z-20">
                   <span className="bg-ama-green text-white font-opensans-condensed font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
                     {proj.badge}
                   </span>
@@ -299,11 +372,12 @@ export default function Programas() {
                 transition={{ duration: 0.4 }}
                 className="grid grid-cols-1 md:grid-cols-3 gap-6"
               >
-                {actividades.map((act, i) => (
+                {actividadesMerged.map((act, i) => (
                   <div key={act.title} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                    <div className="relative" style={{ aspectRatio: '4/3' }}>
-                      <img src={act.image} alt={act.title} className="w-full h-full object-cover" />
-                      <div className="absolute top-3 right-3">
+                    <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                      {act.loading && <div className="absolute inset-0 bg-gray-200 animate-pulse z-10" />}
+                      <img src={act.image} alt={act.title} className="w-full h-full object-cover relative z-0" />
+                      <div className="absolute top-3 right-3 z-20">
                         <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">
                           {act.date}
                         </span>
@@ -323,7 +397,7 @@ export default function Programas() {
 
             {/* Nav dots */}
             <div className="flex justify-center gap-2 mt-8">
-              {actividades.map((_, i) => (
+              {actividadesMerged.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActSlide(i)}

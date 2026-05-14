@@ -32,7 +32,7 @@ const colaborar = [
 
 // Static metadata per program — images are overridden by backend data at runtime
 // Keys must match Proyecto.programa values from DB (case-insensitive)
-export const PROGRAMAS_META = [
+const PROGRAMAS_META = [
   {
     key: 'conecta',
     title: 'Conecta',
@@ -89,19 +89,8 @@ export default function Home() {
   const { valor: statsBgValor } = useConfiguracion('estadisticas_fondo')
   const { valor: statsPropValor } = useConfiguracion('estadisticas_proporcion')
   const { valor: quienesSomosTexto } = useConfiguracion('quienes_somos_texto')
-  const { valor: quienesSomosVideo } = useConfiguracion('quienes_somos_video')
-  const { valor: quienesSomosImagen } = useConfiguracion('quienes_somos_imagen')
-
-  // Convierte URL de YouTube/Vimeo a URL de embed
-  const getEmbedUrl = (url: string): string | null => {
-    if (!url) return null
-    const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
-    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0`
-    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/)
-    if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`
-    return null
-  }
-  const embedUrl = getEmbedUrl(quienesSomosVideo || '')
+  const { valor: videoMp4 } = useConfiguracion('home_video_mp4')
+  const { valor: videoWebm } = useConfiguracion('home_video_webm')
 
   const total = slides.length || 1
 
@@ -231,31 +220,24 @@ export default function Home() {
             className="relative rounded-2xl overflow-hidden shadow-xl"
             style={{ aspectRatio: '4/3' }}
           >
-            {embedUrl ? (
-              // Video embebido (YouTube/Vimeo)
-              <iframe
-                src={embedUrl}
-                title="Video AMA PERÚ"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+            {(videoMp4 || videoWebm) ? (
+              <video 
+                className="w-full h-full object-cover"
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                poster={aboutThumb}
+              >
+                {videoWebm && <source src={videoWebm} type="video/webm" />}
+                {videoMp4 && <source src={videoMp4} type="video/mp4" />}
+                Tu navegador no soporta el formato de video.
+              </video>
             ) : (
-              // Imagen con botón Play (fallback mientras no haya video)
+              // Imagen estática (fallback mientras no haya video)
               <>
-                <img src={quienesSomosImagen || aboutThumb} alt="AMA PERÚ equipo" className="w-full h-full object-cover" />
+                <img src={aboutThumb} alt="AMA PERÚ equipo" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <button
-                  className="absolute inset-0 flex items-center justify-center group"
-                  aria-label="Ver video"
-                  onClick={() => quienesSomosVideo && window.open(quienesSomosVideo, '_blank')}
-                >
-                  <div className="rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
-                    style={{ width: 72, height: 72, background: 'var(--ama-green)', boxShadow: '0 0 0 8px rgba(141,198,63,0.3)' }}
-                  >
-                    <Play size={28} className="text-white ml-1" fill="white" />
-                  </div>
-                </button>
                 <div className="absolute bottom-6 left-6">
                   <div className="font-opensans font-black text-white text-3xl leading-none">AMA</div>
                   <div className="font-opensans text-white/70 text-xs tracking-widest font-bold">CONSTRUYENDO FUTURO</div>
@@ -271,15 +253,15 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="font-opensans font-black text-ama-black mb-3 text-[3rem] uppercase leading-[1.05]">
+            <h2 className="font-opensans font-black text-ama-black mb-1 text-[2.2rem] uppercase leading-[1.1]">
               QUIÉNES<br />
-              <span className="text-ama-green">SOMOS</span>
+              <span className="text-ama-green text-[2.2rem]">SOMOS</span>
             </h2>
-            <div className="w-full max-w-[200px] h-[3px] bg-ama-green mb-6" />
+            <div className="w-[220px] h-[4px] bg-ama-green mb-6 mt-3" />
             <img
               src={logoAmaVerde}
               alt="AMA PERÚ Logo"
-              className="h-[100px] lg:h-[130px] w-auto object-contain mb-8"
+              className="h-[80px] lg:h-[100px] w-auto object-contain mb-8"
             />
             <p className="font-opensans text-ama-gray-dark font-medium text-[1.1rem] leading-[1.8] mb-8 whitespace-pre-wrap">
               {quienesSomosTexto || 'Somos una asociación multidisciplinaria sin fines de lucro, conformada por un grupo de jóvenes profesionales de diferentes carreras con la finalidad de aportar en el desarrollo integral del Perú; a través de la construcción de infraestructura social sostenible.'}

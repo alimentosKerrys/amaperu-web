@@ -1,7 +1,7 @@
 # 📋 AMA PERÚ — Log de Bugs Solucionados y Estado del Proyecto
 
-**Última actualización:** 12 de Mayo de 2026 — 13:45 (Lima, Perú)
-**Dev activo:** Gemini 3.1 Pro → Claude Sonnet 4.6
+**Última actualización:** 14 de Mayo de 2026
+**Dev activo:** Antigravity
 
 ---
 
@@ -91,6 +91,25 @@
 - **Solución:** Eliminado `credentials: 'include'` del fetch en storageService.ts
 
 
+
+### [S-12] JSX Compilation Errors en Contactanos.tsx
+- **Error:** `JSX element 'motion.div' has no corresponding closing tag`
+- **Causa:** Etiquetas de cierre extra `</div>` dejadas accidentalmente al mover componentes de lugar dentro del grid
+- **Solución:** Limpieza de la jerarquía JSX de la vista, logrando un DOM consistente y estabilizado.
+- **Archivo:** `src/pages/Contactanos.tsx`
+
+### [S-13] Fast Refresh warning en Home.tsx
+- **Error:** `Could not Fast Refresh ("PROGRAMAS_META" export is incompatible)`
+- **Causa:** Exportación de objetos no-componentes desde un archivo que renderiza un componente React principal
+- **Solución:** Removido el prefijo `export` del objeto auxiliar `PROGRAMAS_META`
+- **Archivo:** `src/pages/Home.tsx`
+
+### [S-14] Parpadeo (Flicker) de fallback images
+- **Error:** Flash visual de imágenes predefinidas en carga durante micro-segundos antes de que llegue la imagen real del backend
+- **Causa:** Las imágenes de fallback se renderizaban antes de que el hook `useConfiguracion` resolviera el promise de conexión
+- **Solución:** Extraído el state `loading` e implementado Skeleton Loaders condicionales con Tailwind (`animate-pulse`) en todas las capas dinámicas de InsForge
+- **Archivos:** `src/pages/Programas.tsx`, `src/pages/QuienesSomos.tsx`
+
 ---
 
 ## ⚠️ PENDIENTE — Storage 403 (prioridad ALTA)
@@ -123,11 +142,12 @@
 | hero_slides | 3 ✅ | AdminHeroSlider ✅ |
 | proyectos | 3 ✅ | AdminProyectos ✅ |
 | estadisticas | 4 ✅ | AdminEstadisticas ✅ |
-| equipo | 0 | AdminEquipo ✅ |
-| noticias | 0 | AdminNoticias ✅ |
-| testimonios | 0 | ❌ Sin módulo admin |
-| productos | 0 | ❌ Sin módulo admin |
-| alianzas | 0 | ❌ Sin módulo admin |
+| equipo | >0 ✅ | AdminEquipo ✅ |
+| noticias | >0 ✅ | AdminNoticias ✅ |
+| testimonios | >0 ✅ | AdminTestimonios ✅ |
+| productos | >0 ✅ | AdminTienda ✅ |
+| alianzas | >0 ✅ | AdminAlianzas ✅ |
+| configuracion | >20 ✅| AdminAjustes ✅ |
 
 ---
 

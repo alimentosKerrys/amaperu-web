@@ -42,6 +42,9 @@ export default function Unete() {
   const { openModal } = useModal()
   
   const { valor: portadaUnete, loading: loadingPortada } = useConfiguracion('portada_unete')
+  const { valor: imgVoluntariado } = useConfiguracion('img_unete_voluntariado')
+  const { valor: imgEmbajadora } = useConfiguracion('img_unete_embajadora')
+  const { valor: imgCorporativa } = useConfiguracion('img_unete_corporativa')
 
   const nextTest = () => setTestSlide(s => (s + 1) % testimonios.length)
   const prevTest = () => setTestSlide(s => (s - 1 + testimonios.length) % testimonios.length)
@@ -67,7 +70,7 @@ export default function Unete() {
             className="rounded-2xl overflow-hidden shadow-xl"
             style={{ aspectRatio: '3/4', maxHeight: 600 }}
           >
-            <img src={voluntariaUnete} alt="Voluntaria AMA PERÚ" className="w-full h-full object-cover" />
+            <img src={imgVoluntariado || voluntariaUnete} alt="Voluntaria AMA PERÚ" className="w-full h-full object-cover" />
           </motion.div>
 
           {/* Content */}
@@ -229,7 +232,7 @@ export default function Unete() {
             className="rounded-2xl overflow-hidden shadow-xl"
             style={{ aspectRatio: '3/4', maxHeight: 600 }}
           >
-            <img src={embajadora} alt="Embajadora AMA PERÚ" className="w-full h-full object-cover" />
+            <img src={imgEmbajadora || embajadora} alt="Embajadora AMA PERÚ" className="w-full h-full object-cover" />
           </motion.div>
         </div>
       </section>
@@ -245,7 +248,7 @@ export default function Unete() {
             className="rounded-2xl overflow-hidden shadow-xl order-last lg:order-first"
             style={{ aspectRatio: '4/3' }}
           >
-            <img src={corporativa} alt="Empresa voluntaria AMA PERÚ" className="w-full h-full object-cover" />
+            <img src={imgCorporativa || corporativa} alt="Empresa voluntaria AMA PERÚ" className="w-full h-full object-cover" />
           </motion.div>
 
           <motion.div
