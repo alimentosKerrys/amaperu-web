@@ -106,9 +106,9 @@
 
 ### [S-14] Parpadeo (Flicker) de fallback images
 - **Error:** Flash visual de imágenes predefinidas en carga durante micro-segundos antes de que llegue la imagen real del backend
-- **Causa:** Las imágenes de fallback se renderizaban antes de que el hook `useConfiguracion` resolviera el promise de conexión
-- **Solución:** Extraído el state `loading` e implementado Skeleton Loaders condicionales con Tailwind (`animate-pulse`) en todas las capas dinámicas de InsForge
-- **Archivos:** `src/pages/Programas.tsx`, `src/pages/QuienesSomos.tsx`
+- **Causa:** Las imágenes de fallback se renderizaban antes de que el hook `useConfiguracion` resolviera el promise de conexión, y colocar un overlay por encima de la etiqueta `<img>` no evitaba que el navegador dibujara brevemente la imagen antigua al remover el overlay.
+- **Solución:** Extraído el state `loading`. Se inyecta un **GIF transparente de 1x1 en base64** directamente en el atributo `src` de la imagen durante el estado de carga (`src={loading ? 'data:image/gif...' : image}`), combinado con `bg-gray-200 animate-pulse` en los estilos. Esto evita por completo el dibujo de la imagen fallback y previene cualquier flicker visual de manera absoluta.
+- **Archivos:** `src/pages/Programas.tsx`, `src/pages/QuienesSomos.tsx`, `src/pages/Home.tsx`
 
 ---
 

@@ -44,7 +44,15 @@ Se ha configurado la carga, administración y renderizado de imágenes de portad
 ## 🛠️ Notas Técnicas para el Siguiente Desarrollador
 
 *   **Arquitectura Respetada:** UI (`src/pages`) -> Application (`src/application/hooks`) -> Infrastructure (`src/lib/insforge.ts`).
-*   **Gestión del Estado de Carga:** Usar siempre la variable `loading` retornada por `useConfiguracion` y otros hooks para manejar Skeletons y así evitar saltos visuales o flash-load de imágenes hardcodeadas antes del contenido final del backend.
+*   **Gestión del Estado de Carga (Skeletons & Flicker Prevention):** 
+    **Regla Estricta:** Al usar `useConfiguracion` o cualquier hook asíncrono para cargar imágenes desde InsForge, NUNCA expongas la imagen hardcodeada durante el estado de carga (`loading === true`), de lo contrario ocurrirá un parpadeo ("flicker") muy notorio en la UI.
+    **Patrón Obligatorio:** En la etiqueta `<img />`, inyecta un GIF transparente de 1x1 en base64 en la propiedad `src` mientras esté cargando y aplica la clase `animate-pulse` de Tailwind para mostrar el skeleton gris. Ejemplo:
+    ```tsx
+    <img 
+      src={loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imagenDinamica || imagenFallback)} 
+      className={`w-full h-full object-cover ${loading ? 'bg-gray-200 animate-pulse' : ''}`}
+    />
+    ```
 *   **Archivos Clave Añadidos/Modificados Recientemente:**
     *   `src/admin/pages/AdminAjustes.tsx`
     *   `src/application/hooks/useConfiguracion.ts`
