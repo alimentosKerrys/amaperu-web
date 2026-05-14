@@ -3,6 +3,15 @@ import { Save, AlertCircle, Video, Type, CheckCircle, Upload, Image as ImageIcon
 import { configuracionService } from '../../application/contentService'
 import { storageService } from '../../application/storageService'
 
+const SECCIONES_PORTADAS = [
+  { clave: 'portada_tienda', titulo: 'Tienda Solidaria' },
+  { clave: 'portada_quienes_somos', titulo: '¿Quiénes Somos?' },
+  { clave: 'portada_programas', titulo: 'Programas' },
+  { clave: 'portada_unete', titulo: 'Únete' },
+  { clave: 'portada_noticias', titulo: 'Noticias' },
+  { clave: 'portada_contactanos', titulo: 'Contáctanos' },
+]
+
 export default function AdminAjustes() {
   const [quienesSomosTexto, setQuienesSomosTexto] = useState('')
   const [quienesSomosVideo, setQuienesSomosVideo] = useState('')
@@ -13,6 +22,9 @@ export default function AdminAjustes() {
   const [error, setError] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
+  const [portadas, setPortadas] = useState<Record<string, string>>({})
+  const [uploadingPortada, setUploadingPortada] = useState<string | null>(null)
+
   useEffect(() => {
     fetchConfig()
   }, [])
@@ -22,9 +34,21 @@ export default function AdminAjustes() {
     const texto = await configuracionService.getValor('quienes_somos_texto')
     const video = await configuracionService.getValor('quienes_somos_video')
     const imagen = await configuracionService.getValor('quienes_somos_imagen')
+    
+    const portadasVals = await Promise.all(
+      SECCIONES_PORTADAS.map(p => configuracionService.getValor(p.clave))
+    )
+    
     if (texto) setQuienesSomosTexto(texto)
     if (video) setQuienesSomosVideo(video)
     if (imagen) setQuienesSomosImagen(imagen)
+    
+    const portadasObj: Record<string, string> = {}
+    SECCIONES_PORTADAS.forEach((p, i) => {
+      if (portadasVals[i]) portadasObj[p.clave] = portadasVals[i]!
+    })
+    setPortadas(portadasObj)
+    
     setLoading(false)
   }
 
@@ -48,6 +72,26 @@ export default function AdminAjustes() {
       setTimeout(() => setSuccessMessage(null), 3000)
     }
     setIsUploadingImg(false)
+  }
+
+  const handleUploadPortada = async (clave: string, file: File) => {
+    setUploadingPortada(clave)
+    setError(null)
+    const { data, error: uploadError } = await storageService.subirImagenEnCarpeta('portadas', file)
+    if (uploadError || !data) {
+      setError(uploadError || 'Error al subir imagen de portada')
+      setUploadingPortada(null)
+      return
+    }
+    const { error: confError } = await configuracionService.actualizar(clave, data.url)
+    if (confError) {
+      setError('Error guardando la portada: ' + confError.message)
+    } else {
+      setPortadas(prev => ({ ...prev, [clave]: data.url }))
+      setSuccessMessage('¡Portada actualizada correctamente!')
+      setTimeout(() => setSuccessMessage(null), 3000)
+    }
+    setUploadingPortada(null)
   }
 
   const handleSave = async () => {
@@ -144,6 +188,53 @@ export default function AdminAjustes() {
             </label>
             <p className="text-xs text-gray-400 mt-2">JPG, PNG, WEBP — Máx. 5MB</p>
           </div>
+        </div>
+      </div>
+
+      {/* Portadas de Secciones */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+        <div className="p-6 border-b border-gray-100 bg-gray-50">
+          <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
+            <ImageIcon size={18} className="text-green-600" />
+            Imágenes de Portada por Sección
+          </h2>
+          <p className="text-xs text-gray-500 mt-1">Sube la imagen de fondo principal (Hero) para cada una de las páginas internas.</p>
+        </div>
+        <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {SECCIONES_PORTADAS.map(({ clave, titulo }) => (
+            <div key={clave} className="border border-gray-200 rounded-lg p-4 flex flex-col gap-3">
+              <h3 className="font-semibold text-gray-800 text-sm text-center">{titulo}</h3>
+              <div className="w-full h-32 bg-gray-100 rounded overflow-hidden relative shadow-inner">
+                {portadas[clave] ? (
+                  <img src={portadas[clave]} alt={titulo} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-400 text-[11px] text-center px-4 leading-tight">
+                    Usando fondo<br/>por defecto
+                  </div>
+                )}
+                {uploadingPortada === clave && (
+                  <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-2">
+                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+              </div>
+              <label className={`mt-2 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium cursor-pointer transition-colors ${
+                uploadingPortada === clave
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+              }`}>
+                <Upload size={14} />
+                Cambiar Imagen
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={e => e.target.files?.[0] && handleUploadPortada(clave, e.target.files[0])}
+                  disabled={uploadingPortada !== null}
+                />
+              </label>
+            </div>
+          ))}
         </div>
       </div>
 

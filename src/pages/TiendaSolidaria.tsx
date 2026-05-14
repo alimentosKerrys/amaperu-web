@@ -28,17 +28,22 @@ const categories = [
   { label: 'Hombre', count: 5, sub: ['Polos', 'Gorros', 'Accesorios'] },
 ]
 
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
+
 export default function TiendaSolidaria() {
   const [priceRange, setPriceRange] = useState(20)
   const [expandedCat, setExpandedCat] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  
+  const { valor: portadaTienda, loading: loadingPortada } = useConfiguracion('portada_tienda')
 
   return (
     <main className="pt-[88px]">
       <SectionHero
         title="TIENDA SOLIDARIA"
         breadcrumb={['Inicio', 'Tiendas']}
-        backgroundImage={bannerTienda}
+        backgroundImage={portadaTienda || bannerTienda}
+        isLoading={loadingPortada}
       />
 
       <section className="py-16 px-4">

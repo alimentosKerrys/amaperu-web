@@ -84,10 +84,14 @@ const actividades = [
   },
 ]
 
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
+
 export default function Programas() {
   const [openProg, setOpenProg] = useState<string>('conecta')
   const [actSlide, setActSlide] = useState(0)
   const { openModal } = useModal()
+  
+  const { valor: portadaProgramas, loading: loadingPortada } = useConfiguracion('portada_programas')
 
   const nextSlide = () => setActSlide(s => (s + 1) % actividades.length)
   const prevSlide = () => setActSlide(s => (s - 1 + actividades.length) % actividades.length)
@@ -97,7 +101,8 @@ export default function Programas() {
       <SectionHero
         title="PROGRAMAS"
         breadcrumb={['Inicio', 'Programas']}
-        backgroundImage={bannerProgramas}
+        backgroundImage={portadaProgramas || bannerProgramas}
+        isLoading={loadingPortada}
       />
 
       {/* ===== NUESTROS PROGRAMAS ===== */}

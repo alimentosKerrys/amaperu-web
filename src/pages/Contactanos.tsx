@@ -7,10 +7,13 @@ import Button from '../components/ui/Button'
 // Images
 import bannerContacto from '../assets/images/IMAGENES_LISTAS/banner-contacto.png'
 import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.png'
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
 export default function Contactanos() {
   const [form, setForm] = useState({ nombre: '', email: '', mensaje: '' })
   const [sent, setSent] = useState(false)
+  
+  const { valor: portadaContactanos, loading: loadingPortada } = useConfiguracion('portada_contactanos')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,7 +27,8 @@ export default function Contactanos() {
       <SectionHero
         title="CONTÁCTANOS"
         breadcrumb={['Inicio', 'Contáctanos']}
-        backgroundImage={bannerContacto}
+        backgroundImage={portadaContactanos || bannerContacto}
+        isLoading={loadingPortada}
       />
 
       {/* ===== MAIN CONTACT SECTION ===== */}
@@ -96,14 +100,15 @@ export default function Contactanos() {
               </div>
             </motion.div>
 
-            {/* Right — Form */}
+            {/* Right — Form & Map */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
+              className="flex flex-col gap-8"
             >
-              <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 sticky top-28">
+              <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-1 rounded-full" style={{ background: 'var(--ama-green)' }} />
                 </div>
@@ -172,25 +177,21 @@ export default function Contactanos() {
                   <Button type="submit" size="lg" pill fullWidth>Enviar mensaje</Button>
                 </form>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* ===== MAPA ===== */}
-      <section className="px-4 pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="rounded-2xl overflow-hidden shadow-xl" style={{ height: '400px' }}>
-            <iframe
-              title="Ubicación AMA PERÚ"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.7!2d-77.0428!3d-12.1264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDA3JzM1LjAiUyA3N8KwMDInMzQuMSJX!5e0!3m2!1ses!2spe!4v1620000000000!5m2!1ses!2spe"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+              {/* ===== MAPA ===== */}
+              <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-100" style={{ height: '350px' }}>
+                <iframe
+                  title="Ubicación AMA PERÚ"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.7!2d-77.0428!3d-12.1264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDA3JzM1LjAiUyA3N8KwMDInMzQuMSJX!5e0!3m2!1ses!2spe!4v1620000000000!5m2!1ses!2spe"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

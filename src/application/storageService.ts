@@ -180,7 +180,7 @@ export const storageService = {
       formData.append('file', file)
       formData.append('folder', carpeta)
 
-      const { data, error } = await insforge.functions.invoke('upload-image', formData)
+      const { data, error } = await insforge.functions.invoke('upload-image', { body: formData })
 
       if (!error && data?.success) {
         console.log('[storage] ✅ Upload exitoso via Edge Function:', data.url)

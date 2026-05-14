@@ -6,6 +6,7 @@ interface SectionHeroProps {
   breadcrumb: string[]
   backgroundImage: string
   overlay?: boolean
+  isLoading?: boolean
 }
 
 export default function SectionHero({
@@ -13,6 +14,7 @@ export default function SectionHero({
   breadcrumb,
   backgroundImage,
   overlay = true,
+  isLoading = false,
 }: SectionHeroProps) {
   return (
     <section
@@ -21,8 +23,8 @@ export default function SectionHero({
     >
       {/* Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center grayscale brightness-50"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className={`absolute inset-0 bg-cover bg-center grayscale brightness-50 ${isLoading ? 'bg-gray-300 animate-pulse' : ''}`}
+        style={{ backgroundImage: isLoading ? 'none' : `url(${backgroundImage})` }}
       />
       {overlay && (
         <div className="absolute inset-0 bg-black/50" />

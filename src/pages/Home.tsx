@@ -83,7 +83,7 @@ export default function Home() {
   const navigate = useNavigate()
   const { openModal } = useModal()
   const { slides } = useHeroSlides()
-  const { programas } = useProgramas()
+  const { programas, loading: loadingProgramas } = useProgramas()
   const { estadisticas } = useEstadisticas()
 
   const { valor: statsBgValor } = useConfiguracion('estadisticas_fondo')
@@ -348,9 +348,9 @@ export default function Home() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
-                  src={activeProgramaData.image}
+                  src={loadingProgramas ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : activeProgramaData.image}
                   alt={activeProgramaData.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full object-cover ${loadingProgramas ? 'bg-gray-200 animate-pulse' : ''}`}
                 />
               </AnimatePresence>
 
@@ -465,9 +465,9 @@ export default function Home() {
               <div className="h-[280px] w-full relative">
                 <div className="absolute -top-12 left-0 right-0 h-24 bg-white rounded-b-[3rem] z-20" />
                 <img
-                  src={activeProgramaData.image}
+                  src={loadingProgramas ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : activeProgramaData.image}
                   alt={activeProgramaData.title}
-                  className="absolute inset-0 w-full h-full object-cover rounded-b-3xl"
+                  className={`absolute inset-0 w-full h-full object-cover rounded-b-3xl ${loadingProgramas ? 'bg-gray-200 animate-pulse' : ''}`}
                 />
               </div>
             </div>

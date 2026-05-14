@@ -53,16 +53,21 @@ const teamRows = [
   ],
 ]
 
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
+
 export default function QuienesSomos() {
   const [activeTab, setActiveTab] = useState<TabId>('MISIÓN')
   const { openModal } = useModal()
+  
+  const { valor: portadaQuienes, loading: loadingPortada } = useConfiguracion('portada_quienes_somos')
 
   return (
     <main className="pt-[88px]">
       <SectionHero
         title="¿QUIÉNES SOMOS?"
         breadcrumb={['Inicio', '¿Quiénes somos?']}
-        backgroundImage={bannerQuienes}
+        backgroundImage={portadaQuienes || bannerQuienes}
+        isLoading={loadingPortada}
       />
 
       {/* ===== INTRO ===== */}

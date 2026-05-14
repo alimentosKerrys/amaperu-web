@@ -3,18 +3,22 @@ import { ExternalLink, Loader2 } from 'lucide-react'
 import SectionHero from '../components/ui/SectionHero'
 import { useNoticias } from '../application/hooks/useNoticias'
 
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
+
 // Images
 import bannerNoticias from '../assets/images/IMAGENES_LISTAS/banner-noticias.png'
 
 export default function Noticias() {
   const { noticias, loading } = useNoticias()
+  const { valor: portadaNoticias, loading: loadingPortada } = useConfiguracion('portada_noticias')
 
   return (
     <main className="pt-[88px]">
       <SectionHero
         title="NOTICIAS"
         breadcrumb={['Inicio', 'Noticias']}
-        backgroundImage={bannerNoticias}
+        backgroundImage={portadaNoticias || bannerNoticias}
+        isLoading={loadingPortada}
       />
 
       <section className="py-20 px-4">

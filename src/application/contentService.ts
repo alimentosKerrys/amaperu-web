@@ -307,12 +307,10 @@ export const configuracionService = {
   async actualizar(clave: string, valor: string) {
     const result = await insforge.database
       .from('configuracion_global')
-      .update({ valor, updated_at: new Date().toISOString() })
-      .eq('clave', clave)
+      .upsert({ clave, valor, updated_at: new Date().toISOString() }, { onConflict: 'clave' })
       .select()
       .single()
     
-    // Si no existe y da error, podríamos intentar hacer un upsert, pero asumimos que las claves existen
     if (result.data) await logAuditoria('editar', 'configuracion_global', clave, { valor })
     return result
   },

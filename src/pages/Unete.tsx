@@ -35,9 +35,13 @@ const alianzas = [
   { name: 'AMAS WORLD', display: 'AMAS WORLD' },
 ]
 
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
+
 export default function Unete() {
   const [testSlide, setTestSlide] = useState(0)
   const { openModal } = useModal()
+  
+  const { valor: portadaUnete, loading: loadingPortada } = useConfiguracion('portada_unete')
 
   const nextTest = () => setTestSlide(s => (s + 1) % testimonios.length)
   const prevTest = () => setTestSlide(s => (s - 1 + testimonios.length) % testimonios.length)
@@ -47,7 +51,8 @@ export default function Unete() {
       <SectionHero
         title="ÚNETE"
         breadcrumb={['Inicio', 'Únete']}
-        backgroundImage={bannerUnete}
+        backgroundImage={portadaUnete || bannerUnete}
+        isLoading={loadingPortada}
       />
 
       {/* ===== VOLUNTARIADO ===== */}
