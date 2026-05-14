@@ -69,7 +69,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <span className="flex items-center gap-1.5">
             <span className="text-ama-green">★</span>
-            Campaña &quot;Parques Funcionales&quot;
+            Campaña &quot;Construye&quot;
           </span>
           <a
             href="https://wa.me/51939412966"

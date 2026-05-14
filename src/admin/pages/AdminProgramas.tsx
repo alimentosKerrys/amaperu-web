@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Save, X, Edit2, Loader2, Upload, Plus, Trash2, FolderKanban } from 'lucide-react'
-import { proyectosService } from '../../application/contentService'
+import { programasService } from '../../application/contentService'
 import { storageService } from '../../application/storageService'
 import type { Proyecto } from '../../domain/entities'
 import Button from '../../components/ui/Button'
@@ -22,7 +22,7 @@ export default function AdminProgramas() {
 
   const cargarProyectos = async () => {
     setLoading(true)
-    const { data, error } = await proyectosService.getAll()
+    const { data, error } = await programasService.getAll()
     if (!error && data) {
       setProyectos(data)
     }
@@ -39,8 +39,14 @@ export default function AdminProgramas() {
     setEditingProyecto({
       programa: 'construye' as const,
       nombre: '',
+      subtitulo: '',
       descripcion: '',
       imagen_url: '',
+      bullets: [
+        { icon: 'CheckCircle', text: '' },
+        { icon: 'CheckCircle', text: '' },
+        { icon: 'CheckCircle', text: '' }
+      ],
       meta_financiera: 0,
       recaudado: 0,
       ubicacion: '',
@@ -75,7 +81,7 @@ export default function AdminProgramas() {
     setSaving(true)
 
     if (isNew) {
-      const { error } = await proyectosService.crear(editingProyecto as any)
+      const { error } = await programasService.crear(editingProyecto as any)
       if (!error) {
         await cargarProyectos()
         cancelarEdicion()
@@ -83,7 +89,7 @@ export default function AdminProgramas() {
         alert('Error al crear el programa')
       }
     } else {
-      const { error } = await proyectosService.editar(editingProyecto.id!, editingProyecto)
+      const { error } = await programasService.editar(editingProyecto.id!, editingProyecto)
       if (!error) {
         await cargarProyectos()
         cancelarEdicion()
@@ -96,7 +102,7 @@ export default function AdminProgramas() {
 
   const eliminarProyecto = async (id: string) => {
     if (window.confirm('¿Estás seguro de eliminar este programa?')) {
-      const { error } = await proyectosService.eliminar(id)
+      const { error } = await programasService.eliminar(id)
       if (!error) {
         await cargarProyectos()
       } else {
@@ -149,6 +155,9 @@ export default function AdminProgramas() {
               </div>
 
               <div className="p-5 flex-1 flex flex-col">
+                <div className="mb-1 text-ama-green text-[10px] font-bold uppercase tracking-widest">
+                  {proyecto.subtitulo || (proyecto.programa === 'asiste' ? 'Ayuda Social' : proyecto.programa === 'construye' ? 'Parques Multifuncionales' : 'Desarrollo Comunitario')}
+                </div>
                 <h3 className="text-white font-bold text-lg leading-tight mb-2">{proyecto.nombre}</h3>
                 <p className="text-white/60 text-sm line-clamp-2 mb-4 flex-1">{proyecto.descripcion}</p>
 
@@ -268,12 +277,24 @@ export default function AdminProgramas() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-white/80 mb-1">Nombre del Programa</label>
+                      <label className="block text-sm font-semibold text-white/80 mb-1">Nombre del Programa (Título)</label>
                       <input
                         type="text"
                         value={editingProyecto.nombre}
                         onChange={e => setEditingProyecto({ ...editingProyecto, nombre: e.target.value })}
                         className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
+                        placeholder="Ej: Conecta"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-white/80 mb-1">Subtítulo (Categoría)</label>
+                      <input
+                        type="text"
+                        value={editingProyecto.subtitulo || ''}
+                        onChange={e => setEditingProyecto({ ...editingProyecto, subtitulo: e.target.value })}
+                        className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors"
+                        placeholder="Ej: DESARROLLO COMUNITARIO"
                       />
                     </div>
                   </div>
@@ -317,9 +338,30 @@ export default function AdminProgramas() {
                       <textarea
                         value={editingProyecto.descripcion || ''}
                         onChange={e => setEditingProyecto({ ...editingProyecto, descripcion: e.target.value })}
-                        rows={5}
+                        rows={3}
                         className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-ama-green transition-colors resize-none custom-scrollbar"
                       />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-white/80 mb-2">Puntos Clave (Bullets)</label>
+                      <div className="space-y-2">
+                        {(editingProyecto.bullets || [{ icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }]).map((bullet, idx) => (
+                          <div key={idx} className="flex gap-2">
+                            <input
+                              type="text"
+                              value={bullet.text}
+                              onChange={e => {
+                                const newBullets = [...(editingProyecto.bullets || [{ icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }])]
+                                newBullets[idx] = { ...newBullets[idx], text: e.target.value }
+                                setEditingProyecto({ ...editingProyecto, bullets: newBullets })
+                              }}
+                              className="flex-1 bg-black/20 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-ama-green"
+                              placeholder={`Punto ${idx + 1}`}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-3 pt-2">

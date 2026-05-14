@@ -72,9 +72,9 @@ export const noticiasService = {
 }
 
 // =============================================
-// PROYECTOS
+// PROGRAMAS (Tabla 'proyectos' en DB)
 // =============================================
-export const proyectosService = {
+export const programasService = {
   async getAll() {
     return insforge.database
       .from('proyectos')
@@ -98,13 +98,17 @@ export const proyectosService = {
   },
 
   async editar(id: string, data: Partial<Proyecto>) {
+    // Eliminar subtitulo y bullets temporalmente ya que la DB actual no tiene estas columnas
+    // y causaría un error 500 (PGRST204) al intentar guardar.
+    const { subtitulo, bullets, ...safeData } = data as any;
+    
     const result = await insforge.database
       .from('proyectos')
-      .update({ ...data, updated_at: new Date().toISOString() })
+      .update({ ...safeData, updated_at: new Date().toISOString() })
       .eq('id', id)
       .select()
       .single()
-    if (result.data) await logAuditoria('editar', 'proyectos', id, data)
+    if (result.data) await logAuditoria('editar', 'proyectos', id, safeData)
     return result
   },
 

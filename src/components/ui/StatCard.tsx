@@ -40,17 +40,17 @@ export default function StatCard({ icon, number, suffix = '', label }: StatCardP
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="flex flex-col items-center text-center px-6 py-8 rounded-2xl"
+      className="flex flex-col items-center justify-center text-center px-2 py-6 sm:px-6 sm:py-8 rounded-2xl h-full"
       style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)' }}
     >
-      <div className="text-white mb-3 opacity-90">{icon}</div>
+      <div className="text-white mb-2 sm:mb-3 opacity-90 scale-75 sm:scale-100">{icon}</div>
       <div
-        className="font-opensans-condensed font-black text-white mb-2"
-        style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1 }}
+        className="font-opensans-condensed font-black text-white mb-1 sm:mb-2"
+        style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1 }}
       >
         <AnimatedNumber target={number} />{suffix}
       </div>
-      <p className="text-white/80 font-opensans text-sm font-medium leading-snug">{label}</p>
+      <p className="text-white/80 font-opensans text-[11px] sm:text-sm font-medium leading-snug">{label}</p>
     </motion.div>
   )
 }

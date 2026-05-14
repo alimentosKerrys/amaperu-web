@@ -20,6 +20,9 @@ import danielTroncos from '../assets/images/IMAGENES_LISTAS/daniel-troncos.png'
 import jordyArmijo from '../assets/images/IMAGENES_LISTAS/jordy-armijo.png'
 import gianFranco from '../assets/images/IMAGENES_LISTAS/gian-franco-capunay.png'
 
+import logoAmaVerde from '../assets/LOGO/LOGO AMA VERDE.png'
+import iconoPeruVerde from '../assets/ICONOSAMAWEB/ICONO PERU COLOR VERDESIMBOLO PERU AMA WEB.svg'
+
 const tabs = [
   { id: 'MISIÓN', label: 'Misión', Icon: Target },
   { id: 'VISIÓN', label: 'Visión', Icon: Eye },
@@ -63,50 +66,74 @@ export default function QuienesSomos() {
       />
 
       {/* ===== INTRO ===== */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Image */}
+      <section className="py-24 px-4 bg-[#f2f2f2] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Media (Image with Overlay) */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="relative rounded-2xl overflow-hidden shadow-xl"
-            style={{ aspectRatio: '4/3' }}
+            className="relative rounded-[20px] overflow-hidden shadow-xl h-[400px] lg:h-[550px]"
           >
-            <img src={aboutThumb} alt="AMA PERÚ equipo en campo" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-            <div className="absolute bottom-6 left-6">
-              <div className="font-opensans font-black text-white text-3xl leading-none">AMA</div>
-              <div className="font-opensans text-white/70 text-xs tracking-widest font-bold">CONSTRUYENDO FUTURO</div>
+            <img
+              src={aboutThumb}
+              alt="Voluntarios AMA PERÚ construyendo"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Subtle dark gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/20 to-transparent" />
+
+            {/* Text Overlay exactly as in image */}
+            <div className="absolute top-8 left-8 lg:top-10 lg:left-10 z-10">
+              <h3 className="font-opensans font-black text-white text-[1.8rem] sm:text-[2.2rem] lg:text-[2.6rem] leading-[1.1] tracking-tight uppercase">
+                CONSTRUYENDO<br />
+                JUNTOS<br />
+                <span className="text-ama-green">UN MEJOR</span><br />
+                <span className="text-ama-green">PERÚ</span>
+              </h3>
             </div>
           </motion.div>
 
-          {/* Text — mismo estilo que Home */}
+          {/* Text Section */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className="flex flex-col lg:pt-8"
           >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-[3px]" style={{ background: 'var(--ama-green)' }} />
-              <span className="font-quicksand font-bold text-lg tracking-widest uppercase" style={{ color: 'var(--ama-green)' }}>
-                Quiénes Somos
-              </span>
+            {/* Top Row: "SOMOS" + AMA Logo and Peru Map */}
+            <div className="flex flex-row items-center gap-4 sm:gap-8 lg:gap-12 mb-6">
+              {/* Bloque Texto + Logo + Línea */}
+              <div className="flex flex-col">
+                {/* Si quieres achicar o agrandar TODO el bloque, SOLO cambia estos text-[...] */}
+                <h2 className="font-opensans font-black text-black text-[3rem] sm:text-[4rem] lg:text-[5.5rem] leading-[0.8] tracking-tighter uppercase mb-6">
+                  SOMOS
+                </h2>
+                <img
+                  src={logoAmaVerde}
+                  alt="AMA Logo"
+                  className="w-full h-auto object-contain mt-1 lg:mt-3"
+                  style={{ transform: 'translateX(-3px)' }}
+                />
+                {/* Esta línea ahora es w-full, lo que significa que medirá exactamente lo mismo que la palabra SOMOS */}
+                <div className="w-full h-[4px] bg-ama-green mt-4 lg:mt-5" />
+              </div>
+              <div className="flex-shrink-0 self-center">
+                <img
+                  src={iconoPeruVerde}
+                  alt="Mapa de Perú AMA"
+                  className="h-[140px] sm:h-[260px] lg:h-[340px] w-auto object-contain drop-shadow-sm"
+                />
+              </div>
             </div>
-            <h2
-              className="font-opensans font-black text-ama-green uppercase mb-6"
-              style={{ fontSize: 'clamp(3rem, 6vw, 4.5rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}
-            >
-              AMA<br/>PERÚ
-            </h2>
-            <p className="font-opensans text-ama-gray-dark font-medium text-[1.1rem] leading-[1.8] mb-4">
-              Somos una asociación civil sin fines de lucro multidisciplinaria, constituida para luchar activamente contra la pobreza y desigualdad en nuestro país.
+
+            {/* Description Text */}
+            <p className="font-opensans text-[#333333] font-normal text-[1.1rem] lg:text-[1.15rem] leading-[1.8] mb-8">
+              Somos una asociación multidisciplinaria sin fines de lucro, conformada por un grupo de jóvenes profesionales de diferentes carreras con la finalidad de aportar en el desarrollo integral del Perú; a través de la construcción de infraestructura social sostenible.
             </p>
-            <p className="font-opensans text-ama-gray-dark font-medium text-[1.05rem] leading-[1.8]">
-              Construimos espacios que son el alma de la comunidad desarrollando una infraestructura social y sostenible.
-            </p>
+
           </motion.div>
         </div>
       </section>
@@ -218,11 +245,11 @@ export default function QuienesSomos() {
               <div className="relative hidden lg:block">
                 {/* Leaf SVGs */}
                 <svg className="absolute -bottom-6 left-6 z-10 w-16 h-16 opacity-80" viewBox="0 0 60 60" fill="none">
-                  <path d="M10 50 C10 20 40 10 50 10 C50 10 50 40 10 50Z" fill="#8DC63F" opacity="0.7"/>
-                  <line x1="10" y1="50" x2="45" y2="15" stroke="#7aad35" strokeWidth="1.5"/>
+                  <path d="M10 50 C10 20 40 10 50 10 C50 10 50 40 10 50Z" fill="#8DC63F" opacity="0.7" />
+                  <line x1="10" y1="50" x2="45" y2="15" stroke="#7aad35" strokeWidth="1.5" />
                 </svg>
                 <svg className="absolute -top-4 right-4 z-10 w-10 h-10 opacity-60" viewBox="0 0 60 60" fill="none">
-                  <path d="M50 10 C50 40 20 50 10 50 C10 50 10 20 50 10Z" fill="#8DC63F" opacity="0.5"/>
+                  <path d="M50 10 C50 40 20 50 10 50 C10 50 10 20 50 10Z" fill="#8DC63F" opacity="0.5" />
                 </svg>
                 <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full opacity-10 pointer-events-none"
                   style={{ background: 'var(--ama-green)' }} />

@@ -8,7 +8,7 @@
 ## 🛑 Estado Actual
 
 1. **Frontend:** Actualmente usa datos e imágenes hardcodeadas en los componentes (ej. `src/pages/Home.tsx`).
-2. **Backend (InsForge):** La base de datos está estructurada pero **VACÍA**.
+2. **Backend (InsForge):** La base de datos está estructurada pero **YA NO ESTA VACIA HAY QUE ANALZIAR Y COLCAR LOS DATOS AQUI**.
 3. **Admin Panel:** Se ha construido la interfaz para los módulos principales:
    - `AdminHeroSlider.tsx` (Listo)
    - `AdminEquipo.tsx` (Listo)

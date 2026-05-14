@@ -45,7 +45,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="font-opensans text-white/85 text-sm leading-relaxed mb-6">
-              Estamos comprometidos con la construcción de campos deportivos y parques funcionales en las zonas más vulnerables de Lima y Perú.
+              Estamos comprometidos con el desarrollo integral de las comunidades mediante nuestros programas Conecta, Construye y Asiste en las zonas más vulnerables de Lima y Perú.
             </p>
             <button
               onClick={() => openModal()}

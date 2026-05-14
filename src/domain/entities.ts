@@ -33,6 +33,7 @@ export interface Proyecto {
   id: string
   programa: 'construye' | 'conecta' | 'asiste'
   nombre: string
+  subtitulo?: string
   descripcion?: string
   imagen_url?: string
   meta_financiera: number
@@ -40,6 +41,7 @@ export interface Proyecto {
   ubicacion?: string
   estado: 'activo' | 'completado' | 'pausado'
   activo: boolean
+  bullets?: Array<{ icon: string, text: string }>
   orden: number
   created_at: string
   updated_at: string
