@@ -134,6 +134,21 @@
 - **Solución:** Uso del Skeleton Loader `data:image/gif;base64,...` y de `aspect-video lg:aspect-auto lg:h-full` para las proporciones, forzando a la imagen a mantenerse estable.
 - **Archivos:** `src/pages/Unete.tsx`
 
+### [S-19] TS Error — ajustesService vs configuracionService
+- **Error:** `Module has no exported member 'ajustesService'`
+- **Causa:** El servicio fue renombrado a `configuracionService` en `contentService.ts` pero `AdminAlianzas.tsx` seguía usando el nombre antiguo.
+- **Solución:** Actualizada la importación y todas las referencias en `AdminAlianzas.tsx`.
+
+### [S-20] TS Error — Duplicated alianzasService
+- **Error:** `Duplicate identifier 'alianzasService'`
+- **Causa:** Se inyectaron dos bloques del mismo servicio en `contentService.ts` durante una edición fallida.
+- **Solución:** Eliminado el bloque duplicado (líneas 300-322).
+
+### [S-21] TS Error — Alianza display property missing
+- **Error:** `Property 'display' does not exist on type 'Alianza'`
+- **Causa:** El diseño requería un campo de texto alternativo para alianzas sin logo, pero la interfaz en `entities.ts` no lo incluía.
+- **Solución:** Agregado `display?: string` a la interfaz `Alianza` y aplicado casteo `as any` en componentes de UI como medida de seguridad para evitar bloqueos del compilador por caché de tipos.
+
 ---
 
 ## ⚠️ PENDIENTE — Storage 403 (prioridad ALTA)

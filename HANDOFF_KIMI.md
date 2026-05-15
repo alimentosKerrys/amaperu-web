@@ -1,7 +1,7 @@
 # 📋 AMA PERÚ - Handoff / Tracking de Proyecto
 
 **Fecha de actualización:** 15 de Mayo de 2026
-**Fase actual:** Finalización de CMS de Programas y Rediseño de Testimonios
+**Fase actual:** Finalización de CMS, Rediseño de Testimonios y Estabilización de Tipos
 
 ---
 
@@ -35,16 +35,17 @@ Se ha configurado la carga, administración y renderizado de imágenes de portad
 - **Skeleton Loaders:** Prevención de parpadeo (flicker) al cargar imágenes dinámicas desde InsForge reemplazando el fallback.
 
 ### 🌐 Arreglos UI/UX y CMS (Mayo 15)
-- **Rediseño de Testimonios:** Renovación completa de la sección de testimonios en `Unete.tsx` con una estética profesional, minimalista y emocional.
+- **Rediseño de Testimonios (Finalizado):** Renovación completa de la sección de testimonios en `Unete.tsx` con una estética profesional, minimalista y emocional. Se implementó un carrusel horizontal con tarjetas modernas, imágenes superiores, navegación por flechas/puntos y contador dinámico.
 - **Sincronización Visual (Unete.tsx):** Se corrigió la estructura del grid para las secciones "Voluntariado", "Embajadores" y "Empresas", logrando simetría en alturas (`aspect-video lg:aspect-auto lg:h-full`).
 - **CMS de Bullets:** Restauración del editor dinámico de "bullets" (puntos clave) en los programas, permitiendo agregar/quitar hasta 4 elementos.
 - **Surgical Fix - PostgREST Cache Bypass:** Implementación de un sistema de "Extra Data Enrichment" para guardar campos que la API de InsForge no reconoce por caché (bullets y subtitulo) de forma persistente.
 - **Flicker Fix:** Eliminado el destello de imágenes hardcodeadas implementando Base64 Skeletons.
+- **TypeScript Stabilization:** Limpieza profunda de errores de compilación en el módulo de Alianzas, unificación de servicios (`alianzasService`) y corrección de referencias de servicios globales.
 
-### 🤝 Módulo Alianzas Dual-Mode (NUEVO)
-- **Admin Panel:** Se implementó `AdminAlianzas.tsx` con soporte para dos modos de visualización:
-  - **Logos Individuales:** Carga y gestión asíncrona de logos con nombre y formato fallback.
-  - **Imagen Grupal:** Carga unificada de un archivo SVG/PNG panorámico para mostrar todo en bloque.
+### 🤝 Módulo Alianzas Estabilizado
+- **Admin Panel:** Se implementó `AdminAlianzas.tsx` con soporte para dos modos de visualización (Individual/Grupal).
+- **Corrección de Servicios:** Se resolvió el conflicto de nombres entre `ajustesService` (antiguo) y `configuracionService` (actual), y se eliminaron las declaraciones duplicadas de `alianzasService`.
+- **Tipado Dinámico:** Se agregó la propiedad `display` a la entidad `Alianza` para permitir textos personalizados cuando no hay logos disponibles.
 - **Frontend (`Unete.tsx`):** Renderizado dinámico de los componentes en base a la `configuracion_global` (`alianzas_modo`).
 
 ---
