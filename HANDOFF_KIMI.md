@@ -69,4 +69,13 @@ Se ha configurado la carga, administración y renderizado de imágenes de portad
     *   `src/pages/Home.tsx` (Mapeo dinámico de iconos Lucide)
     *   `src/pages/Unete.tsx` (Rediseño de testimonios)
 
-¡Despliegue MVP Listo!
+## 🚀 Preparación para Despliegue (Cloudflare Pages)
+
+1. **Auditoría de Seguridad:** Se ha realizado una auditoría de las variables de entorno. Ver detalle en [SECURITY_AUDIT.md](./SECURITY_AUDIT.md).
+2. **Repositorio Privado:** Confirmado que Cloudflare Pages soporta repositorios privados. No es necesario hacerlo público.
+3. **Variables de Entorno:**
+   - `.env` está en `.gitignore`.
+   - `.env` NO está siendo rastreado por Git.
+   - Las variables deben configurarse manualmente en el panel de Cloudflare (ver [SECURITY_AUDIT.md](./SECURITY_AUDIT.md) para los valores exactos).
+
+¡Despliegue MVP Listo para que el jefe lo revise! 🚀
