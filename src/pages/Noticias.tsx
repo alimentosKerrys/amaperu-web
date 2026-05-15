@@ -6,7 +6,7 @@ import { useNoticias } from '../application/hooks/useNoticias'
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
 // Images
-import bannerNoticias from '../assets/images/IMAGENES_LISTAS/banner-noticias.png'
+import bannerNoticias from '../assets/images/IMAGENES_LISTAS/banner_noticias.webp'
 
 export default function Noticias() {
   const { noticias, loading } = useNoticias()

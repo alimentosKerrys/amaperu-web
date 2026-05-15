@@ -11,7 +11,7 @@ import programaConstruye from '../assets/images/IMAGENES_LISTAS/programa-constru
 import programaConecta from '../assets/images/IMAGENES_LISTAS/programa-conecta.png'
 import programaAsiste from '../assets/images/IMAGENES_LISTAS/programa-asiste.png'
 import parqueApuRender from '../assets/images/IMAGENES_LISTAS/parque-apu-render.png'
-import campoQumirRender from '../assets/images/IMAGENES_LISTAS/campo-qumir-render.png'
+import campoQumirRender from '../assets/images/IMAGENES_LISTAS/campo-qumir-render.webp'
 import actividadChocolatada from '../assets/images/IMAGENES_LISTAS/actividad-chocolatada.png'
 import actividadPiedraApu from '../assets/images/IMAGENES_LISTAS/actividad-piedra-apu.png'
 import actividadPiedraQumir from '../assets/images/IMAGENES_LISTAS/actividad-piedra-qumir.png'
@@ -90,7 +90,7 @@ export default function Programas() {
   const [openProg, setOpenProg] = useState<string>('conecta')
   const [actSlide, setActSlide] = useState(0)
   const { openModal } = useModal()
-  
+
   const { valor: portadaProgramas, loading: loadingPortada } = useConfiguracion('portada_programas')
 
   const { valor: imgProgConstruye, loading: l1 } = useConfiguracion('img_prog_construye')
@@ -154,21 +154,21 @@ export default function Programas() {
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
                   {/* Imagen */}
-                  <motion.div 
+                  <motion.div
                     layout
                     className={`relative ${isOpen ? 'w-full h-1/2 md:h-full md:w-1/2' : 'w-full h-full'}`}
                   >
-                    <img 
-                      src={prog.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : prog.image} 
-                      alt={prog.title} 
-                      className={`w-full h-full object-cover transition-all duration-500 relative z-0 ${prog.loading ? 'bg-gray-200 animate-pulse' : ''} ${isOpen ? 'grayscale' : ''}`} 
+                    <img
+                      src={prog.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : prog.image}
+                      alt={prog.title}
+                      className={`w-full h-full object-cover transition-all duration-500 relative z-0 ${prog.loading ? 'bg-gray-200 animate-pulse' : ''} ${isOpen ? 'grayscale' : ''}`}
                     />
                     {!isOpen && <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors" />}
-                    
+
                     {/* Título en card inactivo */}
                     <AnimatePresence>
                       {!isOpen && (
-                        <motion.h3 
+                        <motion.h3
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
@@ -180,7 +180,7 @@ export default function Programas() {
                     </AnimatePresence>
 
                     {/* Botón Flotante (+ / x) */}
-                    <div 
+                    <div
                       className={`absolute bottom-6 right-0 h-12 md:h-14 w-16 md:w-20 rounded-l-full flex items-center justify-start pl-2 md:pl-3 z-20 transition-colors duration-300 ${isOpen ? 'bg-[#85348b] cursor-pointer' : 'bg-ama-green'}`}
                       onClick={(e) => {
                         if (isOpen) {
@@ -198,7 +198,7 @@ export default function Programas() {
                   {/* Panel de Texto */}
                   <AnimatePresence>
                     {isOpen && (
-                      <motion.div 
+                      <motion.div
                         layout
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -215,7 +215,7 @@ export default function Programas() {
                         >
                           <polygon points="100,0 100,60 90,65 85,50 70,60 65,40 50,45 40,20 20,25 0,0" />
                         </svg>
-                        
+
                         <h3 className="font-opensans font-black text-ama-black text-[32px] md:text-4xl mb-4 relative z-10 capitalize">
                           {prog.title.toLowerCase()}
                         </h3>
@@ -248,7 +248,7 @@ export default function Programas() {
               className="font-opensans font-black text-ama-black uppercase mb-6"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}
             >
-              NUEVOS<br/><span style={{ color: 'var(--ama-green)' }}>PROYECTOS</span>
+              NUEVOS<br /><span style={{ color: 'var(--ama-green)' }}>PROYECTOS</span>
             </h2>
             <p className="font-opensans text-ama-gray-dark font-medium text-[1.05rem] leading-[1.8] mb-4">
               Debido a la carencia de espacios recreativos nace el programa &quot;Parques Multifuncionales&quot;, para promover la construcción de campos deportivos y parques para incentivar el deporte, arte y cultura en los niños, jóvenes y sus familias generando una sociedad con mayor igualdad de oportunidades.
@@ -266,10 +266,10 @@ export default function Programas() {
             className="rounded-2xl overflow-hidden shadow-xl relative"
             style={{ aspectRatio: '4/3' }}
           >
-            <img 
-              src={lNuevoProy ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgNuevoProy || voluntarioCasco)} 
-              alt="Voluntarios revisando planos" 
-              className={`w-full h-full object-cover relative z-0 ${lNuevoProy ? 'bg-gray-200 animate-pulse' : ''}`} 
+            <img
+              src={lNuevoProy ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgNuevoProy || voluntarioCasco)}
+              alt="Voluntarios revisando planos"
+              className={`w-full h-full object-cover relative z-0 ${lNuevoProy ? 'bg-gray-200 animate-pulse' : ''}`}
             />
           </motion.div>
         </div>
@@ -289,10 +289,10 @@ export default function Programas() {
             >
               {/* Badge */}
               <div className="relative overflow-hidden rounded-t-2xl">
-                <img 
-                  src={proj.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : proj.image} 
-                  alt={proj.title} 
-                  className={`w-full h-52 object-cover relative z-0 ${proj.loading ? 'bg-gray-200 animate-pulse' : ''}`} 
+                <img
+                  src={proj.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : proj.image}
+                  alt={proj.title}
+                  className={`w-full h-52 object-cover relative z-0 ${proj.loading ? 'bg-gray-200 animate-pulse' : ''}`}
                 />
                 <div className="absolute top-4 left-4 z-20">
                   <span className="bg-ama-green text-white font-opensans-condensed font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
@@ -380,10 +380,10 @@ export default function Programas() {
                 {actividadesMerged.map((act, i) => (
                   <div key={act.title} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                     <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                      <img 
-                        src={act.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : act.image} 
-                        alt={act.title} 
-                        className={`w-full h-full object-cover relative z-0 ${act.loading ? 'bg-gray-200 animate-pulse' : ''}`} 
+                      <img
+                        src={act.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : act.image}
+                        alt={act.title}
+                        className={`w-full h-full object-cover relative z-0 ${act.loading ? 'bg-gray-200 animate-pulse' : ''}`}
                       />
                       <div className="absolute top-3 right-3 z-20">
                         <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">

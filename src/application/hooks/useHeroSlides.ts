@@ -4,7 +4,7 @@ import type { HeroSlide } from '../../domain/entities'
 
 // Imágenes por defecto en caso de error o DB vacía (Fallback)
 import heroSlide1 from '../../assets/images/IMAGENES_LISTAS/hero-slide-1.png'
-import heroSlide2 from '../../assets/images/IMAGENES_LISTAS/herosection-imag2.png'
+import heroSlide2 from '../../assets/images/IMAGENES_LISTAS/herosection-imag2.webp'
 import heroSlide3 from '../../assets/images/IMAGENES_LISTAS/herosection-imag3.png'
 
 const FALLBACK_SLIDES: HeroSlide[] = [
