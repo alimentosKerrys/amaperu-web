@@ -1,7 +1,7 @@
 # 📋 AMA PERÚ - Handoff / Tracking de Proyecto
 
-**Fecha de actualización:** 14 de Mayo de 2026
-**Fase actual:** MVP Completo (UI/UX finalizado y CMS Operativo)
+**Fecha de actualización:** 15 de Mayo de 2026
+**Fase actual:** Finalización de CMS de Programas y Rediseño de Testimonios
 
 ---
 
@@ -34,10 +34,10 @@ Se ha configurado la carga, administración y renderizado de imágenes de portad
 - Sección de intro *Quiénes Somos* en su página respectiva.
 - **Skeleton Loaders:** Prevención de parpadeo (flicker) al cargar imágenes dinámicas desde InsForge reemplazando el fallback.
 
-### 🌐 Arreglos UI/UX
-- **Proporciones en Home:** Ajuste tipográfico a la palabra "SOMOS" y fijado el tamaño del trazo verde.
-- **Contactanos:** Refinamiento y restitución del mapa debajo del formulario en el Layout de 2 columnas de escritorio.
-- **Fast Refresh:** Eliminación del modificador `export` a constantes auxiliares en páginas principales para evitar recargas completas innecesarias en Vite.
+### 🌐 Arreglos UI/UX y CMS (Mayo 15)
+- **Rediseño de Testimonios:** Renovación completa de la sección de testimonios en `Unete.tsx` con una estética profesional, minimalista y emocional.
+- **CMS de Bullets:** Restauración del editor dinámico de "bullets" (puntos clave) en los programas, permitiendo agregar/quitar hasta 4 elementos.
+- **Surgical Fix - PostgREST Cache Bypass:** Implementación de un sistema de "Extra Data Enrichment" para guardar campos que la API de InsForge no reconoce por caché (bullets y subtitulo) de forma persistente.
 
 ---
 
@@ -56,9 +56,8 @@ Se ha configurado la carga, administración y renderizado de imágenes de portad
 *   **Archivos Clave Añadidos/Modificados Recientemente:**
     *   `src/admin/pages/AdminAjustes.tsx`
     *   `src/application/hooks/useConfiguracion.ts`
-    *   `src/pages/Programas.tsx`
-    *   `src/pages/QuienesSomos.tsx`
-    *   `src/pages/Home.tsx`
-    *   `src/pages/Contactanos.tsx`
+    *   `src/application/contentService.ts` (Implementación de bypass de caché de API)
+    *   `src/pages/Home.tsx` (Mapeo dinámico de iconos Lucide)
+    *   `src/pages/Unete.tsx` (Rediseño de testimonios)
 
 ¡Despliegue MVP Listo!

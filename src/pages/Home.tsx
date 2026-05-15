@@ -117,9 +117,22 @@ export default function Home() {
     const dbProject = programas.find(
       p => p.programa?.toLowerCase() === meta.key.toLowerCase()
     )
+    
+    // Map dbProject bullets to the frontend format if they exist
+    const dynamicBullets = dbProject?.bullets && dbProject.bullets.length > 0 
+      ? dbProject.bullets.map(b => ({
+          icon: (LucideIcons[b.icon as keyof typeof LucideIcons] || CheckCircle) as React.ElementType,
+          text: b.text
+        }))
+      : meta.bullets;
+
     return {
       id: i,
       ...meta,
+      title: dbProject?.nombre || meta.title,
+      subtitle: dbProject?.subtitulo || meta.subtitle,
+      desc: dbProject?.descripcion || meta.desc,
+      bullets: dynamicBullets,
       image: dbProject?.imagen_url || meta.fallbackImage,
     }
   })

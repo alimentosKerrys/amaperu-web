@@ -29,9 +29,31 @@ export default function AdminProgramas() {
     setLoading(false)
   }
 
+  const PROGRAMAS_DEFAULT_BULLETS = {
+    conecta: [
+      { icon: 'CheckCircle', text: 'Talleres formativos' },
+      { icon: 'Heart', text: 'Actividades culturales' },
+      { icon: 'HandHeart', text: 'Participación ciudadana' }
+    ],
+    asiste: [
+      { icon: 'HeartHandshake', text: 'Asistencia inmediata' },
+      { icon: 'Package', text: 'Apoyo logístico' },
+      { icon: 'CheckCircle', text: 'Por completar' }
+    ],
+    construye: [
+      { icon: 'Home', text: 'Infraestructura básica' },
+      { icon: 'Users', text: 'Espacios comunitarios' },
+      { icon: 'Leaf', text: 'Áreas verdes' }
+    ]
+  };
+
   const iniciarEdicion = (proyecto: Proyecto) => {
     setIsNew(false)
-    setEditingProyecto({ ...proyecto })
+    let initialBullets = proyecto.bullets;
+    if (!initialBullets || initialBullets.length === 0) {
+      initialBullets = PROGRAMAS_DEFAULT_BULLETS[proyecto.programa as keyof typeof PROGRAMAS_DEFAULT_BULLETS] || [];
+    }
+    setEditingProyecto({ ...proyecto, bullets: initialBullets })
   }
 
   const iniciarCreacion = () => {
@@ -42,11 +64,7 @@ export default function AdminProgramas() {
       subtitulo: '',
       descripcion: '',
       imagen_url: '',
-      bullets: [
-        { icon: 'CheckCircle', text: '' },
-        { icon: 'CheckCircle', text: '' },
-        { icon: 'CheckCircle', text: '' }
-      ],
+      bullets: [],
       meta_financiera: 0,
       recaudado: 0,
       ubicacion: '',
@@ -344,23 +362,55 @@ export default function AdminProgramas() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-white/80 mb-2">Puntos Clave (Bullets)</label>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="block text-sm font-semibold text-white/80">Puntos Clave (Bullets)</label>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const currentBullets = editingProyecto.bullets || [];
+                            if (currentBullets.length < 4) {
+                              setEditingProyecto({
+                                ...editingProyecto,
+                                bullets: [...currentBullets, { icon: 'CheckCircle', text: '' }]
+                              });
+                            }
+                          }}
+                          disabled={(editingProyecto.bullets || []).length >= 4}
+                          className="!p-1 h-auto text-ama-green hover:bg-ama-green/10 disabled:opacity-50"
+                        >
+                          <Plus size={16} /> Añadir
+                        </Button>
+                      </div>
                       <div className="space-y-2">
-                        {(editingProyecto.bullets || [{ icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }]).map((bullet, idx) => (
-                          <div key={idx} className="flex gap-2">
+                        {(editingProyecto.bullets || []).map((bullet, idx) => (
+                          <div key={idx} className="flex gap-2 items-center">
                             <input
                               type="text"
-                              value={bullet.text}
+                              value={bullet?.text || ''}
                               onChange={e => {
-                                const newBullets = [...(editingProyecto.bullets || [{ icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }, { icon: 'CheckCircle', text: '' }])]
+                                const newBullets = [...(editingProyecto.bullets || [])]
                                 newBullets[idx] = { ...newBullets[idx], text: e.target.value }
                                 setEditingProyecto({ ...editingProyecto, bullets: newBullets })
                               }}
                               className="flex-1 bg-black/20 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-ama-green"
                               placeholder={`Punto ${idx + 1}`}
                             />
+                            <button
+                              onClick={() => {
+                                const newBullets = (editingProyecto.bullets || []).filter((_, i) => i !== idx);
+                                setEditingProyecto({ ...editingProyecto, bullets: newBullets });
+                              }}
+                              className="text-red-400 hover:text-red-300 p-1.5 bg-red-400/10 hover:bg-red-400/20 rounded-lg transition-colors"
+                              title="Eliminar bullet"
+                            >
+                              <Trash2 size={16} />
+                            </button>
                           </div>
                         ))}
+                        {(editingProyecto.bullets || []).length === 0 && (
+                          <div className="text-xs text-white/40 italic">No hay bullets configurados. Usa el botón "Añadir" para crear uno.</div>
+                        )}
                       </div>
                     </div>
 

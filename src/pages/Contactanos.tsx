@@ -6,13 +6,13 @@ import Button from '../components/ui/Button'
 
 // Images
 import bannerContacto from '../assets/images/IMAGENES_LISTAS/banner-contacto.png'
-import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.png'
+import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/imagen para contactos webp.webp'
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
 export default function Contactanos() {
   const [form, setForm] = useState({ nombre: '', email: '', mensaje: '' })
   const [sent, setSent] = useState(false)
-  
+
   const { valor: portadaContactanos, loading: loadingPortada } = useConfiguracion('portada_contactanos')
 
   const handleSubmit = (e: React.FormEvent) => {

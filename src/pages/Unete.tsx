@@ -122,64 +122,97 @@ export default function Unete() {
       </section>
 
       {/* ===== TESTIMONIOS ===== */}
-      <section className="py-20 px-4" style={{ background: 'var(--ama-gray-light)' }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+      <section className="py-24 px-4 bg-white relative overflow-hidden">
+        {/* Decorative subtle elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-ama-green/5 blur-3xl" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-ama-green/5 blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
             <h2
-              className="font-opensans-condensed font-black uppercase"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--ama-green)' }}
+              className="font-opensans font-black text-ama-black uppercase tracking-tight"
+              style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', lineHeight: 1.1 }}
             >
-              TESTIMONIOS
+              Historias que <span className="text-ama-green">Inspiran</span>
             </h2>
-            <p className="font-opensans text-ama-gray-mid mt-2">Lo que dicen nuestros voluntarios acerca de AMA PERÚ</p>
+            <div className="w-16 h-1.5 bg-ama-green mx-auto mt-4 rounded-full" />
+            <p className="font-opensans text-ama-gray-mid mt-4 text-lg max-w-2xl mx-auto">
+              Descubre las experiencias de quienes ya son parte del cambio. Nuestro voluntariado no solo transforma comunidades, transforma vidas.
+            </p>
           </div>
 
-          <div className="relative max-w-3xl mx-auto">
+          <div className="relative max-w-4xl mx-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={testSlide}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.4 }}
-                className="bg-white rounded-3xl p-10 shadow-lg text-center relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className="bg-white rounded-3xl p-8 md:p-14 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-gray-50 relative overflow-hidden"
               >
-                <div
-                  className="font-opensans-condensed font-black text-8xl leading-none mb-4"
-                  style={{ color: 'var(--ama-green)', lineHeight: 0.8 }}
-                >
-                  ❝
+                {/* Watermark Quote */}
+                <div className="absolute top-6 left-8 text-ama-green/10 font-serif text-[120px] leading-none select-none pointer-events-none">
+                  "
                 </div>
-                <p className="font-opensans text-ama-gray-mid text-lg leading-relaxed italic mb-8">
-                  "{testimonios[testSlide].quote}"
-                </p>
-                <div className="flex items-center justify-center gap-4">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center font-opensans-condensed font-black text-white text-lg"
-                    style={{ background: 'var(--ama-green)' }}
-                  >
-                    {testimonios[testSlide].name[0]}
-                  </div>
-                  <div className="text-left">
-                    <p className="font-opensans font-bold" style={{ color: 'var(--ama-green)' }}>
-                      {testimonios[testSlide].name}
-                    </p>
-                    <p className="font-opensans text-xs text-ama-gray-mid tracking-widest">{testimonios[testSlide].role}</p>
+
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <p className="font-opensans text-ama-black/80 text-[1.2rem] md:text-[1.35rem] leading-[1.8] font-medium mb-10 max-w-3xl">
+                    "{testimonios[testSlide].quote}"
+                  </p>
+                  
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    <div className="relative">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-ama-green to-[#688c24] flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-ama-green/30 border-4 border-white">
+                        {testimonios[testSlide].name[0]}
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm">
+                        <div className="w-4 h-4 bg-ama-green rounded-full" />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-opensans font-bold text-ama-black text-lg">
+                        {testimonios[testSlide].name}
+                      </h4>
+                      <p className="font-opensans text-sm text-ama-green font-semibold tracking-wider uppercase">
+                        {testimonios[testSlide].role}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
 
             {/* Nav */}
-            <div className="flex justify-center items-center gap-4 mt-6">
-              <button onClick={prevTest} className="w-10 h-10 rounded-full border-2 border-ama-green text-ama-green flex items-center justify-center hover:bg-ama-green hover:text-white transition-colors">
-                <ChevronLeft size={18} />
+            <div className="flex justify-center items-center gap-6 mt-12">
+              <button 
+                onClick={prevTest} 
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-gray-100 text-ama-gray-dark flex items-center justify-center hover:bg-ama-green hover:text-white hover:border-ama-green hover:shadow-lg hover:shadow-ama-green/20 transition-all duration-300"
+                aria-label="Testimonio anterior"
+              >
+                <ChevronLeft size={20} />
               </button>
-              {testimonios.map((_, i) => (
-                <button key={i} onClick={() => setTestSlide(i)} className={`w-2.5 h-2.5 rounded-full transition-all ${i === testSlide ? 'bg-ama-green scale-125' : 'bg-gray-300'}`} />
-              ))}
-              <button onClick={nextTest} className="w-10 h-10 rounded-full border-2 border-ama-green text-ama-green flex items-center justify-center hover:bg-ama-green hover:text-white transition-colors">
-                <ChevronRight size={18} />
+              
+              <div className="flex gap-2.5">
+                {testimonios.map((_, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setTestSlide(i)} 
+                    className={`h-2.5 rounded-full transition-all duration-300 ${i === testSlide ? 'w-8 bg-ama-green' : 'w-2.5 bg-gray-200 hover:bg-gray-300'}`} 
+                    aria-label={`Ir al testimonio ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button 
+                onClick={nextTest} 
+                className="w-12 h-12 rounded-full bg-white shadow-md border border-gray-100 text-ama-gray-dark flex items-center justify-center hover:bg-ama-green hover:text-white hover:border-ama-green hover:shadow-lg hover:shadow-ama-green/20 transition-all duration-300"
+                aria-label="Siguiente testimonio"
+              >
+                <ChevronRight size={20} />
               </button>
             </div>
           </div>

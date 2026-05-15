@@ -1,6 +1,6 @@
 # 📋 AMA PERÚ — Log de Bugs Solucionados y Estado del Proyecto
 
-**Última actualización:** 14 de Mayo de 2026
+**Última actualización:** 15 de Mayo de 2026
 **Dev activo:** Antigravity
 
 ---
@@ -109,6 +109,24 @@
 - **Causa:** Las imágenes de fallback se renderizaban antes de que el hook `useConfiguracion` resolviera el promise de conexión, y colocar un overlay por encima de la etiqueta `<img>` no evitaba que el navegador dibujara brevemente la imagen antigua al remover el overlay.
 - **Solución:** Extraído el state `loading`. Se inyecta un **GIF transparente de 1x1 en base64** directamente en el atributo `src` de la imagen durante el estado de carga (`src={loading ? 'data:image/gif...' : image}`), combinado con `bg-gray-200 animate-pulse` en los estilos. Esto evita por completo el dibujo de la imagen fallback y previene cualquier flicker visual de manera absoluta.
 - **Archivos:** `src/pages/Programas.tsx`, `src/pages/QuienesSomos.tsx`, `src/pages/Home.tsx`
+
+### [S-15] TS Error — Lucide Icons dynamic casting
+- **Error:** `JSX element type 'b.icon' does not have any construct or call signatures.`
+- **Causa:** TypeScript no podía garantizar que el string dinámico de la base de datos correspondiera a un componente de React al importar `* as LucideIcons`.
+- **Solución:** Casteo explícito a `React.ElementType` en el mapeo de `dynamicBullets`.
+- **Archivo:** `src/pages/Home.tsx`
+
+### [S-16] 406 Not Acceptable en configuracion_global
+- **Error:** `Failed to load resource: 406` al buscar claves inexistentes.
+- **Causa:** El uso de `.single()` en PostgREST lanza un 406 si el registro no existe.
+- **Solución:** Reemplazado por `.maybeSingle()` en `configuracionService.getValor`.
+- **Archivo:** `src/application/contentService.ts`
+
+### [S-17] 400 Bad Request — PostgREST Schema Cache Bug
+- **Error:** `Could not find the 'bullets' column of 'proyectos' in the schema cache`
+- **Causa:** La capa API de InsForge no refrescaba el esquema de la tabla al añadir nuevas columnas, bloqueando el guardado de `bullets` y `subtitulo`.
+- **Solución (Arquitectónica):** Se implementó un sistema de **"Extra Data Enrichment"**. Los campos bloqueados se guardan ahora automáticamente en la tabla `configuracion_global` vinculados al ID del proyecto y se fusionan de forma transparente en la capa de Aplicación (`programasService`).
+- **Archivos:** `src/application/contentService.ts` (Refactorización de todos los métodos de `programasService`).
 
 ---
 

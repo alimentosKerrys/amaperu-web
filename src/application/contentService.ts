@@ -76,44 +76,77 @@ export const noticiasService = {
 // =============================================
 export const programasService = {
   async getAll() {
-    return insforge.database
+    const result = await insforge.database
       .from('proyectos')
       .select('*')
       .order('programa')
       .order('orden')
+    
+    if (result.data) {
+      const { data: configs } = await insforge.database.from('configuracion_global').select('*').like('clave', 'proyecto_%_extra')
+      const extrasMap = (configs || []).reduce((acc, conf) => {
+        try { acc[conf.clave] = JSON.parse(conf.valor) } catch(e) {}
+        return acc
+      }, {} as Record<string, any>)
+      
+      result.data = result.data.map(p => {
+        const extra = extrasMap[`proyecto_${p.id}_extra`]
+        return extra ? { ...p, subtitulo: extra.subtitulo ?? p.subtitulo, bullets: extra.bullets ?? p.bullets } : p
+      })
+    }
+    return result
   },
 
   async getActivos() {
-    return insforge.database
+    const result = await insforge.database
       .from('proyectos')
       .select('*')
       .eq('activo', true)
       .order('orden')
+      
+    if (result.data) {
+      const { data: configs } = await insforge.database.from('configuracion_global').select('*').like('clave', 'proyecto_%_extra')
+      const extrasMap = (configs || []).reduce((acc, conf) => {
+        try { acc[conf.clave] = JSON.parse(conf.valor) } catch(e) {}
+        return acc
+      }, {} as Record<string, any>)
+      
+      result.data = result.data.map(p => {
+        const extra = extrasMap[`proyecto_${p.id}_extra`]
+        return extra ? { ...p, subtitulo: extra.subtitulo ?? p.subtitulo, bullets: extra.bullets ?? p.bullets } : p
+      })
+    }
+    return result
   },
 
   async crear(data: Omit<Proyecto, 'id' | 'created_at' | 'updated_at'>) {
-    const result = await insforge.database.from('proyectos').insert(data).select().single()
-    if (result.data) await logAuditoria('crear', 'proyectos', result.data.id)
+    const { subtitulo, bullets, ...cleanData } = data as any;
+    const result = await insforge.database.from('proyectos').insert(cleanData).select().single()
+    if (result.data) {
+      await configuracionService.actualizar(`proyecto_${result.data.id}_extra`, JSON.stringify({ subtitulo, bullets }))
+      await logAuditoria('crear', 'proyectos', result.data.id)
+    }
     return result
   },
 
   async editar(id: string, data: Partial<Proyecto>) {
-    // Eliminar subtitulo y bullets temporalmente ya que la DB actual no tiene estas columnas
-    // y causaría un error 500 (PGRST204) al intentar guardar.
-    const { subtitulo, bullets, ...safeData } = data as any;
-    
+    const { id: _id, created_at, subtitulo, bullets, ...cleanData } = data as any;
     const result = await insforge.database
       .from('proyectos')
-      .update({ ...safeData, updated_at: new Date().toISOString() })
+      .update({ ...cleanData, updated_at: new Date().toISOString() })
       .eq('id', id)
       .select()
       .single()
-    if (result.data) await logAuditoria('editar', 'proyectos', id, safeData)
+    if (result.data) {
+      await configuracionService.actualizar(`proyecto_${id}_extra`, JSON.stringify({ subtitulo, bullets }))
+      await logAuditoria('editar', 'proyectos', id, cleanData)
+    }
     return result
   },
 
   async eliminar(id: string) {
     const result = await insforge.database.from('proyectos').delete().eq('id', id)
+    await insforge.database.from('configuracion_global').delete().eq('clave', `proyecto_${id}_extra`)
     await logAuditoria('eliminar', 'proyectos', id)
     return result
   },
@@ -300,7 +333,7 @@ export const configuracionService = {
       .from('configuracion_global')
       .select('valor')
       .eq('clave', clave)
-      .single()
+      .maybeSingle()
     return result.data?.valor || null
   },
 
