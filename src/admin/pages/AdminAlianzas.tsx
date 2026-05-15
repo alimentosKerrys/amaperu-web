@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Image as ImageIcon, Save, X, Edit2, Loader2, Upload, Trash2, Plus, LayoutGrid, Image as SingleIcon } from 'lucide-react'
-import { alianzasService, ajustesService } from '../../application/contentService'
+import { alianzasService, configuracionService } from '../../application/contentService'
 import { storageService } from '../../application/storageService'
 import type { Alianza } from '../../domain/entities'
 import Button from '../../components/ui/Button'
@@ -31,12 +31,12 @@ export default function AdminAlianzas() {
     setLoading(true)
     
     // Load config
-    const modoGuardado = await ajustesService.getValor('alianzas_modo')
+    const modoGuardado = await configuracionService.getValor('alianzas_modo')
     if (modoGuardado === 'grupal' || modoGuardado === 'individual') {
       setModo(modoGuardado as 'individual' | 'grupal')
     }
     
-    const imagenGuardada = await ajustesService.getValor('alianzas_imagen_grupal')
+    const imagenGuardada = await configuracionService.getValor('alianzas_imagen_grupal')
     if (imagenGuardada) {
       setImagenGrupal(imagenGuardada)
     }
@@ -52,7 +52,7 @@ export default function AdminAlianzas() {
 
   const handleModoChange = async (nuevoModo: 'individual' | 'grupal') => {
     setModo(nuevoModo)
-    await ajustesService.actualizar('alianzas_modo', nuevoModo)
+    await configuracionService.actualizar('alianzas_modo', nuevoModo)
   }
 
   // --- Grupal Handlers ---
@@ -67,7 +67,7 @@ export default function AdminAlianzas() {
       alert(error)
     } else if (data) {
       setImagenGrupal(data.url)
-      await ajustesService.actualizar('alianzas_imagen_grupal', data.url)
+      await configuracionService.actualizar('alianzas_imagen_grupal', data.url)
     }
     setUploadingGrupal(false)
   }
@@ -75,7 +75,14 @@ export default function AdminAlianzas() {
   // --- Individual Handlers ---
   const iniciarCreacion = () => {
     setIsCreating(true)
-    setEditingAlianza({ nombre: '', display: '', logo_url: '', activo: true, orden: alianzas.length })
+    setEditingAlianza({ 
+      nombre: '', 
+      display: '', 
+      logo_url: '', 
+      tipo: 'alianza',
+      activo: true, 
+      orden: alianzas.length 
+    } as any)
   }
 
   const iniciarEdicion = (alianza: Alianza) => {
@@ -229,7 +236,7 @@ export default function AdminAlianzas() {
                       {alianza.logo_url ? (
                         <img src={alianza.logo_url} alt={alianza.nombre} className="max-w-full max-h-full object-contain" />
                       ) : (
-                        <span className="text-gray-400 font-bold text-lg text-center break-words">{alianza.display || alianza.nombre}</span>
+                        <span className="text-gray-400 font-bold text-lg text-center break-words">{(alianza as any).display || alianza.nombre}</span>
                       )}
                     </div>
                     
@@ -302,8 +309,8 @@ export default function AdminAlianzas() {
                     <label className="block text-sm font-semibold text-white/80 mb-2">Texto a mostrar (si no hay logo)</label>
                     <input 
                       type="text" 
-                      value={editingAlianza.display || ''}
-                      onChange={e => setEditingAlianza({...editingAlianza, display: e.target.value})}
+                      value={(editingAlianza as any).display || ''}
+                      onChange={e => setEditingAlianza({...editingAlianza, display: e.target.value} as any)}
                       className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-ama-green transition-colors"
                       placeholder="Ej: 🏔 Constructores"
                     />

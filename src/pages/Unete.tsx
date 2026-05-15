@@ -370,7 +370,7 @@ export default function Unete() {
                     <img src={a.logo_url} alt={a.nombre} className="h-20 md:h-24 w-auto object-contain" />
                   ) : (
                     <div className="font-opensans-condensed font-black text-2xl text-ama-gray-mid hover:text-ama-green transition-colors px-4">
-                      {a.display || a.nombre}
+                      {(a as any).display || a.nombre}
                     </div>
                   )}
                 </motion.div>

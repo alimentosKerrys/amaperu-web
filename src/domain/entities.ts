@@ -98,6 +98,7 @@ export interface Testimonio {
 export interface Alianza {
   id: string
   nombre: string
+  display?: string
   logo_url?: string
   url_web?: string
   tipo: 'alianza' | 'empresa' | 'convenio' | 'embajador'

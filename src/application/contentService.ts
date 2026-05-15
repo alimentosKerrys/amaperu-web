@@ -297,28 +297,6 @@ export const testimoniosService = {
 
 // =============================================
 // ALIANZAS
-// =============================================
-export const alianzasService = {
-  async getActivas() {
-    return insforge.database.from('alianzas').select('*').eq('activo', true).order('tipo').order('orden')
-  },
-
-  async getAll() {
-    return insforge.database.from('alianzas').select('*').order('tipo').order('orden')
-  },
-
-  async crear(data: Omit<Alianza, 'id' | 'created_at'>) {
-    return insforge.database.from('alianzas').insert(data).select().single()
-  },
-
-  async editar(id: string, data: Partial<Alianza>) {
-    return insforge.database.from('alianzas').update(data).eq('id', id).select().single()
-  },
-
-  async eliminar(id: string) {
-    return insforge.database.from('alianzas').delete().eq('id', id)
-  },
-}
 
 // =============================================
 // CONFIGURACIÓN GLOBAL
