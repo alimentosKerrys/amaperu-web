@@ -128,6 +128,12 @@
 - **Solución (Arquitectónica):** Se implementó un sistema de **"Extra Data Enrichment"**. Los campos bloqueados se guardan ahora automáticamente en la tabla `configuracion_global` vinculados al ID del proyecto y se fusionan de forma transparente en la capa de Aplicación (`programasService`).
 - **Archivos:** `src/application/contentService.ts` (Refactorización de todos los métodos de `programasService`).
 
+### [S-18] Flicker Visual en Imágenes Dinámicas (Unete.tsx)
+- **Error:** Destello momentáneo o desplazamiento (Layout Shift) mientras se resolvía la imagen de `useConfiguracion`.
+- **Causa:** Al estar el estado inicial en `loading=true`, React intentaba renderizar la etiqueta `<img src={undefined}>` provocando un layout shift y un flicker blanco hasta que llegaba la imagen.
+- **Solución:** Uso del Skeleton Loader `data:image/gif;base64,...` y de `aspect-video lg:aspect-auto lg:h-full` para las proporciones, forzando a la imagen a mantenerse estable.
+- **Archivos:** `src/pages/Unete.tsx`
+
 ---
 
 ## ⚠️ PENDIENTE — Storage 403 (prioridad ALTA)

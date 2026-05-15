@@ -29,6 +29,7 @@ import AdminNoticias from './admin/pages/AdminNoticias'
 import AdminProductos from './admin/pages/AdminProductos'
 import AdminEstadisticas from './admin/pages/AdminEstadisticas'
 import AdminAjustes from './admin/pages/AdminAjustes'
+import AdminAlianzas from './admin/pages/AdminAlianzas'
 
 // ---- Sitio Público ----
 function AnimatedRoutes() {
@@ -89,7 +90,7 @@ function AdminRoutes() {
           <Route path="estadisticas" element={<AdminEstadisticas />} />
           <Route path="ajustes" element={<AdminAjustes />} />
           <Route path="testimonios" element={<div className="p-8 text-white/50">Módulo Testimonios — próximamente</div>} />
-          <Route path="alianzas" element={<div className="p-8 text-white/50">Módulo Alianzas — próximamente</div>} />
+          <Route path="alianzas" element={<AdminAlianzas />} />
           <Route path="slider" element={<AdminHeroSlider />} />
         </Route>
       </Route>

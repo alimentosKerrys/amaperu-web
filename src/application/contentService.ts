@@ -348,3 +348,64 @@ export const configuracionService = {
     return result
   },
 }
+
+// =============================================
+// ALIANZAS
+// =============================================
+export const alianzasService = {
+  async getAll() {
+    return insforge.database
+      .from('alianzas')
+      .select('*')
+      .order('orden', { ascending: true })
+      .order('created_at', { ascending: false })
+  },
+
+  async getActivas() {
+    return insforge.database
+      .from('alianzas')
+      .select('*')
+      .eq('activo', true)
+      .order('orden', { ascending: true })
+      .order('created_at', { ascending: false })
+  },
+
+  async crear(data: Omit<Alianza, 'id' | 'created_at'>) {
+    const result = await insforge.database
+      .from('alianzas')
+      .insert(data)
+      .select()
+      .single()
+
+    if (result.data) await logAuditoria('crear', 'alianzas', result.data.id, data)
+    return result
+  },
+
+  async editar(id: string, data: Partial<Omit<Alianza, 'id' | 'created_at'>>) {
+    const result = await insforge.database
+      .from('alianzas')
+      .update(data)
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (result.data) await logAuditoria('editar', 'alianzas', id, data)
+    return result
+  },
+
+  async eliminar(id: string) {
+    const result = await insforge.database
+      .from('alianzas')
+      .delete()
+      .eq('id', id)
+
+    if (!result.error) await logAuditoria('eliminar', 'alianzas', id)
+    return result
+  },
+
+  async reordenar(alianzas: { id: string, orden: number }[]) {
+    for (const a of alianzas) {
+      await insforge.database.from('alianzas').update({ orden: a.orden }).eq('id', a.id)
+    }
+  }
+}
