@@ -1,0 +1,52 @@
+=================================================================
+🔑 CREDENCIALES Y ACCESOS DEL PROYECTO — AMA PERÚ 🔑
+=================================================================
+Este documento contiene información extremadamente sensible sobre
+la base de datos, el servidor y las claves del proyecto.
+
+POR FAVOR, GUARDAR EN UN LUGAR SEGURO Y NO COMPARTIR PÚBLICAMENTE.
+=================================================================
+
+1. BACKEND Y BASE DE DATOS (Plataforma: InsForge)
+-----------------------------------------------------------------
+URL del Proyecto API: 
+https://6une5had.us-east.insforge.app
+
+Clave Anónima Pública (Anon Key) - Para el Frontend: 
+ik_ba0ebf986a048f886ae35905ed3d9e49
+
+Token JWT Anónimo:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OC0xMjM0LTU2NzgtOTBhYi1jZGVmMTIzNDU2NzgiLCJlbWFpbCI6ImFub25AaW5zZm9yZ2UuY29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwODY4ODZ9.3y9ny1tF8UQnxRb715rvDssGcbEY6T_JWlZ5cch71DI
+
+Cadena de Conexión a Base de Datos (PostgreSQL Directo):
+postgresql://postgres:fc9d44268a08265d3ebedb29679e0d2b@6une5had.us-east.database.insforge.app:5432/insforge?sslmode=require
+
+2. PANEL DE ADMINISTRACIÓN Y STORAGE
+-----------------------------------------------------------------
+Correo del Super Administrador: 
+alimentoskerrys@gmail.com
+
+Nombre del Bucket de Almacenamiento (Imágenes):
+amaperu-media
+
+URL de la Edge Function (Proxy para subida segura de imágenes):
+https://mss5tk9f.functions.insforge.app/upload-image
+
+3. NOTAS PARA EL DESPLIEGUE (Cloudflare)
+-----------------------------------------------------------------
+Al momento de desplegar el código en Cloudflare, las variables de 
+entorno que deben configurarse obligatoriamente son:
+
+Variable 1:
+Nombre: VITE_INSFORGE_URL
+Valor:  https://6une5had.us-east.insforge.app
+
+Variable 2:
+Nombre: VITE_INSFORGE_ANON_KEY
+Valor:  ik_ba0ebf986a048f886ae35905ed3d9e49
+(¡IMPORTANTE! Configurar esta variable como "Secret" / Encriptada)
+
+=================================================================
+*Documento autogenerado para entrega al cliente final.
+ Mayo 2026.
+=================================================================

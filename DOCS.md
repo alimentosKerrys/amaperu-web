@@ -41,5 +41,6 @@ Para garantizar que el Admin Panel pueda subir imágenes sin restricciones de mi
 ## 📝 Próximos Pasos
 
 - Implementar el módulo de **Tienda / Productos**.
-- Finalizar los editores de **Testimonios** y **Alianzas**.
+- Finalizar los editores de **Alianzas** (el de **Testimonios** ya está completado).
+- Despliegue en producción usando **Cloudflare** con dominio definitivo **.pe**.
 - Optimización de SEO y performance.

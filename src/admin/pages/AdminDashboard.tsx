@@ -14,6 +14,7 @@ const MODULES = [
   { to: '/admin/testimonios', label: 'Testimonios', desc: 'Gestionar testimonios de voluntarios', icon: MessageSquare, color: '#6366f1' },
   { to: '/admin/alianzas', label: 'Alianzas', desc: 'Logos y links de aliados estratégicos', icon: Handshake, color: '#14b8a6' },
   { to: '/admin/slider', label: 'Hero Slider', desc: 'Imágenes y texto del carrusel principal', icon: Images, color: '#8DC63F' },
+  { to: '/admin/donaciones', label: 'Donaciones', desc: 'Configurar cuentas y verificar seguridad', icon: Handshake, color: '#00d3c5' },
 ]
 
 export default function AdminDashboard() {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, Target, Eye, Gem } from 'lucide-react'
+import { Heart, Target, Eye } from 'lucide-react'
 import SectionHero from '../components/ui/SectionHero'
 import TeamCard from '../components/ui/TeamCard'
 import Button from '../components/ui/Button'
@@ -11,14 +11,6 @@ import bannerQuienes from '../assets/images/IMAGENES_LISTAS/banner-quienes.png'
 import aboutThumb from '../assets/images/IMAGENES_LISTAS/about-thumb.png'
 import actividadChocolatada from '../assets/images/IMAGENES_LISTAS/actividad-chocolatada.png'
 import corporativa from '../assets/images/IMAGENES_LISTAS/corporativa.png'
-import marlonNinawanka from '../assets/images/IMAGENES_LISTAS/marlon-ninawanka.png'
-import roseMarie from '../assets/images/IMAGENES_LISTAS/rose-marie-rivero.png'
-import juanCarlos from '../assets/images/IMAGENES_LISTAS/juan-carlos-herrera.png'
-import flavioRojas from '../assets/images/IMAGENES_LISTAS/flavio-rojas.png'
-import johnnatanCubas from '../assets/images/IMAGENES_LISTAS/johnnatan-cubas.png'
-import danielTroncos from '../assets/images/IMAGENES_LISTAS/daniel-troncos.png'
-import jordyArmijo from '../assets/images/IMAGENES_LISTAS/jordy-armijo.png'
-import gianFranco from '../assets/images/IMAGENES_LISTAS/gian-franco-capunay.png'
 
 import logoAmaVerde from '../assets/LOGO/LOGO AMA VERDE.png'
 import iconoPeruVerde from '../assets/ICONOSAMAWEB/ICONO PERU COLOR VERDESIMBOLO PERU AMA WEB.svg'
@@ -30,30 +22,8 @@ const tabs = [
 ] as const
 type TabId = typeof tabs[number]['id']
 
-const tabImages: Record<TabId, string> = {
-  'MISIÓN': actividadChocolatada,
-  'VISIÓN': corporativa,
-  'VALORES': bannerQuienes,
-}
-
-const teamRows = [
-  [
-    { image: marlonNinawanka, name: 'Marlon Ninawanka', role: 'Presidente Fundador' },
-    { image: roseMarie, name: 'Rose Marie Rivero', role: 'Directora General' },
-    { image: juanCarlos, name: 'Juan Carlos Herrera', role: 'Coordinador General' },
-  ],
-  [
-    { image: flavioRojas, name: 'Flavio Rojas', role: 'Coordinador de Administración y Logística' },
-    { image: johnnatanCubas, name: 'Johnnatan Cubas', role: 'Coordinador de Programas y Proyectos' },
-    { image: danielTroncos, name: 'Daniel Troncos', role: 'Coordinador de Marketing, Publicidad y Redes Sociales' },
-  ],
-  [
-    { image: jordyArmijo, name: 'Jordy Armijo', role: 'Asistente de Programas y Proyectos' },
-    { image: gianFranco, name: 'Gian Franco Capuñay', role: 'Asistente de Marketing, Publicidad y Redes Sociales' },
-  ],
-]
-
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
+import { useEquipo } from '../application/hooks/useEquipo'
 
 export default function QuienesSomos() {
   const [activeTab, setActiveTab] = useState<TabId>('MISIÓN')
@@ -62,6 +32,17 @@ export default function QuienesSomos() {
   const { valor: portadaQuienes, loading: loadingPortada } = useConfiguracion('portada_quienes_somos')
   const { valor: quienesSomosImagen, loading: loadingQuienesImg } = useConfiguracion('quienes_somos_imagen')
   const { valor: quienesSomosTexto } = useConfiguracion('quienes_somos_texto')
+
+  const { equipo } = useEquipo()
+  const { valor: misionImagen, loading: loadingMisionImg } = useConfiguracion('img_quienes_mision')
+  const { valor: visionImagen, loading: loadingVisionImg } = useConfiguracion('img_quienes_vision')
+  const { valor: valoresImagen, loading: loadingValoresImg } = useConfiguracion('img_quienes_valores')
+  
+  const { valor: misionTexto } = useConfiguracion('quienes_mision_texto')
+  const { valor: visionTexto } = useConfiguracion('quienes_vision_texto')
+  const { valor: valor1Desc } = useConfiguracion('quienes_valor_1_desc')
+  const { valor: valor2Desc } = useConfiguracion('quienes_valor_2_desc')
+  const { valor: valor3Desc } = useConfiguracion('quienes_valor_3_desc')
 
   return (
     <main className="pt-[88px]">
@@ -180,15 +161,8 @@ export default function QuienesSomos() {
               transition={{ duration: 0.3 }}
               className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
             >
-              {/* Left: dot pattern + circle + content */}
+              {/* Left: content */}
               <div className="relative">
-                {/* subtle dot grid */}
-                <div className="absolute -left-8 top-0 w-24 h-full opacity-30 pointer-events-none"
-                  style={{ backgroundImage: 'radial-gradient(#8DC63F 25%, transparent 25%)', backgroundSize: '12px 12px' }} />
-                {/* large faint circle */}
-                <div className="absolute -left-16 top-1/2 -translate-y-1/2 w-40 h-40 rounded-full opacity-10 pointer-events-none"
-                  style={{ background: 'var(--ama-green)' }} />
-
                 <div className="relative z-10 pl-2 sm:pl-6">
                   <p className="font-opensans font-bold text-sm tracking-widest uppercase mb-2" style={{ color: 'var(--ama-green)' }}>
                     NUESTRA
@@ -204,7 +178,7 @@ export default function QuienesSomos() {
                   {activeTab === 'MISIÓN' && (
                     <>
                       <p className="font-opensans text-ama-gray-dark text-[1rem] leading-[1.8] mb-8">
-                        Promover la creación, mejoramiento y desarrollo de la infraestructura social, en acción conjunta con la población y voluntarios, logrando generar un trabajo en equipo con responsabilidad social.
+                        {misionTexto || 'Promover la creación, mejoramiento y desarrollo de la infraestructura social, en acción conjunta con la población y voluntarios, logrando generar un trabajo en equipo con responsabilidad social.'}
                       </p>
                       <Button size="md" pill onClick={() => openModal()}>
                         <Heart size={16} className="mr-2" /> DONA AHORA
@@ -214,7 +188,7 @@ export default function QuienesSomos() {
                   {activeTab === 'VISIÓN' && (
                     <>
                       <p className="font-opensans text-ama-gray-dark text-[1rem] leading-[1.8] mb-8">
-                        Ser la asociación multidisciplinaria que promueva una sociedad con mayor igualdad de oportunidades, mediante la construcción de infraestructura social para el desarrollo de actividades como herramientas de transformación personal y social.
+                        {visionTexto || 'Ser la asociación multidisciplinaria que promueva una sociedad con mayor igualdad de oportunidades, mediante la construcción de infraestructura social para el desarrollo de actividades como herramientas de transformación personal y social.'}
                       </p>
                       <Button size="md" pill onClick={() => openModal()}>
                         <Heart size={16} className="mr-2" /> DONA AHORA
@@ -225,9 +199,9 @@ export default function QuienesSomos() {
                     <>
                       <div className="flex flex-col gap-4 mb-8">
                         {[
-                          { Icon: Heart, label: 'Unidad', desc: 'Trabajamos juntos como un solo equipo.' },
-                          { Icon: Eye, label: 'Transparencia', desc: 'Actuamos con honestidad y rendición de cuentas.' },
-                          { Icon: Target, label: 'Sostenibilidad', desc: 'Construimos con visión de largo plazo.' },
+                          { Icon: Heart, label: 'Unidad', desc: valor1Desc || 'Trabajamos juntos como un solo equipo.' },
+                          { Icon: Eye, label: 'Transparencia', desc: valor2Desc || 'Actuamos con honestidad y rendición de cuentas.' },
+                          { Icon: Target, label: 'Sostenibilidad', desc: valor3Desc || 'Construimos con visión de largo plazo.' },
                         ].map(v => (
                           <div key={v.label} className="flex items-start gap-4">
                             <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(141,198,63,0.15)' }}>
@@ -250,22 +224,23 @@ export default function QuienesSomos() {
 
               {/* Right: image — se oculta en mobile, visible en desktop */}
               <div className="relative hidden lg:block">
-                {/* Leaf SVGs */}
-                <svg className="absolute -bottom-6 left-6 z-10 w-16 h-16 opacity-80" viewBox="0 0 60 60" fill="none">
-                  <path d="M10 50 C10 20 40 10 50 10 C50 10 50 40 10 50Z" fill="#8DC63F" opacity="0.7" />
-                  <line x1="10" y1="50" x2="45" y2="15" stroke="#7aad35" strokeWidth="1.5" />
-                </svg>
-                <svg className="absolute -top-4 right-4 z-10 w-10 h-10 opacity-60" viewBox="0 0 60 60" fill="none">
-                  <path d="M50 10 C50 40 20 50 10 50 C10 50 10 20 50 10Z" fill="#8DC63F" opacity="0.5" />
-                </svg>
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full opacity-10 pointer-events-none"
-                  style={{ background: 'var(--ama-green)' }} />
-
-                <div className="rounded-3xl overflow-hidden shadow-xl" style={{ aspectRatio: '4/3' }}>
+                <div className="rounded-3xl overflow-hidden shadow-xl relative" style={{ aspectRatio: '4/3' }}>
                   <img
-                    src={tabImages[activeTab]}
+                    src={
+                      activeTab === 'MISIÓN'
+                        ? (loadingMisionImg ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (misionImagen || actividadChocolatada))
+                        : activeTab === 'VISIÓN'
+                        ? (loadingVisionImg ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (visionImagen || corporativa))
+                        : (loadingValoresImg ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (valoresImagen || bannerQuienes))
+                    }
                     alt={activeTab}
-                    className="w-full h-full object-cover transition-all duration-500"
+                    className={`w-full h-full object-cover transition-all duration-500 ${
+                      (activeTab === 'MISIÓN' && loadingMisionImg) ||
+                      (activeTab === 'VISIÓN' && loadingVisionImg) ||
+                      (activeTab === 'VALORES' && loadingValoresImg)
+                        ? 'bg-gray-200 animate-pulse'
+                        : ''
+                    }`}
                   />
                 </div>
               </div>
@@ -292,16 +267,16 @@ export default function QuienesSomos() {
             <p className="font-opensans text-ama-gray-mid mt-2">Conoce a nuestro equipo AMA</p>
           </div>
 
-          {teamRows.map((row, ri) => (
-            <div
-              key={ri}
-              className={`grid gap-6 mb-8 ${row.length === 3 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto'}`}
-            >
-              {row.map(member => (
-                <TeamCard key={member.name} {...member} />
-              ))}
-            </div>
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {equipo.map(member => (
+              <TeamCard 
+                key={member.id} 
+                image={member.foto_url || ''} 
+                name={member.nombre} 
+                role={member.cargo} 
+              />
+            ))}
+          </div>
         </div>
       </section>
     </main>

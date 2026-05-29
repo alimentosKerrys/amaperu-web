@@ -1,39 +1,41 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { CreditCard, Banknote, QrCode, AlertCircle } from 'lucide-react'
+import { QrCode, AlertCircle, Copy, Check, MessageSquare } from 'lucide-react'
 import SectionHero from '../components/ui/SectionHero'
-import Button from '../components/ui/Button'
-import { useModal } from '../context/ModalContext'
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
 // Images
 import bannerDonacion from '../assets/images/IMAGENES_LISTAS/banner-donacion.png'
 import pagoBbva from '../assets/images/IMAGENES_LISTAS/pago-bbva.png'
-import pagoAgora from '../assets/images/IMAGENES_LISTAS/pago-agora.png'
-import pagoBim from '../assets/images/IMAGENES_LISTAS/pago-bim.png'
-import pagoK from '../assets/images/IMAGENES_LISTAS/pago-k.png'
 import pagoScotiabank from '../assets/images/IMAGENES_LISTAS/pago-scotiabank.png'
-import pagoTunki from '../assets/images/IMAGENES_LISTAS/pago-tunki.png'
 import qrDonacion from '../assets/images/IMAGENES_LISTAS/qr-donacion.png'
 
-const amounts = [10, 50, 100]
-
 export default function Donacion() {
-  const [payType, setPayType] = useState<'credito' | 'debito'>('credito')
-  const [selectedAmount, setSelectedAmount] = useState(50)
-  const [customAmount, setCustomAmount] = useState(false)
-  const [customVal, setCustomVal] = useState('')
-  const [nombre, setNombre] = useState('')
-  const [apellidos, setApellidos] = useState('')
-  const [email, setEmail] = useState('')
-  const [sent, setSent] = useState(false)
-  const { openModal } = useModal()
+  const [copiedText, setCopiedText] = useState<string | null>(null)
 
-  const finalAmount = customAmount ? Number(customVal) || 0 : selectedAmount
+  // Dynamic values
+  const { valor: yapeNumero } = useConfiguracion('donacion_yape_numero')
+  const { valor: waNumero } = useConfiguracion('donacion_wa_numero')
+  const { valor: scCta } = useConfiguracion('donacion_scotiabank_cta')
+  const { valor: scCci } = useConfiguracion('donacion_scotiabank_cci')
+  const { valor: bbCta } = useConfiguracion('donacion_bbva_cta')
+  const { valor: bbCci } = useConfiguracion('donacion_bbva_cci')
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    openModal(finalAmount)
+  const currentYape = yapeNumero || '941 157 372'
+  const currentWa = waNumero || '51939412966'
+  const currentScCta = scCta || '194-8289720-0-43'
+  const currentScCci = scCci || '00219400828972004390'
+  const currentBbCta = bbCta || '001106140100016611'
+  const currentBbCci = bbCci || '001161400010001661154'
+
+  const handleCopy = (text: string, label: string) => {
+    navigator.clipboard.writeText(text)
+    setCopiedText(label)
+    setTimeout(() => setCopiedText(null), 2000)
   }
+
+  const messageText = encodeURIComponent('Hola AMA PERÚ, acabo de realizar una donación. Adjunto el comprobante de mi transferencia/Yape para su verificación.')
+  const waUrl = `https://wa.me/${currentWa}?text=${messageText}`
 
   return (
     <main className="pt-[88px]">
@@ -45,209 +47,217 @@ export default function Donacion() {
 
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2
               className="font-opensans-condensed font-black text-ama-black uppercase"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
             >
               APOYA NUESTRA <span style={{ color: 'var(--ama-green)' }}>MISIÓN</span>
             </h2>
-            <p className="font-opensans text-ama-gray-mid mt-3 max-w-lg mx-auto">
-              Con tu donación podremos seguir construyendo espacios recreativos y llevando ayuda en beneficio de las poblaciones más vulnerables.
+            <p className="font-opensans text-ama-gray-mid mt-3 max-w-2xl mx-auto text-base">
+              Actualmente nos encontramos en proceso de apertura de nuestra cuenta corporativa. Por el momento, puedes apoyarnos de manera segura y directa a través de depósitos en nuestra cuenta corriente o por Yape.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* ===== CARD IZQUIERDA — Formulario ===== */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            {/* ===== CARD IZQUIERDA — YAPE ===== */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100"
+              className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100/80 flex flex-col items-center text-center"
             >
-              <h3
-                className="font-opensans-condensed font-black text-2xl uppercase mb-6"
-                style={{ color: 'var(--ama-green)' }}
-              >
-                Método de Pago
+              <span className="bg-[#00D3C5]/10 text-[#008980] border border-[#00D3C5]/20 font-opensans font-bold text-xs px-3 py-1.5 rounded-full tracking-wider mb-6">
+                PAGO RÁPIDO
+              </span>
+
+              <h3 className="font-opensans font-black text-3xl text-ama-black uppercase mb-2">
+                Donar con <span className="text-[#00D3C5]">Yape</span>
               </h3>
-
-              {/* Payment type toggle */}
-              <div className="flex gap-4 mb-6">
-                {(['credito', 'debito'] as const).map(type => (
-                  <label key={type} className="flex items-center gap-2 cursor-pointer">
-                    <div
-                      className="w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors"
-                      style={{ borderColor: payType === type ? 'var(--ama-green)' : '#d1d5db' }}
-                    >
-                      {payType === type && (
-                        <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'var(--ama-green)' }} />
-                      )}
-                    </div>
-                    <input type="radio" className="sr-only" checked={payType === type} onChange={() => setPayType(type)} />
-                    <span className="font-opensans text-sm font-medium capitalize text-ama-gray-dark">
-                      Tarjeta de {type === 'credito' ? 'Crédito' : 'Débito'}
-                    </span>
-                  </label>
-                ))}
-              </div>
-
-              {/* Amount selector */}
-              <div className="mb-6">
-                <p className="font-opensans font-semibold text-ama-black text-sm mb-3">Deseo donar:</p>
-                <div className="relative mb-4">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-opensans font-bold text-ama-gray-mid">S/.</span>
-                  <input
-                    type="number"
-                    value={customAmount ? customVal : selectedAmount}
-                    onChange={e => { setCustomAmount(true); setCustomVal(e.target.value) }}
-                    className="ama-input pl-10 text-2xl font-opensans-condensed font-black"
-                    min={1}
-                  />
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  {amounts.map(a => (
-                    <button
-                      key={a}
-                      onClick={() => { setSelectedAmount(a); setCustomAmount(false) }}
-                      className="flex-1 py-2 px-3 rounded-full font-opensans-condensed font-bold text-sm transition-all"
-                      style={{
-                        background: !customAmount && selectedAmount === a ? 'var(--ama-green)' : 'white',
-                        color: !customAmount && selectedAmount === a ? 'white' : 'var(--ama-gray-dark)',
-                        border: `2px solid ${!customAmount && selectedAmount === a ? 'var(--ama-green)' : '#e5e7eb'}`,
-                      }}
-                    >
-                      S/.{a}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() => { setCustomAmount(true); setCustomVal('') }}
-                    className="flex-1 py-2 px-3 rounded-full font-opensans-condensed font-bold text-sm transition-all"
-                    style={{
-                      background: customAmount ? 'var(--ama-green)' : 'white',
-                      color: customAmount ? 'white' : 'var(--ama-gray-dark)',
-                      border: `2px solid ${customAmount ? 'var(--ama-green)' : '#e5e7eb'}`,
-                    }}
-                  >
-                    Otra cantidad
-                  </button>
-                </div>
-              </div>
-
-              {/* Personal info */}
-              <div className="mb-6">
-                <p className="font-opensans font-semibold text-ama-black text-sm mb-3">Información Personal:</p>
-                <div className="flex flex-col gap-3">
-                  <input className="ama-input" placeholder="Nombres *" value={nombre} onChange={e => setNombre(e.target.value)} required />
-                  <input className="ama-input" placeholder="Apellidos *" value={apellidos} onChange={e => setApellidos(e.target.value)} required />
-                  <input className="ama-input" type="email" placeholder="Correo Electrónico *" value={email} onChange={e => setEmail(e.target.value)} required />
-                </div>
-              </div>
-
-              <button
-                onClick={() => openModal(finalAmount)}
-                className="w-full py-4 rounded-full font-opensans-condensed font-black text-xl text-white transition-colors"
-                style={{ background: 'var(--ama-green)' }}
-              >
-                DONA AHORA — S/{finalAmount}.00
-              </button>
-
-              <p className="font-opensans text-ama-gray-mid text-xs text-center mt-4 leading-relaxed">
-                Con tu donación podremos seguir construyendo espacios recreativos y llevando ayuda en beneficio de las poblaciones más vulnerable.
+              <p className="font-opensans text-sm text-ama-gray-mid mb-8 max-w-sm">
+                Escanea el código QR desde tu aplicación de Yape o digita directamente el número de teléfono.
               </p>
+
+              {/* QR Code Frame */}
+              <div className="bg-gray-50 rounded-3xl p-6 border border-gray-100 flex flex-col items-center mb-8 relative group">
+                <div className="bg-white p-4 rounded-2xl shadow-md transition-transform duration-300 group-hover:scale-105">
+                  <img src={qrDonacion} alt="QR Yape AMA PERÚ" className="w-48 h-48 object-contain" />
+                </div>
+                <div className="flex items-center gap-2 mt-4 text-[#00D3C5] font-semibold text-sm">
+                  <QrCode size={18} />
+                  <span>QR de Donación AMA</span>
+                </div>
+              </div>
+
+              {/* Yape Number Section */}
+              <div className="w-full bg-[#f2fcfb] border border-[#00d3c5]/10 rounded-2xl p-4 mb-8 flex justify-between items-center max-w-md">
+                <div className="text-left">
+                  <span className="text-[11px] font-bold text-ama-gray-mid uppercase tracking-wider">Número Yape</span>
+                  <p className="font-opensans-condensed font-black text-2xl text-ama-black tracking-tight">{currentYape}</p>
+                </div>
+                <button
+                  onClick={() => handleCopy(currentYape.replace(/\s/g, ''), 'yape')}
+                  className="bg-white border border-[#00d3c5]/20 hover:border-[#00d3c5]/50 p-3 rounded-xl transition-all shadow-sm flex items-center justify-center text-ama-gray-dark hover:text-[#00c0b3]"
+                  title="Copiar número"
+                >
+                  {copiedText === 'yape' ? <Check size={18} className="text-green-600 animate-pulse" /> : <Copy size={18} />}
+                </button>
+              </div>
+
+              {/* Instructions */}
+              <div className="text-left w-full max-w-md mb-8">
+                <h4 className="font-opensans font-bold text-ama-black text-sm mb-3">Instrucciones sencillas:</h4>
+                <ol className="flex flex-col gap-3 font-opensans text-xs text-ama-gray-mid">
+                  <li className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#00D3C5]/10 text-[#008980] flex items-center justify-center font-bold flex-shrink-0 text-[10px]">1</span>
+                    <p className="mt-0.5">Ingresa a tu aplicación de Yape en tu teléfono celular.</p>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#00D3C5]/10 text-[#008980] flex items-center justify-center font-bold flex-shrink-0 text-[10px]">2</span>
+                    <p className="mt-0.5">Escanea el código QR superior o escribe el número <strong className="text-ama-black">{currentYape}</strong>.</p>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-[#00D3C5]/10 text-[#008980] flex items-center justify-center font-bold flex-shrink-0 text-[10px]">3</span>
+                    <p className="mt-0.5">Ingresa el monto de tu donación voluntaria y confirma.</p>
+                  </li>
+                </ol>
+              </div>
+
+              {/* WhatsApp CTA */}
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full max-w-md py-4 rounded-full font-opensans font-black text-base text-white transition-all shadow-lg flex items-center justify-center gap-2 hover:-translate-y-0.5"
+                style={{
+                  background: '#25D366',
+                  boxShadow: '0 8px 20px rgba(37,211,102,0.2)'
+                }}
+              >
+                <MessageSquare size={20} fill="white" />
+                ENVIAR VOUCHER POR WHATSAPP
+              </a>
             </motion.div>
 
-            {/* ===== CARD DERECHA — Transferencias ===== */}
+            {/* ===== CARD DERECHA — TRANSFERENCIAS ===== */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100"
+              className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100/80"
             >
-              <h3
-                className="font-opensans-condensed font-black text-2xl uppercase mb-6"
-                style={{ color: 'var(--ama-green)' }}
-              >
-                Depósitos y transferencias
+              <div className="flex justify-center mb-6">
+                <span className="bg-ama-green/10 text-ama-green border border-ama-green/20 font-opensans font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
+                  DEPOSITOS LOCALES
+                </span>
+              </div>
+
+              <h3 className="font-opensans font-black text-3xl text-ama-black uppercase mb-2 text-center">
+                Cuentas <span className="text-ama-green">Bancarias</span>
               </h3>
+              <p className="font-opensans text-sm text-ama-gray-mid mb-8 text-center max-w-sm mx-auto">
+                Realiza una transferencia interbancaria o depósito en ventanilla utilizando las siguientes cuentas.
+              </p>
 
-              {/* Bank info */}
-              {[
-                {
-                  logo: pagoScotiabank,
-                  name: 'Scotiabank',
-                  details: [
-                    { label: 'Cuenta en Soles', value: '194-8289720-0-43' },
-                    { label: 'CCI', value: '00219400828972004390' },
-                  ],
-                },
-                {
-                  logo: pagoBbva,
-                  name: 'BBVA',
-                  details: [
-                    { label: 'Cuenta en Soles', value: '001106140100016611' },
-                    { label: 'CCI', value: '001161400010001661154' },
-                  ],
-                },
-              ].map(bank => (
-                <div key={bank.name} className="flex flex-col gap-2 mb-5 p-4 bg-gray-50 rounded-xl border border-gray-100">
+              {/* Bank Details */}
+              <div className="space-y-6 mb-8">
+                {/* Scotiabank */}
+                <div className="flex flex-col gap-3 p-5 bg-gray-50 rounded-2xl border border-gray-100">
                   <div className="flex items-center gap-3">
-                    <img src={bank.logo} alt={bank.name} className="h-8 w-auto object-contain" />
-                    <span className="font-opensans font-bold text-sm text-ama-black">{bank.name}</span>
+                    <img src={pagoScotiabank} alt="Scotiabank" className="h-8 w-auto object-contain" />
+                    <span className="font-opensans font-bold text-sm text-ama-black">Scotiabank</span>
                   </div>
-                  {bank.details.map(d => (
-                    <div key={d.label} className="flex justify-between items-center">
-                      <span className="font-opensans text-xs text-ama-gray-mid">{d.label}:</span>
-                      <span className="font-opensans-condensed font-bold text-sm text-ama-black">{d.value}</span>
+                  
+                  <div className="border-t border-gray-200/50 pt-3 space-y-3">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-opensans text-ama-gray-mid">Cuenta en Soles:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-opensans-condensed font-bold text-sm text-ama-black">{currentScCta}</span>
+                        <button
+                          onClick={() => handleCopy(currentScCta, 'scotia_cta')}
+                          className="text-gray-400 hover:text-ama-green transition-colors"
+                        >
+                          {copiedText === 'scotia_cta' ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                        </button>
+                      </div>
                     </div>
-                  ))}
+                    
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-opensans text-ama-gray-mid">CCI (Interbancaria):</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-opensans-condensed font-bold text-sm text-ama-black">{currentScCci}</span>
+                        <button
+                          onClick={() => handleCopy(currentScCci, 'scotia_cci')}
+                          className="text-gray-400 hover:text-ama-green transition-colors"
+                        >
+                          {copiedText === 'scotia_cci' ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ))}
 
-              {/* Yape */}
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 mb-5">
-                <p className="font-opensans font-bold text-sm text-ama-black mb-1">Yape</p>
-                <p className="font-opensans-condensed font-bold text-lg" style={{ color: 'var(--ama-green)' }}>941 157 372</p>
+                {/* BBVA */}
+                <div className="flex flex-col gap-3 p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                  <div className="flex items-center gap-3">
+                    <img src={pagoBbva} alt="BBVA" className="h-8 w-auto object-contain" />
+                    <span className="font-opensans font-bold text-sm text-ama-black">BBVA</span>
+                  </div>
+                  
+                  <div className="border-t border-gray-200/50 pt-3 space-y-3">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-opensans text-ama-gray-mid">Cuenta en Soles:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-opensans-condensed font-bold text-sm text-ama-black">{currentBbCta}</span>
+                        <button
+                          onClick={() => handleCopy(currentBbCta, 'bbva_cta')}
+                          className="text-gray-400 hover:text-ama-green transition-colors"
+                        >
+                          {copiedText === 'bbva_cta' ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-opensans text-ama-gray-mid">CCI (Interbancaria):</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-opensans-condensed font-bold text-sm text-ama-black">{currentBbCci}</span>
+                        <button
+                          onClick={() => handleCopy(currentBbCci, 'bbva_cci')}
+                          className="text-gray-400 hover:text-ama-green transition-colors"
+                        >
+                          {copiedText === 'bbva_cci' ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* QR Izipay */}
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 mb-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <QrCode size={18} style={{ color: 'var(--ama-green)' }} />
-                  <p className="font-opensans font-bold text-sm text-ama-black">Izipay — QR Universal</p>
-                </div>
-                <div className="flex justify-center mb-4">
-                  <img src={qrDonacion} alt="QR código donación" className="w-32 h-32 object-contain" />
-                </div>
-                <ol className="flex flex-col gap-1.5 mb-4">
-                  {[
-                    'Ingresa a tu billetera electrónica.',
-                    'Escanea el código Universal QR.',
-                    'Ingresar el monto de tu donación y acepta.',
-                  ].map((s, i) => (
-                    <li key={i} className="flex items-start gap-2 font-opensans text-xs text-ama-gray-mid">
-                      <span className="font-opensans-condensed font-bold text-ama-green flex-shrink-0">{i + 1}.</span>
-                      {s}
-                    </li>
-                  ))}
-                </ol>
-                {/* Wallet logos */}
-                <div className="flex items-center justify-center gap-3 flex-wrap">
-                  {[pagoAgora, pagoBim, pagoK, pagoTunki].map((logo, i) => (
-                    <img key={i} src={logo} alt="Wallet" className="h-8 w-auto object-contain" />
-                  ))}
-                </div>
-              </div>
-
-              {/* Warning */}
-              <div className="flex items-start gap-3 p-4 rounded-xl" style={{ background: 'rgba(141,198,63,0.1)', border: '1.5px solid var(--ama-green)' }}>
-                <AlertCircle size={18} style={{ color: 'var(--ama-green)', flexShrink: 0 }} />
-                <p className="font-opensans text-xs font-medium" style={{ color: 'var(--ama-green)' }}>
-                  * No olvides enviar la foto de tu comprobante a nuestro WhatsApp.
+              {/* Warning/Voucher Notice */}
+              <div className="flex items-start gap-3 p-4 rounded-2xl mb-8" style={{ background: 'rgba(141,198,63,0.08)', border: '1.5px solid var(--ama-green)' }}>
+                <AlertCircle size={20} style={{ color: 'var(--ama-green)', flexShrink: 0 }} />
+                <p className="font-opensans text-xs font-semibold leading-relaxed" style={{ color: 'var(--ama-green)' }}>
+                  Es muy importante enviar una foto del voucher o captura de la pantalla de transferencia para registrar su donación de forma correcta.
                 </p>
               </div>
+
+              {/* WhatsApp CTA */}
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 rounded-full font-opensans font-black text-base text-white transition-all shadow-lg flex items-center justify-center gap-2 hover:-translate-y-0.5"
+                style={{
+                  background: '#25D366',
+                  boxShadow: '0 8px 20px rgba(37,211,102,0.2)'
+                }}
+              >
+                <MessageSquare size={20} fill="white" />
+                ENVIAR VOUCHER POR WHATSAPP
+              </a>
             </motion.div>
           </div>
         </div>
@@ -255,3 +265,4 @@ export default function Donacion() {
     </main>
   )
 }
+

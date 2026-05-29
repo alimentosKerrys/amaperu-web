@@ -25,10 +25,19 @@ const SECCIONES_OTRAS_IMAGENES = [
   { clave: 'img_unete_voluntariado', titulo: 'Únete: Voluntariado' },
   { clave: 'img_unete_embajadora', titulo: 'Únete: Embajadores' },
   { clave: 'img_unete_corporativa', titulo: 'Únete: Corporativa' },
+  { clave: 'img_quienes_mision', titulo: '¿Quiénes Somos?: Imagen Misión' },
+  { clave: 'img_quienes_vision', titulo: '¿Quiénes Somos?: Imagen Visión' },
+  { clave: 'img_quienes_valores', titulo: '¿Quiénes Somos?: Imagen Valores' },
 ]
 
 export default function AdminAjustes() {
   const [quienesSomosTexto, setQuienesSomosTexto] = useState('')
+  const [misionTexto, setMisionTexto] = useState('')
+  const [visionTexto, setVisionTexto] = useState('')
+  const [valor1Desc, setValor1Desc] = useState('')
+  const [valor2Desc, setValor2Desc] = useState('')
+  const [valor3Desc, setValor3Desc] = useState('')
+  
   const [videoMp4, setVideoMp4] = useState('')
   const [videoWebm, setVideoWebm] = useState('')
   const [quienesSomosImagen, setQuienesSomosImagen] = useState('')
@@ -51,6 +60,11 @@ export default function AdminAjustes() {
   const fetchConfig = async () => {
     setLoading(true)
     const texto = await configuracionService.getValor('quienes_somos_texto')
+    const mision = await configuracionService.getValor('quienes_mision_texto')
+    const vision = await configuracionService.getValor('quienes_vision_texto')
+    const val1 = await configuracionService.getValor('quienes_valor_1_desc')
+    const val2 = await configuracionService.getValor('quienes_valor_2_desc')
+    const val3 = await configuracionService.getValor('quienes_valor_3_desc')
     const mp4 = await configuracionService.getValor('home_video_mp4')
     const webm = await configuracionService.getValor('home_video_webm')
     const imagen = await configuracionService.getValor('quienes_somos_imagen')
@@ -64,6 +78,11 @@ export default function AdminAjustes() {
     )
 
     if (texto) setQuienesSomosTexto(texto)
+    if (mision) setMisionTexto(mision)
+    if (vision) setVisionTexto(vision)
+    if (val1) setValor1Desc(val1)
+    if (val2) setValor2Desc(val2)
+    if (val3) setValor3Desc(val3)
     if (mp4) setVideoMp4(mp4)
     if (webm) setVideoWebm(webm)
     if (imagen) setQuienesSomosImagen(imagen)
@@ -179,10 +198,18 @@ export default function AdminAjustes() {
 
     const { error: err1 } = await configuracionService.actualizar('quienes_somos_texto', quienesSomosTexto)
     if (err1) {
-      setError('Error guardando el texto: ' + err1.message)
+      setError('Error guardando el texto principal: ' + err1.message)
       setSaving(false)
       return
     }
+
+    await Promise.all([
+      configuracionService.actualizar('quienes_mision_texto', misionTexto),
+      configuracionService.actualizar('quienes_vision_texto', visionTexto),
+      configuracionService.actualizar('quienes_valor_1_desc', valor1Desc),
+      configuracionService.actualizar('quienes_valor_2_desc', valor2Desc),
+      configuracionService.actualizar('quienes_valor_3_desc', valor3Desc)
+    ])
 
     setSuccessMessage('¡Cambios guardados correctamente!')
     setTimeout(() => setSuccessMessage(null), 3000)
@@ -406,7 +433,63 @@ export default function AdminAjustes() {
             <p className="text-xs text-gray-400 mt-1">Aparece a la derecha de la imagen del equipo.</p>
           </div>
 
-          <div>
+          <div className="border-t border-gray-100 pt-6">
+            <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-4">
+              <Type size={15} className="text-green-600" />
+              Textos de Misión, Visión y Valores
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Misión</label>
+                <textarea
+                  value={misionTexto}
+                  onChange={e => setMisionTexto(e.target.value)}
+                  rows={3}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none resize-none text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Visión</label>
+                <textarea
+                  value={visionTexto}
+                  onChange={e => setVisionTexto(e.target.value)}
+                  rows={3}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none resize-none text-sm"
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Valor 1 (Unidad)</label>
+                  <input
+                    type="text"
+                    value={valor1Desc}
+                    onChange={e => setValor1Desc(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Valor 2 (Transparencia)</label>
+                  <input
+                    type="text"
+                    value={valor2Desc}
+                    onChange={e => setValor2Desc(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Valor 3 (Sostenibilidad)</label>
+                  <input
+                    type="text"
+                    value={valor3Desc}
+                    onChange={e => setValor3Desc(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-100 pt-6">
             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
               <Video size={15} className="text-green-600" />
               Video del Home (Aparece después del Hero Slider)

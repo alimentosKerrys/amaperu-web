@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { configuracionService } from '../contentService'
+import { insforge } from '../../lib/insforge'
 
 export function useConfiguracion(clave: string) {
   const [valor, setValor] = useState<string | null>(null)
@@ -9,7 +9,16 @@ export function useConfiguracion(clave: string) {
     let isMounted = true
     
     async function fetchConfig() {
-      const val = await configuracionService.getValor(clave)
+      const result = await insforge.database
+        .from('configuracion_global')
+        .select('valor')
+        .eq('clave', clave)
+        .maybeSingle()
+      
+      // DEBUG TEMPORAL — ver en consola del navegador (F12)
+      console.log(`[useConfiguracion] clave="${clave}"`, { data: result.data, error: result.error })
+      
+      const val = result.data?.valor || null
       if (isMounted) {
         setValor(val)
         setLoading(false)

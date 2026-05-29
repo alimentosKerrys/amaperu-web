@@ -14,40 +14,8 @@ import voluntariaUnete from '../assets/images/IMAGENES_LISTAS/voluntaria-unete.p
 import embajadora from '../assets/images/IMAGENES_LISTAS/embajadora.png'
 import corporativa from '../assets/images/IMAGENES_LISTAS/corporativa.png'
 
-const testimonios = [
-  {
-    quote: 'El voluntariado es súper genial y no solo sirve para ayudar a las personas sino para que nosotros aprendamos a ser mejores humanos cada día.',
-    name: 'Jeniffer Alzate',
-    role: 'VOLUNTARIA AMA',
-    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    quote: 'Me uní a AMA PERÚ porque tengo la convicción que el mundo puede cambiar con buenas acciones y el voluntariado me ayudó a conocer la realidad de las comunidades más vulnerables.',
-    name: 'Fran Vertiz',
-    role: 'VOLUNTARIO AMA',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    quote: 'Ser parte de esta familia me ha permitido ver el impacto real que podemos generar cuando nos unimos por una causa noble. Cada niño sonriendo es una victoria.',
-    name: 'Carolina Ruiz',
-    role: 'COORDINADORA DE PROYECTOS',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    quote: 'La logística detrás de cada entrega es un reto que acepto con alegría, sabiendo que estamos llegando a donde más se necesita.',
-    name: 'Miguel Ángel Torres',
-    role: 'VOCERO INSTITUCIONAL',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    quote: 'AMA PERÚ me enseñó que la verdadera riqueza está en dar. Ha sido la experiencia más enriquecedora de mi vida profesional y personal.',
-    name: 'Sofía Méndez',
-    role: 'VOLUNTARIA SENIOR',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=800',
-  },
-]
-
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
+import { useTestimonios } from '../application/hooks/useTestimonios'
 
 export default function Unete() {
   const [testSlide, setTestSlide] = useState(0)
@@ -62,6 +30,8 @@ export default function Unete() {
   const { valor: imgAlianzasGrupal } = useConfiguracion('alianzas_imagen_grupal')
   const [alianzasIndividuales, setAlianzasIndividuales] = useState<Alianza[]>([])
 
+  const { testimonios } = useTestimonios()
+
   useEffect(() => {
     // Only fetch individual alliances if we are in individual mode (or if mode is not set yet)
     if (alianzasModo !== 'grupal') {
@@ -71,8 +41,8 @@ export default function Unete() {
     }
   }, [alianzasModo])
 
-  const nextTest = () => setTestSlide(s => (s + 1) % testimonios.length)
-  const prevTest = () => setTestSlide(s => (s - 1 + testimonios.length) % testimonios.length)
+  const nextTest = () => setTestSlide(s => (s + 1) % (testimonios.length || 1))
+  const prevTest = () => setTestSlide(s => (s - 1 + (testimonios.length || 1)) % (testimonios.length || 1))
 
   return (
     <main className="pt-[88px]">
@@ -119,7 +89,7 @@ export default function Unete() {
 
             <div className="space-y-2 mb-10">
               <AccordionItem title="¿Qué es el voluntariado Ama?" defaultOpen>
-                Es uno de los pilares fundamentales de nuestra ONG. Son agentes de cambio que contribuyen al desarrollo de nuestra sociedad a través de su participación en las diversas actividades y proyectos que realizamos. Nuestros voluntarios también reciben capacitaciones, ayudándolos así en su desarrollo personal y profesional.
+                Es uno de los pilares fundamentales de nuestra ONG. Son agentes de cambio que contribuyen al desarrollo de nuestra sociedad a través de su participation en las diversas actividades y proyectos que realizamos. Nuestros voluntarios también reciben capacitaciones, ayudándolos así en su desarrollo personal y profesional.
               </AccordionItem>
               <AccordionItem title="¿Cuáles son los requisitos?">
                 <ul className="list-disc list-inside space-y-2 text-ama-gray-mid text-base mt-2">
@@ -172,7 +142,7 @@ export default function Unete() {
                 </span>
                 <span className="text-ama-gray-mid/40 text-2xl mb-0.5">/</span>
                 <span className="text-ama-gray-mid/40 text-2xl mb-0.5">
-                  {String(testimonios.length).padStart(2, '0')}
+                  {String(testimonios.length || 1).padStart(2, '0')}
                 </span>
               </div>
             </motion.div>
@@ -199,11 +169,11 @@ export default function Unete() {
               </div>
 
               {/* Contenedor Carrusel */}
-              <div className="relative overflow-visible">
+              <div className="relative overflow-hidden w-full lg:max-w-[784px] pr-4 pb-4 -mr-4">
                 <div className="flex gap-6 transition-all duration-500 ease-out" style={{ transform: `translateX(-${testSlide * (380 + 24)}px)` }}>
                   {testimonios.map((item, index) => (
                     <motion.div
-                      key={index}
+                      key={item.id || index}
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
@@ -212,7 +182,13 @@ export default function Unete() {
                     >
                       {/* Imagen superior */}
                       <div className="h-56 relative overflow-hidden">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        {item.foto_url ? (
+                          <img src={item.foto_url} alt={item.nombre} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <span className="text-gray-400 text-xs">Sin Foto</span>
+                          </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                       </div>
 
@@ -225,12 +201,12 @@ export default function Unete() {
                         </div>
                         
                         <p className="font-opensans text-ama-black/70 text-lg leading-relaxed mb-8 flex-1 italic">
-                          {item.quote}
+                          {item.testimonio}
                         </p>
                         
                         <div className="pt-6 border-t border-gray-50">
-                          <h4 className="font-opensans font-bold text-ama-black text-xl mb-1">{item.name}</h4>
-                          <p className="font-opensans text-ama-green font-bold text-sm tracking-wider uppercase">{item.role}</p>
+                          <h4 className="font-opensans font-bold text-ama-black text-xl mb-1">{item.nombre}</h4>
+                          <p className="font-opensans text-ama-green font-bold text-sm tracking-wider uppercase">{item.cargo}</p>
                         </div>
                       </div>
                     </motion.div>
