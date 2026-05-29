@@ -13,6 +13,7 @@ export default function AdminDonaciones() {
   const [bcpCci, setBcpCci] = useState('00219312345678012314')
   const [waNumero, setWaNumero] = useState('51939412966')
   const [emailVerif, setEmailVerif] = useState('fabricioburning22@gmail.com')
+  const [mensajeAmigable, setMensajeAmigable] = useState('')
 
   // Active Toggles
   const [yapeActivo, setYapeActivo] = useState(true)
@@ -45,6 +46,7 @@ export default function AdminDonaciones() {
     const bcCci = await configuracionService.getValor('donacion_bcp_cci')
     const wa = await configuracionService.getValor('donacion_wa_numero')
     const emailV = await configuracionService.getValor('donacion_email_verificacion')
+    const msjAmigable = await configuracionService.getValor('donacion_mensaje_amigable')
 
     const yapeAct = await configuracionService.getValor('donacion_yape_activo')
     const scAct = await configuracionService.getValor('donacion_scotiabank_activo')
@@ -60,6 +62,7 @@ export default function AdminDonaciones() {
     if (bcCci) setBcpCci(bcCci)
     if (wa) setWaNumero(wa)
     if (emailV) setEmailVerif(emailV)
+    if (msjAmigable) setMensajeAmigable(msjAmigable)
 
     if (yapeAct) setYapeActivo(yapeAct === 'true')
     if (scAct) setScotiaActivo(scAct === 'true')
@@ -119,7 +122,8 @@ export default function AdminDonaciones() {
         configuracionService.actualizar('donacion_bcp_cci', bcpCci),
         configuracionService.actualizar('donacion_wa_numero', waNumero),
         configuracionService.actualizar('donacion_email_verificacion', emailVerif),
-        
+        configuracionService.actualizar('donacion_mensaje_amigable', mensajeAmigable),
+
         configuracionService.actualizar('donacion_yape_activo', yapeActivo.toString()),
         configuracionService.actualizar('donacion_scotiabank_activo', scotiaActivo.toString()),
         configuracionService.actualizar('donacion_bbva_activo', bbvaActivo.toString()),
@@ -209,6 +213,17 @@ export default function AdminDonaciones() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
                 placeholder="Ej: 51939412966"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Mensaje de Agradecimiento (Modal)</label>
+              <textarea
+                value={mensajeAmigable}
+                onChange={e => setMensajeAmigable(e.target.value)}
+                rows={2}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none resize-none"
+                placeholder="Ej: ¡Gracias por tu apoyo! Envía tu voucher:"
+              />
+              <p className="text-xs text-gray-500 mt-1">Este texto reemplaza al título "Donar S/.50.00" en el popup.</p>
             </div>
           </div>
         </div>

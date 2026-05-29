@@ -35,6 +35,7 @@ export default function ModalPago() {
   const { valor: bbvaActivo } = useConfiguracion('donacion_bbva_activo')
   const { valor: scotiaActivo } = useConfiguracion('donacion_scotiabank_activo')
   const { valor: bcpActivo } = useConfiguracion('donacion_bcp_activo')
+  const { valor: msjAmigable } = useConfiguracion('donacion_mensaje_amigable')
 
   const currentYape = yapeNumero || '941 157 372'
   const currentWa = waNumero || '51939412966'
@@ -132,7 +133,7 @@ export default function ModalPago() {
               >
                 <div className="mb-4 text-center">
                   <p className="text-ama-black font-opensans font-black text-xl mb-1">
-                    {lang === 'ESP' ? `Donar S/.${amount}.00` : `Donate S/.${amount}.00`}
+                    {lang === 'ESP' ? (msjAmigable || `Donar S/.${amount}.00`) : (msjAmigable || `Donate S/.${amount}.00`)}
                   </p>
                   <p className="text-xs text-ama-gray-mid font-opensans">
                     {lang === 'ESP' ? 'Por favor realiza tu donación y reporta el voucher por WhatsApp' : 'Please make your donation and report the voucher via WhatsApp'}
