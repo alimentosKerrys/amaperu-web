@@ -10,9 +10,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses = {
-  primary: 'bg-ama-green text-white hover:bg-ama-green-dark border-2 border-ama-green hover:border-ama-green-dark',
-  outline: 'bg-transparent text-ama-green border-2 border-ama-green hover:bg-ama-green hover:text-white',
-  ghost: 'bg-white/20 text-white border-2 border-white hover:bg-white hover:text-ama-black',
+  primary: 'bg-ama-green text-white hover:bg-ama-green-dark border-2 border-ama-green hover:border-ama-green-dark shadow-lg hover:shadow-ama-green/40 hover:-translate-y-0.5',
+  outline: 'bg-transparent text-ama-green border-2 border-ama-green hover:bg-ama-green hover:text-white hover:-translate-y-0.5',
+  ghost: 'bg-white/5 backdrop-blur-sm text-white border-2 border-white hover:bg-white hover:text-ama-black hover:-translate-y-0.5',
   text: 'bg-transparent text-ama-green border-2 border-transparent hover:text-ama-green-dark underline-offset-4 hover:underline',
 }
 
@@ -36,10 +36,9 @@ export default function Button({
       whileTap={{ scale: 0.97 }}
       whileHover={{ scale: 1.02 }}
       className={[
-        'inline-flex items-center justify-center gap-2 transition-all duration-200 font-quicksand tracking-wider cursor-pointer uppercase',
+        'inline-flex items-center justify-center gap-2 transition-all duration-300 font-quicksand tracking-widest cursor-pointer uppercase rounded-none',
         variantClasses[variant],
         sizeClasses[size],
-        pill ? 'rounded-full' : 'rounded-lg',
         fullWidth ? 'w-full' : '',
         className,
       ].join(' ')}

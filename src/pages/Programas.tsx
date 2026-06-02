@@ -6,16 +6,16 @@ import Button from '../components/ui/Button'
 import { useModal } from '../context/ModalContext'
 
 // Images
-import bannerProgramas from '../assets/images/IMAGENES_LISTAS/banner-programas.png'
-import programaConstruye from '../assets/images/IMAGENES_LISTAS/programa-construye.png'
-import programaConecta from '../assets/images/IMAGENES_LISTAS/programa-conecta.png'
-import programaAsiste from '../assets/images/IMAGENES_LISTAS/programa-asiste.png'
-import parqueApuRender from '../assets/images/IMAGENES_LISTAS/parque-apu-render.png'
-import campoQumirRender from '../assets/images/IMAGENES_LISTAS/campo-qumir-render.webp'
-import actividadChocolatada from '../assets/images/IMAGENES_LISTAS/actividad-chocolatada.png'
-import actividadPiedraApu from '../assets/images/IMAGENES_LISTAS/actividad-piedra-apu.png'
-import actividadPiedraQumir from '../assets/images/IMAGENES_LISTAS/actividad-piedra-qumir.png'
-import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.png'
+const bannerProgramas = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaConstruye = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaConecta = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaAsiste = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const parqueApuRender = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const campoQumirRender = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const actividadChocolatada = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const actividadPiedraApu = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const actividadPiedraQumir = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const voluntarioCasco = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
 
 const programas = [
   {
@@ -88,7 +88,6 @@ import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
 export default function Programas() {
   const [openProg, setOpenProg] = useState<string>('conecta')
-  const [actSlide, setActSlide] = useState(0)
   const { openModal } = useModal()
 
   const { valor: portadaProgramas, loading: loadingPortada } = useConfiguracion('portada_programas')
@@ -119,9 +118,6 @@ export default function Programas() {
     { ...actividades[1], image: imgActPiedraApu || actividades[1].image, loading: l7 },
     { ...actividades[2], image: imgActPiedraQumir || actividades[2].image, loading: l8 },
   ]
-
-  const nextSlide = () => setActSlide(s => (s + 1) % actividades.length)
-  const prevSlide = () => setActSlide(s => (s - 1 + actividades.length) % actividades.length)
 
   return (
     <main className="pt-[88px]">
@@ -211,9 +207,15 @@ export default function Programas() {
                           className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 text-[#85348b]"
                           viewBox="0 0 100 100"
                           fill="currentColor"
-                          preserveAspectRatio="none"
                         >
-                          <polygon points="100,0 100,60 90,65 85,50 70,60 65,40 50,45 40,20 20,25 0,0" />
+                          <rect x="0" y="0" width="68" height="18" rx="3" />
+                          <rect x="71" y="0" width="29" height="18" rx="3" />
+                          <rect x="20" y="20" width="30" height="18" rx="3" />
+                          <rect x="53" y="20" width="47" height="18" rx="3" />
+                          <rect x="39" y="40" width="36" height="18" rx="3" />
+                          <rect x="78" y="40" width="22" height="18" rx="3" />
+                          <rect x="61" y="60" width="39" height="18" rx="3" />
+                          <rect x="89" y="80" width="11" height="18" rx="3" />
                         </svg>
 
                         <h3 className="font-opensans font-black text-ama-black text-[32px] md:text-4xl mb-4 relative z-10 capitalize">
@@ -277,7 +279,24 @@ export default function Programas() {
 
       {/* ===== CARDS PROYECTOS ===== */}
       <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Encabezado introductorio */}
+          <div className="text-center mb-12">
+            <span className="inline-block font-opensans-condensed font-bold text-xs tracking-[0.25em] uppercase px-4 py-1.5 rounded-full mb-4" style={{ background: 'rgba(141,198,63,0.12)', color: 'var(--ama-green)' }}>
+              Parques Multifuncionales
+            </span>
+            <h2
+              className="font-opensans-condensed font-black text-ama-black uppercase"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}
+            >
+              PROYECTOS EN <span style={{ color: 'var(--ama-green)' }}>CURSO</span>
+            </h2>
+            <p className="font-opensans text-ama-gray-mid mt-3 max-w-2xl mx-auto text-[1rem] leading-[1.75]">
+              Conoce los proyectos que actualmente estamos construyendo junto a la comunidad. Tu apoyo hace posible cada avance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {proyectosMerged.map((proj, i) => (
             <motion.div
               key={proj.title}
@@ -350,11 +369,19 @@ export default function Programas() {
                 </div>
 
                 <div className="mt-5">
-                  <Button onClick={() => openModal()} size="md" pill fullWidth>DONA A ESTE PROYECTO</Button>
+                  <Button onClick={() => openModal()} size="md" pill fullWidth>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M2 6h2l2 8h9l3-6H5.5" />
+                      <circle cx="15.5" cy="17.5" r="2.5" />
+                      <path d="M8 14l-2 4" />
+                    </svg>
+                    DONA A ESTE PROYECTO
+                  </Button>
                 </div>
               </div>
             </motion.div>
           ))}
+          </div>
         </div>
       </section>
 
@@ -367,51 +394,30 @@ export default function Programas() {
             </h2>
           </div>
 
-          <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={actSlide}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6"
-              >
-                {actividadesMerged.map((act, i) => (
-                  <div key={act.title} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                    <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                      <img
-                        src={act.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : act.image}
-                        alt={act.title}
-                        className={`w-full h-full object-cover relative z-0 ${act.loading ? 'bg-gray-200 animate-pulse' : ''}`}
-                      />
-                      <div className="absolute top-3 right-3 z-20">
-                        <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">
-                          {act.date}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-opensans-condensed font-bold text-lg mb-2" style={{ color: 'var(--ama-green)' }}>
-                        {act.title}
-                      </h3>
-                      <p className="font-opensans text-sm text-ama-gray-mid leading-relaxed mb-4">{act.desc}</p>
-                      <Button variant="primary" size="sm" pill>GALERÍA</Button>
+          <div className="relative w-full">
+            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {actividadesMerged.map((act, i) => (
+                <div key={act.title} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-auto snap-center md:snap-align-none">
+                  <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                    <img
+                      src={act.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : act.image}
+                      alt={act.title}
+                      className={`w-full h-full object-cover relative z-0 ${act.loading ? 'bg-gray-200 animate-pulse' : ''}`}
+                    />
+                    <div className="absolute top-3 right-3 z-20">
+                      <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">
+                        {act.date}
+                      </span>
                     </div>
                   </div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Nav dots */}
-            <div className="flex justify-center gap-2 mt-8">
-              {actividadesMerged.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActSlide(i)}
-                  className={`w-3 h-3 rounded-full transition-all ${i === actSlide ? 'bg-ama-green scale-125' : 'bg-gray-300'}`}
-                  aria-label={`Actividad ${i + 1}`}
-                />
+                  <div className="p-5">
+                    <h3 className="font-opensans-condensed font-bold text-lg mb-2" style={{ color: 'var(--ama-green)' }}>
+                      {act.title}
+                    </h3>
+                    <p className="font-opensans text-sm text-ama-gray-mid leading-relaxed mb-4">{act.desc}</p>
+                    <Button variant="primary" size="sm" pill>GALERÍA</Button>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

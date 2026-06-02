@@ -1,0 +1,5 @@
+# Ignorar contexto e imágenes en duro que sobrecargan el análisis semántico
+INFORMACION DE CONTEXTO/
+src/assets/images/
+src/assets/ICONOSAMAWEB/
+src/assets/LOGO/

@@ -1,0 +1,10 @@
+Por favor, actúa como Arquitecto de Configuración. Acabo de traerme mi plantilla maestra en la carpeta `_Guia_Visual_Setup`. 
+Necesito que leas todos los archivos dentro de esa carpeta (del 1 al 7) y repliques exactamente todo este entorno en este nuevo proyecto:
+1. Crea el archivo `.agrules` en la raíz con el contenido del paso 1.
+2. Copia las carpetas `agents/` y `artifacts/` que están dentro de la guía hacia la raíz de este proyecto.
+3. Ejecuta los comandos de terminal necesarios para instalar Husky, Vitest, Jsdom y Testing-library según el paso 4.
+4. Crea la estructura de carpetas de testing (domain, application, infrastructure) del paso 5.
+5. Crea la carpeta `docs/adr/` y su plantilla según el paso 2.
+6. Configura el hook de pre-commit de Husky según el paso 3.
+NOTA: Yo me encargaré personalmente de ejecutar `/graphify .` y de actualizar manualmente el `mcp_config.json` con la ruta de este proyecto (pasos 6 y 7).
+Avisa cuando el proyecto esté 100% idéntico a mi guía visual

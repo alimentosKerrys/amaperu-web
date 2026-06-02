@@ -8,9 +8,9 @@ const BUCKET = 'amaperu-media'
 const INSFORGE_URL = import.meta.env.VITE_INSFORGE_URL as string
 const ADMIN_KEY = import.meta.env.VITE_INSFORGE_ANON_KEY as string
 
-// Tipos de imagen permitidos
-const TIPOS_PERMITIDOS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
-const TAMANO_MAXIMO_MB = 5
+// Tipos de archivo permitidos
+const TIPOS_PERMITIDOS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml', 'video/webm', 'video/mp4']
+const TAMANO_MAXIMO_MB = 50
 
 export interface UploadResult {
   url: string
@@ -19,7 +19,7 @@ export interface UploadResult {
 
 function validarArchivo(file: File): string | null {
   if (!TIPOS_PERMITIDOS.includes(file.type)) {
-    return `Tipo de archivo no permitido. Use: JPEG, PNG o WEBP`
+    return `Tipo de archivo no permitido. Use: JPEG, PNG, WEBP, SVG, MP4 o WEBM`
   }
   const tamanoMB = file.size / (1024 * 1024)
   if (tamanoMB > TAMANO_MAXIMO_MB) {

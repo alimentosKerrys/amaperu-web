@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Save, X, Edit2, Loader2, Upload, Plus, Trash2, FolderKanban } from 'lucide-react'
-import { programasService } from '../../application/contentService'
+import { programasService, configuracionService } from '../../application/contentService'
 import { storageService } from '../../application/storageService'
 import type { Proyecto } from '../../domain/entities'
 import Button from '../../components/ui/Button'
@@ -14,10 +14,22 @@ export default function AdminProgramas() {
   const [uploadingImage, setUploadingImage] = useState(false)
   const [isNew, setIsNew] = useState(false)
 
+  const [iconAsiste, setIconAsiste] = useState('')
+  const [iconConecta, setIconConecta] = useState('')
+  const [iconConstruye, setIconConstruye] = useState('')
+  const [uploadingCatIcon, setUploadingCatIcon] = useState<string | null>(null)
+
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const cargarConfig = async () => {
+    setIconAsiste(await configuracionService.getValor('prog_icon_asiste') || '')
+    setIconConecta(await configuracionService.getValor('prog_icon_conecta') || '')
+    setIconConstruye(await configuracionService.getValor('prog_icon_construye') || '')
+  }
 
   useEffect(() => {
     cargarProyectos()
+    cargarConfig()
   }, [])
 
   const cargarProyectos = async () => {
@@ -27,6 +39,20 @@ export default function AdminProgramas() {
       setProyectos(data)
     }
     setLoading(false)
+  }
+
+  const handleCatIconUpload = async (e: React.ChangeEvent<HTMLInputElement>, clave: string, setter: (val: string) => void) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingCatIcon(clave)
+    const { data, error } = await storageService.subirImagenEnCarpeta('iconos', file)
+    if (!error && data) {
+      await configuracionService.actualizar(clave, data.url)
+      setter(data.url)
+    } else {
+      alert(error || 'Error al subir')
+    }
+    setUploadingCatIcon(null)
   }
 
   const PROGRAMAS_DEFAULT_BULLETS = {
@@ -139,6 +165,42 @@ export default function AdminProgramas() {
         <Button onClick={iniciarCreacion} variant="primary">
           <Plus size={18} /> Nuevo Programa
         </Button>
+      </div>
+
+      {/* ===== ÍCONOS DE CATEGORÍAS ===== */}
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
+        <h2 className="text-lg font-bold text-white mb-2">Íconos de Programas (Home)</h2>
+        <p className="text-sm text-white/60 mb-6">Sube íconos (PNG, WEBP, SVG) con fondo transparente. El sistema usará una máscara para aplicar el color Plomo (inactivo) o Verde (activo) automáticamente en la web.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { label: 'Construye', clave: 'prog_icon_construye', val: iconConstruye, setter: setIconConstruye },
+            { label: 'Conecta', clave: 'prog_icon_conecta', val: iconConecta, setter: setIconConecta },
+            { label: 'Asiste', clave: 'prog_icon_asiste', val: iconAsiste, setter: setIconAsiste },
+          ].map(cat => (
+            <div key={cat.clave} className="bg-black/20 rounded-xl p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/10 rounded flex items-center justify-center overflow-hidden">
+                  {cat.val ? (
+                    <img src={cat.val} alt={cat.label} className="w-6 h-6 object-contain" />
+                  ) : (
+                    <FolderKanban size={20} className="text-white/40" />
+                  )}
+                </div>
+                <span className="font-bold text-white">{cat.label}</span>
+              </div>
+              <label className={`cursor-pointer text-white text-xs font-bold px-3 py-1.5 rounded transition-opacity ${uploadingCatIcon === cat.clave ? 'bg-gray-500 cursor-not-allowed' : 'bg-ama-green hover:bg-opacity-80'}`}>
+                {uploadingCatIcon === cat.clave ? 'Subiendo...' : 'Subir Ícono'}
+                <input 
+                  type="file" 
+                  className="hidden" 
+                  accept="image/png, image/webp, image/svg+xml" 
+                  onChange={e => handleCatIconUpload(e, cat.clave, cat.setter)} 
+                  disabled={!!uploadingCatIcon}
+                />
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
 
       {loading ? (

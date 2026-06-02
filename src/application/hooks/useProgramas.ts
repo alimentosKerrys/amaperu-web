@@ -3,9 +3,9 @@ import { programasService } from '../contentService'
 import type { Proyecto } from '../../domain/entities'
 
 // Fallback images (imported through Vite to get hashed URLs)
-import programaConstruye from '../../assets/images/IMAGENES_LISTAS/programa-construye.png'
-import programaConecta from '../../assets/images/IMAGENES_LISTAS/programa-conecta.png'
-import programaAsiste from '../../assets/images/IMAGENES_LISTAS/programa-asiste.png'
+const programaConstruye = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaConecta = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaAsiste = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
 
 const FALLBACK_PROGRAMAS: Proyecto[] = [
   { id: 'fb1', programa: 'construye', nombre: 'Construye', subtitulo: 'PARQUES MULTIFUNCIONALES', descripcion: 'Promovemos la construcción de campos deportivos y parques para incentivar el deporte, el arte y la cultura.', imagen_url: programaConstruye, meta_financiera: 0, recaudado: 0, estado: 'activo', activo: true, orden: 1, created_at: '', updated_at: '', bullets: [] },
@@ -32,9 +32,9 @@ export function useProgramas() {
         
         // Mapeo de rutas locales a imports reales de vite (solo si la URL coincide con el patrón local)
         const parsedData = activos.map(p => {
-          if (p.imagen_url === '/src/assets/images/IMAGENES_LISTAS/programa-construye.png') return { ...p, imagen_url: programaConstruye }
-          if (p.imagen_url === '/src/assets/images/IMAGENES_LISTAS/programa-asiste.png') return { ...p, imagen_url: programaAsiste }
-          if (p.imagen_url === '/src/assets/images/IMAGENES_LISTAS/programa-conecta.png') return { ...p, imagen_url: programaConecta }
+          if (p.imagen_url === '/src/assets/images/IMAGENES_LISTAS/programa-construye.webp') return { ...p, imagen_url: programaConstruye }
+          if (p.imagen_url === '/src/assets/images/IMAGENES_LISTAS/programa-asiste.webp') return { ...p, imagen_url: programaAsiste }
+          if (p.imagen_url === '/src/assets/images/IMAGENES_LISTAS/programa-conecta.webp') return { ...p, imagen_url: programaConecta }
           return p
         })
         

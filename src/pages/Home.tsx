@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import * as LucideIcons from 'lucide-react'
-import { ChevronLeft, ChevronRight, Play, Users, CheckCircle, Building2, Heart, Package, Utensils, BookOpen, Shirt, Truck, Wrench, TreePine, ShoppingBag, ArrowRight, HandHeart, Leaf, DollarSign } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play, Users, CheckCircle, Building2, Heart, Package, Utensils, BookOpen, Shirt, Truck, Wrench, TreePine, ShoppingBag, ArrowRight, HandHeart, Leaf, DollarSign, Calendar, Briefcase } from 'lucide-react'
 import Button from '../components/ui/Button'
 import StatCard from '../components/ui/StatCard'
 import { useModal } from '../context/ModalContext'
@@ -13,13 +13,13 @@ import { useProgramas } from '../application/hooks/useProgramas'
 import { useEstadisticas } from '../application/hooks/useEstadisticas'
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
-import aboutThumb from '../assets/images/IMAGENES_LISTAS/about-thumb.png'
-import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.png'
-import statsBg from '../assets/images/IMAGENES_LISTAS/stats-bg.png'
-import programaAsiste from '../assets/images/IMAGENES_LISTAS/programa-asiste.png'
-import programaConecta from '../assets/images/IMAGENES_LISTAS/programa-conecta.png'
-import programaConstruye from '../assets/images/IMAGENES_LISTAS/programa-construye.png'
-import bannerTienda from '../assets/images/IMAGENES_LISTAS/banner-tienda.png'
+const aboutThumb = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/voluntario-casco.webp'
+const statsBg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaAsiste = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaConecta = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const programaConstruye = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const bannerTienda = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
 import logoAmaVerde from '../assets/LOGO/LOGO AMA VERDE.png'
 
 const colaborar = [
@@ -27,7 +27,7 @@ const colaborar = [
   { icon: Utensils, label: 'Alimentos no perecibles' },
   { icon: Shirt, label: 'Ropa' },
   { icon: Truck, label: 'Logística en General' },
-  { icon: DollarSign, label: 'dinero' },
+  { icon: DollarSign, label: 'Dinero' },
 ]
 
 // Static metadata per program — images are overridden by backend data at runtime
@@ -92,6 +92,10 @@ export default function Home() {
   const { valor: videoMp4 } = useConfiguracion('home_video_mp4')
   const { valor: videoWebm } = useConfiguracion('home_video_webm')
 
+  const { valor: progIconAsiste } = useConfiguracion('prog_icon_asiste')
+  const { valor: progIconConecta } = useConfiguracion('prog_icon_conecta')
+  const { valor: progIconConstruye } = useConfiguracion('prog_icon_construye')
+
   const total = slides.length || 1
 
   const next = useCallback(() => setCurrent(c => (c + 1) % total), [total])
@@ -126,9 +130,15 @@ export default function Home() {
         }))
       : meta.bullets;
 
+    const customIcon = meta.key.toLowerCase() === 'asiste' ? progIconAsiste 
+                     : meta.key.toLowerCase() === 'conecta' ? progIconConecta 
+                     : meta.key.toLowerCase() === 'construye' ? progIconConstruye 
+                     : null;
+
     return {
       id: i,
       ...meta,
+      customIcon: customIcon,
       title: dbProject?.nombre || meta.title,
       subtitle: dbProject?.subtitulo || meta.subtitle,
       desc: dbProject?.descripcion || meta.desc,
@@ -170,12 +180,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-opensans-condensed font-black text-white uppercase mb-8"
-            style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)', lineHeight: 1.05, maxWidth: '800px' }}
+            className="font-opensans-condensed font-black text-white uppercase mb-8 drop-shadow-2xl"
+            style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', lineHeight: 1.05, maxWidth: '1000px' }}
           >
-            {slides[current]?.titulo || 'FORMA PARTE DE AMA PERÚ'}
-            <div className="text-2xl mt-4 font-opensans font-medium text-white/80" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
-              {slides[current]?.subtitulo || 'Transformando el Perú desde adentro.'}
+            {slides[current]?.titulo || 'CONSTRUYENDO FELICIDAD'}
+            <div className="mt-4 font-opensans font-semibold text-white drop-shadow-lg" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)' }}>
+              {slides[current]?.subtitulo || 'Construye futuros e impacto real.'}
             </div>
           </motion.h1>
           <motion.div
@@ -316,7 +326,11 @@ export default function Home() {
                     >
                       <div className="flex items-center gap-5">
                         <div className={`p-4 rounded-full transition-colors ${isActive ? 'bg-ama-green/10 text-ama-green' : 'bg-gray-50 text-ama-gray-mid group-hover:text-ama-green group-hover:bg-ama-green/10'}`}>
-                          <p.icon size={26} strokeWidth={1.5} />
+                          {p.customIcon ? (
+                            <div className="w-[26px] h-[26px] transition-colors bg-current" style={{ WebkitMaskImage: `url(${p.customIcon})`, WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: `url(${p.customIcon})`, maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }} />
+                          ) : (
+                            <p.icon size={26} strokeWidth={1.5} />
+                          )}
                         </div>
                         <span className={`font-opensans font-bold text-lg ${isActive ? 'text-ama-black' : 'text-ama-gray-mid group-hover:text-ama-black'}`}>
                           {p.shortTitle}
@@ -355,7 +369,11 @@ export default function Home() {
 
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-ama-green rounded-full text-white flex items-center justify-center mb-6 shadow-lg shadow-ama-green/30">
-                    <activeProgramaData.icon size={30} strokeWidth={1.5} />
+                    {activeProgramaData.customIcon ? (
+                      <div className="w-[30px] h-[30px] bg-white" style={{ WebkitMaskImage: `url(${activeProgramaData.customIcon})`, WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: `url(${activeProgramaData.customIcon})`, maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }} />
+                    ) : (
+                      <activeProgramaData.icon size={30} strokeWidth={1.5} />
+                    )}
                   </div>
 
                   <h3 className="font-opensans font-black text-4xl leading-[1.1] text-ama-black mb-2 whitespace-pre-wrap">
@@ -411,7 +429,11 @@ export default function Home() {
                       }`}
                   >
                     <div className={`mb-3 transition-colors ${isActive ? 'text-ama-green' : 'text-ama-gray-mid'}`}>
-                      <p.icon size={36} strokeWidth={1.5} />
+                      {p.customIcon ? (
+                        <div className="w-[36px] h-[36px] mx-auto bg-current transition-colors" style={{ WebkitMaskImage: `url(${p.customIcon})`, WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: `url(${p.customIcon})`, maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }} />
+                      ) : (
+                        <p.icon size={36} strokeWidth={1.5} />
+                      )}
                     </div>
                     <span className={`font-bold font-opensans text-[13px] text-center leading-tight ${isActive ? 'text-ama-green' : 'text-ama-gray-mid'}`}>
                       {p.shortTitle}
@@ -428,7 +450,11 @@ export default function Home() {
             <div className="mx-4 mt-2 bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative">
               <div className="p-6 pb-8 relative z-10">
                 <div className="w-14 h-14 bg-ama-green/10 rounded-full text-ama-green flex items-center justify-center mb-5">
-                  <activeProgramaData.icon size={28} strokeWidth={1.5} />
+                  {activeProgramaData.customIcon ? (
+                    <div className="w-[28px] h-[28px] bg-current" style={{ WebkitMaskImage: `url(${activeProgramaData.customIcon})`, WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: `url(${activeProgramaData.customIcon})`, maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }} />
+                  ) : (
+                    <activeProgramaData.icon size={28} strokeWidth={1.5} />
+                  )}
                 </div>
 
                 <h3 className="font-opensans font-black text-[28px] leading-[1.1] text-ama-black mb-3 whitespace-pre-wrap">
@@ -604,10 +630,14 @@ export default function Home() {
               <StatCard
                 key={stat.id}
                 icon={
-                  stat.icono === 'Users' ? <Users size={36} /> :
-                    stat.icono === 'CheckCircle' ? <CheckCircle size={36} /> :
-                      stat.icono === 'Building2' ? <Building2 size={36} /> :
-                        <Heart size={36} />
+                  stat.icono?.startsWith('http') ? (
+                    <img src={stat.icono} alt={stat.etiqueta} className="w-[46px] h-[46px] object-contain drop-shadow-md" />
+                  ) : stat.icono?.toLowerCase() === 'users' ? <Users size={36} /> :
+                    stat.icono?.toLowerCase() === 'checkcircle' ? <CheckCircle size={36} /> :
+                      stat.icono?.toLowerCase() === 'building2' ? <Building2 size={36} /> :
+                        stat.icono?.toLowerCase() === 'calendar' ? <Calendar size={36} /> :
+                          stat.icono?.toLowerCase() === 'briefcase' ? <Briefcase size={36} /> :
+                            <Heart size={36} />
                 }
                 number={stat.valor}
                 label={stat.etiqueta}

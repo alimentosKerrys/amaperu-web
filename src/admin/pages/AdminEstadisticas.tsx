@@ -12,6 +12,7 @@ export default function AdminEstadisticas() {
   const [isEditing, setIsEditing] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<Partial<Estadistica>>({})
   const [isSaving, setIsSaving] = useState(false)
+  const [isUploadingIcon, setIsUploadingIcon] = useState(false)
 
   // Configuración de fondo
   const [bgImage, setBgImage] = useState<string>('')
@@ -84,6 +85,25 @@ export default function AdminEstadisticas() {
   const cancelEdit = () => {
     setIsEditing(null)
     setEditForm({})
+  }
+
+  const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsUploadingIcon(true)
+    setError(null)
+    
+    const { data, error: uploadError } = await storageService.subirImagen(file)
+    
+    if (uploadError || !data) {
+      setError(uploadError || 'Error al subir ícono')
+      setIsUploadingIcon(false)
+      return
+    }
+
+    setEditForm({ ...editForm, icono: data.url })
+    setIsUploadingIcon(false)
   }
 
   const saveEdit = async () => {
@@ -228,18 +248,29 @@ export default function AdminEstadisticas() {
                 </td>
                 <td className="py-4 px-6">
                   {isEditing === est.id ? (
-                    <select
-                      className="w-full px-3 py-1.5 border border-gray-300 rounded focus:ring-2 focus:ring-green-500 outline-none"
-                      value={editForm.icono || ''}
-                      onChange={e => setEditForm({ ...editForm, icono: e.target.value })}
-                    >
-                      <option value="Users">Users (Voluntarios)</option>
-                      <option value="Heart">Heart (Familias)</option>
-                      <option value="CheckCircle">CheckCircle (Actividades)</option>
-                      <option value="Building2">Building2 (Proyectos)</option>
-                    </select>
+                    <div className="flex flex-col gap-2">
+                      <input
+                        type="text"
+                        placeholder="URL o nombre de icono"
+                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-green-500 outline-none"
+                        value={editForm.icono || ''}
+                        onChange={e => setEditForm({ ...editForm, icono: e.target.value })}
+                      />
+                      <label className={`text-xs text-center py-1 px-2 border rounded cursor-pointer transition-colors ${
+                        isUploadingIcon ? 'bg-gray-100 text-gray-400' : 'bg-white hover:bg-gray-50 border-gray-300 text-gray-700'
+                      }`}>
+                        {isUploadingIcon ? 'Subiendo...' : 'Subir Imagen'}
+                        <input type="file" className="hidden" accept="image/*" onChange={handleIconUpload} disabled={isUploadingIcon} />
+                      </label>
+                    </div>
                   ) : (
-                    <span className="text-gray-500 bg-gray-100 px-2 py-1 rounded text-xs">{est.icono}</span>
+                    <div>
+                      {est.icono?.startsWith('http') ? (
+                        <img src={est.icono} alt="Icono" className="h-8 w-auto object-contain bg-gray-100 p-1 rounded" />
+                      ) : (
+                        <span className="text-gray-500 bg-gray-100 px-2 py-1 rounded text-xs">{est.icono}</span>
+                      )}
+                    </div>
                   )}
                 </td>
                 <td className="py-4 px-6 text-right">
@@ -247,14 +278,14 @@ export default function AdminEstadisticas() {
                     <div className="flex justify-end gap-2">
                       <button
                         onClick={saveEdit}
-                        disabled={isSaving}
+                        disabled={isSaving || isUploadingIcon}
                         className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50"
                       >
                         <Check size={18} />
                       </button>
                       <button
                         onClick={cancelEdit}
-                        disabled={isSaving}
+                        disabled={isSaving || isUploadingIcon}
                         className="p-1.5 text-gray-400 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
                       >
                         <X size={18} />

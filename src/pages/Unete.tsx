@@ -9,10 +9,10 @@ import { alianzasService } from '../application/contentService'
 import type { Alianza } from '../domain/entities'
 
 // Images
-import bannerUnete from '../assets/images/IMAGENES_LISTAS/banner-unete.png'
-import voluntariaUnete from '../assets/images/IMAGENES_LISTAS/voluntaria-unete.png'
-import embajadora from '../assets/images/IMAGENES_LISTAS/embajadora.png'
-import corporativa from '../assets/images/IMAGENES_LISTAS/corporativa.png'
+const bannerUnete = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const voluntariaUnete = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const embajadora = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const corporativa = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
 
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
 import { useTestimonios } from '../application/hooks/useTestimonios'
@@ -183,7 +183,7 @@ export default function Unete() {
                       {/* Imagen superior */}
                       <div className="h-56 relative overflow-hidden">
                         {item.foto_url ? (
-                          <img src={item.foto_url} alt={item.nombre} className="w-full h-full object-cover" />
+                          <img src={item.foto_url} alt={item.nombre} className="w-full h-full object-cover object-top" />
                         ) : (
                           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                             <span className="text-gray-400 text-xs">Sin Foto</span>

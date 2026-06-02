@@ -37,6 +37,13 @@ export default function AdminAjustes() {
   const [valor1Desc, setValor1Desc] = useState('')
   const [valor2Desc, setValor2Desc] = useState('')
   const [valor3Desc, setValor3Desc] = useState('')
+
+  const [valor1Icono, setValor1Icono] = useState('')
+  const [valor2Icono, setValor2Icono] = useState('')
+  const [valor3Icono, setValor3Icono] = useState('')
+  const [isUploadingV1, setIsUploadingV1] = useState(false)
+  const [isUploadingV2, setIsUploadingV2] = useState(false)
+  const [isUploadingV3, setIsUploadingV3] = useState(false)
   
   const [videoMp4, setVideoMp4] = useState('')
   const [videoWebm, setVideoWebm] = useState('')
@@ -65,6 +72,9 @@ export default function AdminAjustes() {
     const val1 = await configuracionService.getValor('quienes_valor_1_desc')
     const val2 = await configuracionService.getValor('quienes_valor_2_desc')
     const val3 = await configuracionService.getValor('quienes_valor_3_desc')
+    const ic1 = await configuracionService.getValor('quienes_valor_1_icono')
+    const ic2 = await configuracionService.getValor('quienes_valor_2_icono')
+    const ic3 = await configuracionService.getValor('quienes_valor_3_icono')
     const mp4 = await configuracionService.getValor('home_video_mp4')
     const webm = await configuracionService.getValor('home_video_webm')
     const imagen = await configuracionService.getValor('quienes_somos_imagen')
@@ -83,6 +93,9 @@ export default function AdminAjustes() {
     if (val1) setValor1Desc(val1)
     if (val2) setValor2Desc(val2)
     if (val3) setValor3Desc(val3)
+    if (ic1) setValor1Icono(ic1)
+    if (ic2) setValor2Icono(ic2)
+    if (ic3) setValor3Icono(ic3)
     if (mp4) setVideoMp4(mp4)
     if (webm) setVideoWebm(webm)
     if (imagen) setQuienesSomosImagen(imagen)
@@ -191,6 +204,37 @@ export default function AdminAjustes() {
     setUploadingPortada(null)
   }
 
+  const handleUploadIconoValor = async (e: React.ChangeEvent<HTMLInputElement>, valorNum: 1 | 2 | 3) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    
+    const setUploading = valorNum === 1 ? setIsUploadingV1 : valorNum === 2 ? setIsUploadingV2 : setIsUploadingV3
+    const setIcono = valorNum === 1 ? setValor1Icono : valorNum === 2 ? setValor2Icono : setValor3Icono
+    const clave = `quienes_valor_${valorNum}_icono`
+
+    setUploading(true)
+    setError(null)
+    
+    const { data, error: uploadError } = await storageService.subirImagenEnCarpeta('quienes-somos', file)
+    
+    if (uploadError || !data) {
+      setError(uploadError || `Error al subir ícono del valor ${valorNum}`)
+      setUploading(false)
+      return
+    }
+
+    const { error: confError } = await configuracionService.actualizar(clave, data.url)
+    if (confError) {
+      setError(`Error guardando ícono ${valorNum}: ` + confError.message)
+    } else {
+      setIcono(data.url)
+      setSuccessMessage(`¡Ícono de Valor ${valorNum} actualizado!`)
+      setTimeout(() => setSuccessMessage(null), 3000)
+    }
+    
+    setUploading(false)
+  }
+
   const handleSave = async () => {
     setSaving(true)
     setError(null)
@@ -208,7 +252,10 @@ export default function AdminAjustes() {
       configuracionService.actualizar('quienes_vision_texto', visionTexto),
       configuracionService.actualizar('quienes_valor_1_desc', valor1Desc),
       configuracionService.actualizar('quienes_valor_2_desc', valor2Desc),
-      configuracionService.actualizar('quienes_valor_3_desc', valor3Desc)
+      configuracionService.actualizar('quienes_valor_3_desc', valor3Desc),
+      configuracionService.actualizar('quienes_valor_1_icono', valor1Icono),
+      configuracionService.actualizar('quienes_valor_2_icono', valor2Icono),
+      configuracionService.actualizar('quienes_valor_3_icono', valor3Icono)
     ])
 
     setSuccessMessage('¡Cambios guardados correctamente!')
@@ -458,32 +505,71 @@ export default function AdminAjustes() {
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
+                <div className="bg-white p-3 border border-gray-200 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Valor 1 (Unidad)</label>
                   <input
                     type="text"
                     value={valor1Desc}
                     onChange={e => setValor1Desc(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm mb-3"
                   />
+                  <div className="flex items-center gap-3">
+                    {valor1Icono ? (
+                      <img src={valor1Icono} alt="Ico 1" className="w-8 h-8 object-contain bg-gray-100 rounded" />
+                    ) : (
+                      <div className="w-8 h-8 bg-gray-100 rounded border border-gray-200 flex items-center justify-center text-[10px] text-gray-400">N/A</div>
+                    )}
+                    <label className={`text-xs font-medium px-3 py-1.5 border border-gray-300 rounded cursor-pointer transition-colors ${
+                      isUploadingV1 ? 'bg-gray-100 text-gray-400' : 'bg-white hover:bg-gray-50'
+                    }`}>
+                      {isUploadingV1 ? 'Subiendo...' : 'Subir Ícono'}
+                      <input type="file" className="hidden" accept="image/*" onChange={e => handleUploadIconoValor(e, 1)} disabled={isUploadingV1} />
+                    </label>
+                  </div>
                 </div>
-                <div>
+                <div className="bg-white p-3 border border-gray-200 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Valor 2 (Transparencia)</label>
                   <input
                     type="text"
                     value={valor2Desc}
                     onChange={e => setValor2Desc(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm mb-3"
                   />
+                  <div className="flex items-center gap-3">
+                    {valor2Icono ? (
+                      <img src={valor2Icono} alt="Ico 2" className="w-8 h-8 object-contain bg-gray-100 rounded" />
+                    ) : (
+                      <div className="w-8 h-8 bg-gray-100 rounded border border-gray-200 flex items-center justify-center text-[10px] text-gray-400">N/A</div>
+                    )}
+                    <label className={`text-xs font-medium px-3 py-1.5 border border-gray-300 rounded cursor-pointer transition-colors ${
+                      isUploadingV2 ? 'bg-gray-100 text-gray-400' : 'bg-white hover:bg-gray-50'
+                    }`}>
+                      {isUploadingV2 ? 'Subiendo...' : 'Subir Ícono'}
+                      <input type="file" className="hidden" accept="image/*" onChange={e => handleUploadIconoValor(e, 2)} disabled={isUploadingV2} />
+                    </label>
+                  </div>
                 </div>
-                <div>
+                <div className="bg-white p-3 border border-gray-200 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Valor 3 (Sostenibilidad)</label>
                   <input
                     type="text"
                     value={valor3Desc}
                     onChange={e => setValor3Desc(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-sm mb-3"
                   />
+                  <div className="flex items-center gap-3">
+                    {valor3Icono ? (
+                      <img src={valor3Icono} alt="Ico 3" className="w-8 h-8 object-contain bg-gray-100 rounded" />
+                    ) : (
+                      <div className="w-8 h-8 bg-gray-100 rounded border border-gray-200 flex items-center justify-center text-[10px] text-gray-400">N/A</div>
+                    )}
+                    <label className={`text-xs font-medium px-3 py-1.5 border border-gray-300 rounded cursor-pointer transition-colors ${
+                      isUploadingV3 ? 'bg-gray-100 text-gray-400' : 'bg-white hover:bg-gray-50'
+                    }`}>
+                      {isUploadingV3 ? 'Subiendo...' : 'Subir Ícono'}
+                      <input type="file" className="hidden" accept="image/*" onChange={e => handleUploadIconoValor(e, 3)} disabled={isUploadingV3} />
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

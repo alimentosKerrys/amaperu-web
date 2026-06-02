@@ -5,9 +5,9 @@ import { useModal } from '../context/ModalContext'
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
 
 // Images
-import pagoBbva from '../assets/images/IMAGENES_LISTAS/pago-bbva.png'
-import pagoScotiabank from '../assets/images/IMAGENES_LISTAS/pago-scotiabank.png'
-import qrDonacion from '../assets/images/IMAGENES_LISTAS/qr-donacion.png'
+const pagoBbva = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const pagoScotiabank = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const qrDonacion = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
 
 type TabType = 'DIRECTO' | 'TARJETA'
 

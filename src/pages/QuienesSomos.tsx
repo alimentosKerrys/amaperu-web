@@ -7,13 +7,13 @@ import Button from '../components/ui/Button'
 import { useModal } from '../context/ModalContext'
 
 // Images
-import bannerQuienes from '../assets/images/IMAGENES_LISTAS/banner-quienes.png'
-import aboutThumb from '../assets/images/IMAGENES_LISTAS/about-thumb.png'
-import actividadChocolatada from '../assets/images/IMAGENES_LISTAS/actividad-chocolatada.png'
-import corporativa from '../assets/images/IMAGENES_LISTAS/corporativa.png'
+const bannerQuienes = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const aboutThumb = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const actividadChocolatada = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const corporativa = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
 
 import logoAmaVerde from '../assets/LOGO/LOGO AMA VERDE.png'
-import iconoPeruVerde from '../assets/ICONOSAMAWEB/ICONO PERU COLOR VERDESIMBOLO PERU AMA WEB.svg'
+import iconoPeruVerde from '../assets/ICONOSAMAWEB/MAPA DEL PERUICONOSAMAPERU.webp'
 
 const tabs = [
   { id: 'MISIÓN', label: 'Misión', Icon: Target },
@@ -43,6 +43,9 @@ export default function QuienesSomos() {
   const { valor: valor1Desc } = useConfiguracion('quienes_valor_1_desc')
   const { valor: valor2Desc } = useConfiguracion('quienes_valor_2_desc')
   const { valor: valor3Desc } = useConfiguracion('quienes_valor_3_desc')
+  const { valor: valor1Icono } = useConfiguracion('quienes_valor_1_icono')
+  const { valor: valor2Icono } = useConfiguracion('quienes_valor_2_icono')
+  const { valor: valor3Icono } = useConfiguracion('quienes_valor_3_icono')
 
   return (
     <main className="pt-[88px]">
@@ -199,13 +202,17 @@ export default function QuienesSomos() {
                     <>
                       <div className="flex flex-col gap-4 mb-8">
                         {[
-                          { Icon: Heart, label: 'Unidad', desc: valor1Desc || 'Trabajamos juntos como un solo equipo.' },
-                          { Icon: Eye, label: 'Transparencia', desc: valor2Desc || 'Actuamos con honestidad y rendición de cuentas.' },
-                          { Icon: Target, label: 'Sostenibilidad', desc: valor3Desc || 'Construimos con visión de largo plazo.' },
+                          { Icon: Heart, label: 'Unidad', desc: valor1Desc || 'Trabajamos juntos como un solo equipo.', customIco: valor1Icono },
+                          { Icon: Eye, label: 'Transparencia', desc: valor2Desc || 'Actuamos con honestidad y rendición de cuentas.', customIco: valor2Icono },
+                          { Icon: Target, label: 'Sostenibilidad', desc: valor3Desc || 'Construimos con visión de largo plazo.', customIco: valor3Icono },
                         ].map(v => (
                           <div key={v.label} className="flex items-start gap-4">
                             <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(141,198,63,0.15)' }}>
-                              <v.Icon size={18} style={{ color: 'var(--ama-green)' }} />
+                              {v.customIco ? (
+                                <img src={v.customIco} alt={v.label} className="w-5 h-5 object-contain" />
+                              ) : (
+                                <v.Icon size={18} style={{ color: 'var(--ama-green)' }} />
+                              )}
                             </div>
                             <div>
                               <p className="font-opensans font-bold text-ama-black">{v.label}</p>

@@ -5,7 +5,7 @@ import SectionHero from '../components/ui/SectionHero'
 import Button from '../components/ui/Button'
 
 // Images
-import bannerContacto from '../assets/images/IMAGENES_LISTAS/banner-contacto.png'
+import bannerContacto from '../assets/images/IMAGENES_LISTAS/banner-contacto.webp'
 import voluntarioCasco from '../assets/images/IMAGENES_LISTAS/imagen para contactos webp.webp'
 import { useConfiguracion } from '../application/hooks/useConfiguracion'
 

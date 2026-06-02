@@ -512,3 +512,35 @@ Todas las imágenes están en: `src/assets/images/IMAGENES_LISTAS/`
 
 
 *Última actualización: Mayo 2026*
+
+---
+
+## 🔒 CREDENCIALES DEL BACKEND (InsForge)
+
+| Variable | Valor |
+|---|---|
+| `VITE_INSFORGE_URL` | `https://6une5had.us-east.insforge.app` |
+| `VITE_INSFORGE_ANON_KEY` | `ik_ba0ebf986a048f886ae35905ed3d9e49` |
+| `JWT anon` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OC0xMjM0LTU2NzgtOTBhYi1jZGVmMTIzNDU2NzgiLCJlbWFpbCI6ImFub25AaW5zZm9yZ2UuY29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwODY4ODZ9.3y9ny1tF8UQnxRb715rvDssGcbEY6T_JWlZ5cch71DI` |
+| DB Connection | `postgresql://postgres:fc9d44268a08265d3ebedb29679e0d2b@6une5had.us-east.database.insforge.app:5432/insforge?sslmode=require` |
+| Admin email | `alimentoskerrys@gmail.com` |
+| Bucket storage | `amaperu-media` |
+| Edge Function proxy | `https://mss5tk9f.functions.insforge.app/upload-image` |
+
+> ⚠️ Las variables `VITE_*` viven en `.env` (ignorado por Git). En Cloudflare deben configurarse como Secrets.
+
+---
+
+## 📊 ESTADO DE BASE DE DATOS Y CMS
+
+| Tabla / Sección | Registros | Admin Editor |
+|---|---|---|
+| `hero_slides` | 3 ✅ | `AdminHeroSlider.tsx` ✅ |
+| `proyectos` | 3 ✅ | `AdminProgramas.tsx` ✅ |
+| `estadisticas` | 4 ✅ | `AdminEstadisticas.tsx` ✅ |
+| `equipo` | >0 ✅ | `AdminEquipo.tsx` ✅ |
+| `noticias` | >0 ✅ | `AdminNoticias.tsx` ✅ |
+| `testimonios` | >0 ✅ | `AdminTestimonios.tsx` ✅ |
+| `productos` | >0 ✅ | `AdminProductos.tsx` ✅ (Tienda en 2do plano) |
+| `alianzas` | >0 ✅ | `AdminAlianzas.tsx` ✅ |
+| `configuracion_global` | >20 ✅ | `AdminAjustes.tsx` ✅ |

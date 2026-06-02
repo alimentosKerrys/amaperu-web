@@ -3,10 +3,10 @@ import { noticiasService } from '../contentService'
 import type { Noticia } from '../../domain/entities'
 
 // Fallback images
-import noticia1 from '../../assets/images/IMAGENES_LISTAS/noticia-1.png'
-import noticia2 from '../../assets/images/IMAGENES_LISTAS/noticia-2.png'
-import noticia3 from '../../assets/images/IMAGENES_LISTAS/noticia-3.png'
-import noticia4 from '../../assets/images/IMAGENES_LISTAS/noticia-4.png'
+import noticia1 from '../../assets/images/IMAGENES_LISTAS/noticia-1.webp'
+import noticia2 from '../../assets/images/IMAGENES_LISTAS/noticia-2.webp'
+import noticia3 from '../../assets/images/IMAGENES_LISTAS/noticia-3.webp'
+import noticia4 from '../../assets/images/IMAGENES_LISTAS/noticia-4.webp'
 
 const FALLBACK_NOTICIAS: Noticia[] = [
   {
