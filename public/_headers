@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com; img-src 'self' data: https: blob:; media-src 'self' https://*.insforge.app blob: data:; frame-src 'self' https://www.youtube.com; connect-src 'self' https://*.insforge.app wss://*.insforge.app;
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com; img-src 'self' data: https: blob:; media-src 'self' https://*.insforge.app https://*.insforge.dev blob: data:; frame-src 'self' https://www.youtube.com; connect-src 'self' https://*.insforge.app wss://*.insforge.app https://*.insforge.dev wss://*.insforge.dev;
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
