@@ -29,7 +29,7 @@ export default function ProductCard({ image, name, price }: ProductCardProps) {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        <img src={image} alt={name} className="w-full h-full object-cover" />
+        <img src={image} alt={name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
         <motion.div
           initial={false}
           animate={{ opacity: hovered ? 1 : 0 }}

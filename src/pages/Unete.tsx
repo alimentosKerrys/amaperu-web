@@ -69,6 +69,8 @@ export default function Unete() {
               src={loadingVoluntariado ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgVoluntariado || voluntariaUnete)} 
               alt="Voluntaria AMA PERÚ" 
               className={`w-full h-full object-cover transform hover:scale-105 transition-transform duration-700 ${loadingVoluntariado ? 'bg-gray-200 animate-pulse' : ''}`} 
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -183,7 +185,7 @@ export default function Unete() {
                       {/* Imagen superior */}
                       <div className="h-56 relative overflow-hidden">
                         {item.foto_url ? (
-                          <img src={item.foto_url} alt={item.nombre} className="w-full h-full object-cover object-top" />
+                          <img src={item.foto_url} alt={item.nombre} className="w-full h-full object-cover object-top" loading="lazy" decoding="async" />
                         ) : (
                           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                             <span className="text-gray-400 text-xs">Sin Foto</span>
@@ -277,6 +279,8 @@ export default function Unete() {
               src={loadingEmbajadora ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgEmbajadora || embajadora)} 
               alt="Embajadora AMA PERÚ" 
               className={`w-full h-full object-cover transform hover:scale-105 transition-transform duration-700 ${loadingEmbajadora ? 'bg-gray-200 animate-pulse' : ''}`} 
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
         </div>
@@ -297,6 +301,8 @@ export default function Unete() {
               src={loadingCorporativa ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgCorporativa || corporativa)} 
               alt="Empresa voluntaria AMA PERÚ" 
               className={`w-full h-full object-cover transform hover:scale-105 transition-transform duration-700 ${loadingCorporativa ? 'bg-gray-200 animate-pulse' : ''}`} 
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -363,6 +369,8 @@ export default function Unete() {
                 src={imgAlianzasGrupal} 
                 alt="Alianzas y Convenios AMA PERÚ" 
                 className="w-full max-w-5xl h-auto object-contain"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           ) : (
@@ -374,7 +382,7 @@ export default function Unete() {
                   className="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 cursor-pointer"
                 >
                   {a.logo_url ? (
-                    <img src={a.logo_url} alt={a.nombre} className="h-20 md:h-24 w-auto object-contain" />
+                    <img src={a.logo_url} alt={a.nombre} className="h-20 md:h-24 w-auto object-contain" loading="lazy" decoding="async" />
                   ) : (
                     <div className="font-opensans-condensed font-black text-2xl text-ama-gray-mid hover:text-ama-green transition-colors px-4">
                       {(a as any).display || a.nombre}

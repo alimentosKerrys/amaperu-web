@@ -162,7 +162,7 @@ export default function Home() {
             transition={{ duration: 0.7, ease: 'easeInOut' }}
             className="absolute inset-0"
           >
-            <img src={slides[current]?.imagen_url} alt={`Slide ${slides[current]?.orden}`} className="w-full h-full object-cover" />
+            <img src={slides[current]?.imagen_url} alt={`Slide ${slides[current]?.orden}`} className="w-full h-full object-cover" fetchPriority="high" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
           </motion.div>
         </AnimatePresence>
@@ -259,7 +259,7 @@ export default function Home() {
             ) : (
               // Imagen estática (fallback mientras no haya video)
               <>
-                <img src={aboutThumb} alt="AMA PERÚ equipo" className="w-full h-full object-cover" />
+                <img src={aboutThumb} alt="AMA PERÚ equipo" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="absolute bottom-6 left-6">
                   <div className="font-opensans font-black text-white text-3xl leading-none">AMA</div>
@@ -360,6 +360,8 @@ export default function Home() {
                   src={loadingProgramas ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : activeProgramaData.image}
                   alt={activeProgramaData.title}
                   className={`absolute inset-0 w-full h-full object-cover ${loadingProgramas ? 'bg-gray-200 animate-pulse' : ''}`}
+                  loading="lazy"
+                  decoding="async"
                 />
               </AnimatePresence>
 
@@ -489,6 +491,8 @@ export default function Home() {
                   src={loadingProgramas ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : activeProgramaData.image}
                   alt={activeProgramaData.title}
                   className={`absolute inset-0 w-full h-full object-cover rounded-b-3xl ${loadingProgramas ? 'bg-gray-200 animate-pulse' : ''}`}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -539,7 +543,7 @@ export default function Home() {
               <div
                 className="absolute bottom-[-5%] left-[-25%] w-[140%] aspect-square rounded-full border border-[#c4df82] z-0"
               />
-              <img src={voluntarioCasco} alt="Voluntario AMA" className="relative z-10 w-full object-contain drop-shadow-2xl" />
+              <img src={voluntarioCasco} alt="Voluntario AMA" className="relative z-10 w-full object-contain drop-shadow-2xl" loading="lazy" decoding="async" />
             </div>
           </motion.div>
 
@@ -620,6 +624,8 @@ export default function Home() {
             src={statsBgValor || programaAsiste}
             alt="Estadísticas AMA PERÚ"
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-black/55" />
         </div>
