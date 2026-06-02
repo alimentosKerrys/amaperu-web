@@ -149,6 +149,18 @@
 - **Causa:** El diseño requería un campo de texto alternativo para alianzas sin logo, pero la interfaz en `entities.ts` no lo incluía.
 - **Solución:** Agregado `display?: string` a la interfaz `Alianza` y aplicado casteo `as any` en componentes de UI como medida de seguridad para evitar bloqueos del compilador por caché de tipos.
 
+### [S-22] CSP bloqueando fuentes, scripts y videos en producción
+- **Error:** `Content Security Policy directive: "default-src 'self' 'unsafe-inline' 'unsafe-eval'"` y `media-src 'self' https://*.insforge.app blob: data:` en producción.
+- **Causa:** El servidor de desarrollo (localhost) ignora las reglas de CSP definidas en `public/_headers`, pero en producción, Cloudflare Pages restringe los recursos externos como Google Fonts, Cloudflare Insights y videos cargados desde la CDN.
+- **Solución:** Se actualizó `public/_headers` para incluir explícitamente `https://fonts.googleapis.com`, `https://fonts.gstatic.com`, `https://static.cloudflareinsights.com` y `https://*.insforge.dev` en las directivas `style-src`, `font-src`, `script-src` y `media-src` respectivamente.
+- **Archivo:** `public/_headers`
+
+### [S-23] Google Maps bloqueado en página de Contáctanos
+- **Error:** `Framing 'https://www.google.com/' violates the following Content Security Policy directive: "frame-src 'self' https://www.youtube.com"`
+- **Causa:** Misma causa que [S-22]. La directiva `frame-src` no permitía iframes desde `google.com`.
+- **Solución:** Se agregó `https://www.google.com` a la directiva `frame-src` en `public/_headers`.
+- **Archivo:** `public/_headers`
+
 ---
 
 ## ⚠️ PENDIENTE — Storage 403 (prioridad ALTA)
