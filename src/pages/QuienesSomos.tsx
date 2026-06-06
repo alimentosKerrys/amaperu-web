@@ -257,7 +257,7 @@ export default function QuienesSomos() {
       </section>
 
       {/* ===== EQUIPO ===== */}
-      <section className="py-20 px-4">
+      {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -285,7 +285,7 @@ export default function QuienesSomos() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   )
 }

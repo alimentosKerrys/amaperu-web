@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { to: '/admin/noticias', label: 'Noticias', icon: Newspaper },
   { to: '/admin/programas', label: 'Programas', icon: FolderKanban },
+  { to: '/admin/proyectos', label: 'Proyectos', icon: FolderKanban },
   { to: '/admin/equipo', label: 'Equipo', icon: Users },
   { to: '/admin/tienda', label: 'Tienda', icon: ShoppingBag },
   { to: '/admin/estadisticas', label: 'Estadísticas', icon: BarChart3 },

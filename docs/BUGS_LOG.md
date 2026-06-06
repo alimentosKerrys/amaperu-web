@@ -161,6 +161,42 @@
 - **Solución:** Se agregó `https://www.google.com` a la directiva `frame-src` en `public/_headers`.
 - **Archivo:** `public/_headers`
 
+### [S-24] Módulo de Proyectos Separado de Programas
+- **Error/Problema:** Los proyectos de infraestructura física (Parque Apu, Campo Q'umir) estaban acoplados en el CMS con las tres categorías de programas base (Construye, Conecta, Asiste), dificultando su gestión y edición independiente de presupuestos y metas financieras.
+- **Causa:** Acoplamiento conceptual y técnico en la interfaz de administración y base de datos.
+- **Solución:** Se creó un nuevo módulo `AdminProyectos.tsx`, se aislaron los programas en `AdminProgramas.tsx` utilizando un filtro para conservar sólo los 3 base, y se implementó una página pública `/proyectos` dedicada a renderizar los proyectos de construcción con sus barras de progreso financieras dinámicas.
+- **Archivos:** `src/App.tsx`, `src/admin/components/AdminLayout.tsx`, `src/admin/pages/AdminDashboard.tsx`, `src/admin/pages/AdminAjustes.tsx`, `src/admin/pages/AdminProgramas.tsx`, `src/admin/pages/AdminProyectos.tsx`, `src/pages/Proyectos.tsx`
+
+### [S-25] Gestión de Beneficiados mediante JSON Dinámico
+- **Error/Problema:** Las historias de impacto de personas beneficiadas en la página de programas requerían persistencia dinámica, pero no existía una tabla específica en la base de datos para este fin, y crear esquemas dinámicos para textos alternos era propenso a errores.
+- **Causa:** Necesidad de simplificar el modelo relacional sin añadir tablas vacías o complejas de migrar en InsForge.
+- **Solución:** Se implementó `beneficiadosService` en `contentService.ts` para guardar la lista completa de beneficiados serializada como un string JSON en `configuracion_global` bajo la clave `'beneficiados_programas'`. El frontend consume y parsea este valor de forma transparente.
+- **Archivos:** `src/domain/entities.ts`, `src/application/contentService.ts`, `src/pages/Programas.tsx`
+
+### [S-26] Inconsistencias de Estilo en Botones de Donación (CTAs)
+- **Error/Problema:** Los botones de "Dona Ahora" en el Navbar y secciones de pie de página se visualizaban con bordes redondeados (`rounded-full`) y tipografías genéricas, lo cual rompía la consistencia con la tipografía de marca `Quicksand` y la directriz de botones rectangulares.
+- **Causa:** Clases de Tailwind antiguas o sin unificar.
+- **Solución:** Se modificó la UI de los botones "Dona Ahora" para implementar `font-quicksand font-bold rounded-none tracking-widest uppercase border-none shadow-md hover:-translate-y-0.5`, logrando coherencia visual premium en todo el sitio.
+- **Archivos:** `src/components/layout/Navbar.tsx`
+
+### [S-27] Ocultar Sección de Equipo Temporalmente
+- **Error/Problema:** La sección de equipo en la vista "¿Quiénes Somos?" mostraba información genérica o de relleno, afectando la credibilidad del sitio mientras se recopilan los datos reales del equipo de AMA PERÚ.
+- **Causa:** Falta de información del staff en producción.
+- **Solución:** Se envolvió la sección `<section className="py-20 px-4">` en comentarios de TSX `{/* ... */}` para removerla temporalmente del flujo de renderizado de forma reversible.
+- **Archivos:** `src/pages/QuienesSomos.tsx`
+
+### [S-28] Color de Marca Desactualizado en Programas
+- **Error/Problema:** Los esquineros decorativos (ladrillos SVG) y el botón de cerrar en el acordeón de programas de `Programas.tsx` mantenían el color morado de la marca anterior (`#85348b`).
+- **Causa:** Clases `bg-[#85348b]` y `text-[#85348b]` hardcodeadas en el componente.
+- **Solución:** Se reemplazaron estas clases por `bg-ama-green` y `text-ama-green` para uniformar las interacciones visuales con la identidad verde oficial de la asociación.
+- **Archivos:** `src/pages/Programas.tsx`
+
+### [S-29] Falta de Visualización de Estado en Proyectos en Curso
+- **Error/Problema:** Las tarjetas de la página pública `/proyectos` no indicaban de forma explícita y rápida el estado de ejecución de cada obra ("En Proceso" o "Ejecutado").
+- **Causa:** Propiedad ausente en la entidad estática y en el renderizado de la UI.
+- **Solución:** Se agregó la propiedad opcional `estado` a la interfaz `Proyecto` y a la constante `PROYECTOS_STATIC`. Se implementó un badge secundario junto al título principal con colores condicionales (`bg-orange-500` para "En Proceso" y `bg-blue-600` para "Ejecutado").
+- **Archivos:** `src/domain/entities.ts`, `src/pages/Proyectos.tsx`
+
 ---
 
 ## ⚠️ PENDIENTE — Storage 403 (prioridad ALTA)

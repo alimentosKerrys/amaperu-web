@@ -122,3 +122,10 @@ export interface ConfiguracionGlobal {
   valor: string
   updated_at: string
 }
+
+export interface Beneficiado {
+  nombre: string
+  historia: string
+  programa: 'construye' | 'conecta' | 'asiste'
+  foto_url?: string
+}

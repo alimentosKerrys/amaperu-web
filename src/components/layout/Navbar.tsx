@@ -9,6 +9,13 @@ import { useModal } from '../../context/ModalContext'
 import logoVerde from '../../assets/LOGO/LOGO AMA VERDE.avif'
 import logoBlanco from '../../assets/LOGO/LOGO AMA BLANCO.avif'
 
+// TikTok icon (custom SVG)
+const TikTokIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.95a8.16 8.16 0 004.77 1.52V7.03a4.85 4.85 0 01-1-.34z"/>
+  </svg>
+)
+
 const NAV_LINKS = [
   { label: 'Inicio', to: '/' },
   {
@@ -28,6 +35,10 @@ const NAV_LINKS = [
       { label: 'Asiste', to: '/programas' },
       { label: 'Nuevos Proyectos', to: '/programas' },
     ],
+  },
+  {
+    label: 'Proyectos',
+    to: '/proyectos',
   },
   {
     label: 'Únete',
@@ -175,6 +186,9 @@ export default function Navbar() {
               <a href="#" className="w-8 h-8 rounded-full border border-white/60 flex items-center justify-center hover:bg-white hover:text-ama-green transition-colors">
                 <Linkedin size={14} />
               </a>
+              <a href="#" className="w-8 h-8 rounded-full border border-white/60 flex items-center justify-center hover:bg-white hover:text-ama-green transition-colors">
+                <TikTokIcon />
+              </a>
             </div>
 
             <div className="h-6 w-px bg-white/30 hidden xl:block"></div>
@@ -194,7 +208,7 @@ export default function Navbar() {
             
             <button
               onClick={() => openModal()}
-              className="bg-white text-ama-green font-opensans font-bold text-xs px-5 py-2.5 rounded-full hover:bg-gray-100 transition-colors tracking-wider flex items-center gap-2 ml-1"
+              className="bg-white text-ama-green font-quicksand font-bold text-xs px-6 py-2.5 rounded-none hover:bg-gray-100 transition-all duration-300 tracking-widest uppercase flex items-center gap-2 ml-1 border-none hover:-translate-y-0.5 shadow-md"
             >
               <Heart size={14} className="fill-ama-green" />
               DONA AHORA
@@ -267,7 +281,7 @@ export default function Navbar() {
                   </Link>
                   <button
                     onClick={() => { openModal(); setMobileOpen(false) }}
-                    className="w-full bg-ama-green text-white font-opensans-condensed font-bold py-3 rounded-full hover:bg-ama-green-dark transition-colors tracking-wider"
+                    className="w-full bg-ama-green text-white font-quicksand font-bold py-3 rounded-none hover:bg-ama-green-dark transition-all duration-300 tracking-widest uppercase border-none shadow-md hover:-translate-y-0.5 flex justify-center items-center gap-2"
                   >
                     DONA AHORA
                   </button>

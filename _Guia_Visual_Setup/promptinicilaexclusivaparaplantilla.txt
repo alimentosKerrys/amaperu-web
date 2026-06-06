@@ -1,3 +1,4 @@
+```
 Por favor, actúa como Arquitecto de Configuración. Acabo de traerme mi plantilla maestra en la carpeta `_Guia_Visual_Setup`. 
 Necesito que leas todos los archivos dentro de esa carpeta (del 1 al 7) y repliques exactamente todo este entorno en este nuevo proyecto:
 1. Crea el archivo `.agrules` en la raíz con el contenido del paso 1.

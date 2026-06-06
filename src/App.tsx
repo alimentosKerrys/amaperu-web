@@ -10,6 +10,7 @@ import ModalPago from './components/ModalPago'
 import Home from './pages/Home'
 import QuienesSomos from './pages/QuienesSomos'
 import Programas from './pages/Programas'
+import Proyectos from './pages/Proyectos'
 import Unete from './pages/Unete'
 import Noticias from './pages/Noticias'
 import Contactanos from './pages/Contactanos'
@@ -32,6 +33,7 @@ import AdminAjustes from './admin/pages/AdminAjustes'
 import AdminAlianzas from './admin/pages/AdminAlianzas'
 import AdminTestimonios from './admin/pages/AdminTestimonios'
 import AdminDonaciones from './admin/pages/AdminDonaciones'
+import AdminProyectos from './admin/pages/AdminProyectos'
 
 // ---- Sitio Público ----
 function AnimatedRoutes() {
@@ -49,6 +51,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/quienes-somos" element={<QuienesSomos />} />
           <Route path="/programas" element={<Programas />} />
+          <Route path="/proyectos" element={<Proyectos />} />
           <Route path="/unete" element={<Unete />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/contactanos" element={<Contactanos />} />
@@ -87,6 +90,7 @@ function AdminRoutes() {
           {/* Módulos — se irán añadiendo aquí */}
           <Route path="noticias" element={<AdminNoticias />} />
           <Route path="programas" element={<AdminProgramas />} />
+          <Route path="proyectos" element={<AdminProyectos />} />
           <Route path="equipo" element={<AdminEquipo />} />
           <Route path="tienda" element={<AdminProductos />} />
           <Route path="estadisticas" element={<AdminEstadisticas />} />

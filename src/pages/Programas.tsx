@@ -1,122 +1,60 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Users, Plus, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Plus, X, Quote } from 'lucide-react'
 import SectionHero from '../components/ui/SectionHero'
-import Button from '../components/ui/Button'
 import { useModal } from '../context/ModalContext'
+import { useConfiguracion } from '../application/hooks/useConfiguracion'
+import { beneficiadosService } from '../application/contentService'
+import type { Beneficiado } from '../domain/entities'
 
-// Images
-const bannerProgramas = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const programaConstruye = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const programaConecta = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const programaAsiste = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const parqueApuRender = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const campoQumirRender = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const actividadChocolatada = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const actividadPiedraApu = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const actividadPiedraQumir = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
-const voluntarioCasco = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E";
+const placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' fill='%2394a3b8' font-family='sans-serif' font-size='32' text-anchor='middle' dy='.3em'%3ECargando...%3C/text%3E%3C/svg%3E"
 
-const programas = [
+const PROGRAMAS_STATIC = [
   {
     key: 'construye',
-    image: programaConstruye,
     title: 'CONSTRUYE',
     desc: 'Construimos espacios recreativos y deportivos en zonas vulnerables, levantando infraestructura social con voluntarios y la comunidad.',
   },
   {
     key: 'conecta',
-    image: programaConecta,
     title: 'CONECTA',
     desc: 'Brindamos ayuda a la población vulnerable, asistiendo de manera directa los casos de emergencia social, mediante donaciones y talleres.',
   },
   {
     key: 'asiste',
-    image: programaAsiste,
     title: 'ASISTE',
     desc: 'Asistimos directamente a las comunidades que lo necesitan, llevando apoyo logístico, material y humano donde más se requiere.',
   },
 ]
 
-const proyectos = [
-  {
-    badge: 'Parques Multifuncionales',
-    image: parqueApuRender,
-    title: 'PARQUE APU',
-    location: 'Asociación Hijos de Apurímac - Ate, Lima - Perú',
-    beneficiarios: '3500 Familias',
-    progress: 1,
-    presupuesto: 'S/.1,000,000',
-    recaudado: 'S/.10,500',
-    pendiente: 'S/.989,500',
-  },
-  {
-    badge: 'Parques Multifuncionales',
-    image: campoQumirRender,
-    title: "CAMPO DEPORTIVO Q'UMIR PALAO",
-    location: 'AA.HH. 15 de Enero Mz. P - SJL., Lima - Perú',
-    beneficiarios: '2500 Familias',
-    progress: 5,
-    presupuesto: 'S/.200,000',
-    recaudado: 'S/.10,500',
-    pendiente: 'S/.189,500',
-  },
-]
-
-const actividades = [
-  {
-    date: '09/12/2021',
-    image: actividadChocolatada,
-    title: 'Chocolatada Navideña para niños',
-    desc: 'Realizamos una chocolatada navideña para 250 niños con el apoyo de Norkys, Autoniza y la Municipalidad de Ate.',
-  },
-  {
-    date: '02/12/2021',
-    image: actividadPiedraApu,
-    title: '1ra piedra "Parque Apú"',
-    desc: 'Participamos en la colocación de la primera piedra en el Asociación Hijos de Apurimac en Ate, Lima - Perú.',
-  },
-  {
-    date: '25/11/2021',
-    image: actividadPiedraQumir,
-    title: "1ra Piedra Campo deportivo \"Q'umir Palao\"",
-    desc: 'Participamos en la colocación de la primera piedra en el AA.HH. 5 de Enero en SJL, Lima - Perú.',
-  },
-]
-
-import { useConfiguracion } from '../application/hooks/useConfiguracion'
+const PROGRAMA_COLORS: Record<string, string> = {
+  construye: '#8DC63F',
+  conecta: '#3f8dc6',
+  asiste: '#c67a3f',
+}
 
 export default function Programas() {
   const [openProg, setOpenProg] = useState<string>('conecta')
+  const [beneficiados, setBeneficiados] = useState<Beneficiado[]>([])
+  const [loadingBenef, setLoadingBenef] = useState(true)
   const { openModal } = useModal()
 
   const { valor: portadaProgramas, loading: loadingPortada } = useConfiguracion('portada_programas')
-
   const { valor: imgProgConstruye, loading: l1 } = useConfiguracion('img_prog_construye')
   const { valor: imgProgConecta, loading: l2 } = useConfiguracion('img_prog_conecta')
   const { valor: imgProgAsiste, loading: l3 } = useConfiguracion('img_prog_asiste')
-  const { valor: imgNuevoProy, loading: lNuevoProy } = useConfiguracion('img_prog_nuevo_proy')
-  const { valor: imgParqueApu, loading: l4 } = useConfiguracion('img_prog_parque_apu')
-  const { valor: imgCampoQumir, loading: l5 } = useConfiguracion('img_prog_campo_qumir')
-  const { valor: imgActChoco, loading: l6 } = useConfiguracion('img_prog_act_choco')
-  const { valor: imgActPiedraApu, loading: l7 } = useConfiguracion('img_prog_act_piedra_apu')
-  const { valor: imgActPiedraQumir, loading: l8 } = useConfiguracion('img_prog_act_piedra_qumir')
+
+  useEffect(() => {
+    beneficiadosService.getAll().then(data => {
+      setBeneficiados(data)
+      setLoadingBenef(false)
+    })
+  }, [])
 
   const programasMerged = [
-    { ...programas[0], image: imgProgConstruye || programas[0].image, loading: l1 },
-    { ...programas[1], image: imgProgConecta || programas[1].image, loading: l2 },
-    { ...programas[2], image: imgProgAsiste || programas[2].image, loading: l3 },
-  ]
-
-  const proyectosMerged = [
-    { ...proyectos[0], image: imgParqueApu || proyectos[0].image, loading: l4 },
-    { ...proyectos[1], image: imgCampoQumir || proyectos[1].image, loading: l5 },
-  ]
-
-  const actividadesMerged = [
-    { ...actividades[0], image: imgActChoco || actividades[0].image, loading: l6 },
-    { ...actividades[1], image: imgActPiedraApu || actividades[1].image, loading: l7 },
-    { ...actividades[2], image: imgActPiedraQumir || actividades[2].image, loading: l8 },
+    { ...PROGRAMAS_STATIC[0], image: imgProgConstruye || placeholder, loading: l1 },
+    { ...PROGRAMAS_STATIC[1], image: imgProgConecta || placeholder, loading: l2 },
+    { ...PROGRAMAS_STATIC[2], image: imgProgAsiste || placeholder, loading: l3 },
   ]
 
   return (
@@ -124,7 +62,7 @@ export default function Programas() {
       <SectionHero
         title="PROGRAMAS"
         breadcrumb={['Inicio', 'Programas']}
-        backgroundImage={portadaProgramas || bannerProgramas}
+        backgroundImage={portadaProgramas || placeholder}
         isLoading={loadingPortada}
       />
 
@@ -147,9 +85,8 @@ export default function Programas() {
                   layout
                   className={`relative rounded-xl overflow-hidden cursor-pointer shadow-lg flex flex-col md:flex-row ${isOpen ? 'md:w-1/2 h-[500px] md:h-auto' : 'md:w-1/4 h-[200px] md:h-auto'}`}
                   onClick={() => { if (!isOpen) setOpenProg(prog.key) }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
                 >
-                  {/* Imagen */}
                   <motion.div
                     layout
                     className={`relative ${isOpen ? 'w-full h-1/2 md:h-full md:w-1/2' : 'w-full h-full'}`}
@@ -157,11 +94,10 @@ export default function Programas() {
                     <img
                       src={prog.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : prog.image}
                       alt={prog.title}
-                      className={`w-full h-full object-cover transition-all duration-500 relative z-0 ${prog.loading ? 'bg-gray-200 animate-pulse' : ''} ${isOpen ? 'grayscale' : ''}`}
+                      className={`w-full h-full object-cover transition-all duration-500 ${prog.loading ? 'bg-gray-200 animate-pulse' : ''} ${isOpen ? 'grayscale' : ''}`}
                     />
                     {!isOpen && <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors" />}
 
-                    {/* Título en card inactivo */}
                     <AnimatePresence>
                       {!isOpen && (
                         <motion.h3
@@ -175,23 +111,16 @@ export default function Programas() {
                       )}
                     </AnimatePresence>
 
-                    {/* Botón Flotante (+ / x) */}
                     <div
-                      className={`absolute bottom-6 right-0 h-12 md:h-14 w-16 md:w-20 rounded-l-full flex items-center justify-start pl-2 md:pl-3 z-20 transition-colors duration-300 ${isOpen ? 'bg-[#85348b] cursor-pointer' : 'bg-ama-green'}`}
-                      onClick={(e) => {
-                        if (isOpen) {
-                          e.stopPropagation()
-                          setOpenProg('')
-                        }
-                      }}
+                      className={`absolute bottom-6 right-0 h-12 md:h-14 w-16 md:w-20 rounded-l-full flex items-center justify-start pl-2 md:pl-3 z-20 transition-colors duration-300 bg-ama-green ${isOpen ? 'cursor-pointer' : ''}`}
+                      onClick={e => { if (isOpen) { e.stopPropagation(); setOpenProg('') } }}
                     >
-                      <div className={`w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center ${isOpen ? 'text-[#85348b]' : 'text-ama-green'}`}>
+                      <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center text-ama-green">
                         {isOpen ? <X size={24} strokeWidth={4} /> : <Plus size={24} strokeWidth={4} />}
                       </div>
                     </div>
                   </motion.div>
 
-                  {/* Panel de Texto */}
                   <AnimatePresence>
                     {isOpen && (
                       <motion.div
@@ -202,12 +131,7 @@ export default function Programas() {
                         transition={{ duration: 0.4 }}
                         className="bg-white relative overflow-hidden flex flex-col justify-center px-6 md:px-10 py-6 w-full h-1/2 md:h-full md:w-1/2"
                       >
-                        {/* Forma morada esquina superior derecha */}
-                        <svg
-                          className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 text-[#85348b]"
-                          viewBox="0 0 100 100"
-                          fill="currentColor"
-                        >
+                        <svg className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 text-ama-green" viewBox="0 0 100 100" fill="currentColor">
                           <rect x="0" y="0" width="68" height="18" rx="3" />
                           <rect x="71" y="0" width="29" height="18" rx="3" />
                           <rect x="20" y="20" width="30" height="18" rx="3" />
@@ -217,7 +141,6 @@ export default function Programas() {
                           <rect x="61" y="60" width="39" height="18" rx="3" />
                           <rect x="89" y="80" width="11" height="18" rx="3" />
                         </svg>
-
                         <h3 className="font-opensans font-black text-ama-black text-[32px] md:text-4xl mb-4 relative z-10 capitalize">
                           {prog.title.toLowerCase()}
                         </h3>
@@ -227,7 +150,6 @@ export default function Programas() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-
                 </motion.div>
               )
             })}
@@ -235,192 +157,90 @@ export default function Programas() {
         </div>
       </section>
 
-      {/* ===== NUEVOS PROYECTOS ===== */}
-      <section className="py-20 px-4" style={{ background: 'var(--ama-gray-light)' }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Label removed as requested */}
-            {/* Título con misma escala que AMA/PERÚ del Home */}
-            <h2
-              className="font-opensans font-black text-ama-black uppercase mb-6"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}
-            >
-              NUEVOS<br /><span style={{ color: 'var(--ama-green)' }}>PROYECTOS</span>
-            </h2>
-            <p className="font-opensans text-ama-gray-dark font-medium text-[1.05rem] leading-[1.8] mb-4">
-              Debido a la carencia de espacios recreativos nace el programa &quot;Parques Multifuncionales&quot;, para promover la construcción de campos deportivos y parques para incentivar el deporte, arte y cultura en los niños, jóvenes y sus familias generando una sociedad con mayor igualdad de oportunidades.
-            </p>
-            <p className="font-opensans text-ama-gray-dark font-medium text-[1.05rem] leading-[1.8]">
-              Estamos en el proceso de construcción de parques que cuenten con espacios para impulsar el deporte, espacios recreativos, espacios para actividades culturales y una biblioteca.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="rounded-2xl overflow-hidden shadow-xl relative"
-            style={{ aspectRatio: '4/3' }}
-          >
-            <img
-              src={lNuevoProy ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : (imgNuevoProy || voluntarioCasco)}
-              alt="Voluntarios revisando planos"
-              className={`w-full h-full object-cover relative z-0 ${lNuevoProy ? 'bg-gray-200 animate-pulse' : ''}`}
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ===== CARDS PROYECTOS ===== */}
-      <section className="py-20 px-4">
+      {/* ===== BENEFICIADOS ===== */}
+      <section className="py-20 px-4 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          {/* Encabezado introductorio */}
-          <div className="text-center mb-12">
-            <span className="inline-block font-opensans-condensed font-bold text-xs tracking-[0.25em] uppercase px-4 py-1.5 rounded-full mb-4" style={{ background: 'rgba(141,198,63,0.12)', color: 'var(--ama-green)' }}>
-              Parques Multifuncionales
-            </span>
-            <h2
-              className="font-opensans-condensed font-black text-ama-black uppercase"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}
+          <div className="text-center mb-14">
+            <span
+              className="inline-block font-opensans-condensed font-bold text-xs tracking-[0.25em] uppercase px-4 py-1.5 rounded-full mb-4"
+              style={{ background: 'rgba(141,198,63,0.12)', color: 'var(--ama-green)' }}
             >
-              PROYECTOS EN <span style={{ color: 'var(--ama-green)' }}>CURSO</span>
+              Impacto Real
+            </span>
+            <h2 className="font-opensans-condensed font-black text-ama-black uppercase" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+              PERSONAS <span style={{ color: 'var(--ama-green)' }}>BENEFICIADAS</span>
             </h2>
             <p className="font-opensans text-ama-gray-mid mt-3 max-w-2xl mx-auto text-[1rem] leading-[1.75]">
-              Conoce los proyectos que actualmente estamos construyendo junto a la comunidad. Tu apoyo hace posible cada avance.
+              Historias reales de personas y familias cuyas vidas han mejorado gracias a nuestros programas.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {proyectosMerged.map((proj, i) => (
-            <motion.div
-              key={proj.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.5 }}
-              className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow"
-            >
-              {/* Badge */}
-              <div className="relative overflow-hidden rounded-t-2xl">
-                <img
-                  src={proj.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : proj.image}
-                  alt={proj.title}
-                  className={`w-full h-52 object-cover relative z-0 ${proj.loading ? 'bg-gray-200 animate-pulse' : ''}`}
-                />
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="bg-ama-green text-white font-opensans-condensed font-bold text-xs px-3 py-1.5 rounded-full tracking-wider">
-                    {proj.badge}
-                  </span>
-                </div>
+          {loadingBenef ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="bg-gray-100 rounded-2xl h-64 animate-pulse" />
+              ))}
+            </div>
+          ) : beneficiados.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'rgba(141,198,63,0.1)' }}>
+                <Quote size={32} style={{ color: 'var(--ama-green)' }} />
               </div>
-
-              <div className="p-6">
-                <h3 className="font-opensans-condensed font-black text-xl mb-4 uppercase" style={{ color: 'var(--ama-green)' }}>
-                  {proj.title}
-                </h3>
-                <div className="flex flex-col gap-2 mb-5">
-                  <div className="flex items-start gap-2">
-                    <MapPin size={15} className="text-ama-gray-mid mt-0.5 flex-shrink-0" />
-                    <span className="font-opensans text-sm text-ama-gray-mid">{proj.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users size={15} className="text-ama-gray-mid flex-shrink-0" />
-                    <span className="font-opensans text-sm text-ama-gray-mid">
-                      Beneficiarios: <strong className="text-ama-black">{proj.beneficiarios}</strong>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Progress */}
-                <div className="mb-5">
-                  <div className="flex justify-between text-xs font-opensans mb-1.5">
-                    <span className="text-ama-gray-mid">Avance del proyecto</span>
-                    <span className="font-bold" style={{ color: 'var(--ama-green)' }}>{proj.progress}%</span>
-                  </div>
-                  <div className="progress-bar">
-                    <motion.div
-                      className="progress-bar-fill"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${proj.progress}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.2, ease: 'easeOut' }}
-                    />
-                  </div>
-                </div>
-
-                {/* Financial table */}
-                <div className="grid grid-cols-3 gap-3 bg-gray-50 rounded-xl p-4">
-                  {[
-                    { label: 'Presupuesto', val: proj.presupuesto },
-                    { label: 'Recaudado', val: proj.recaudado },
-                    { label: 'Pendiente', val: proj.pendiente },
-                  ].map(row => (
-                    <div key={row.label} className="text-center">
-                      <p className="font-opensans text-xs text-ama-gray-mid mb-1">{row.label}</p>
-                      <p className="font-opensans-condensed font-bold text-sm text-ama-black">{row.val}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5">
-                  <Button onClick={() => openModal()} size="md" pill fullWidth>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M2 6h2l2 8h9l3-6H5.5" />
-                      <circle cx="15.5" cy="17.5" r="2.5" />
-                      <path d="M8 14l-2 4" />
-                    </svg>
-                    DONA A ESTE PROYECTO
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== ACTIVIDADES REALIZADAS ===== */}
-      <section className="py-16 px-4" style={{ background: 'var(--ama-gray-light)' }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-opensans-condensed font-black text-ama-black uppercase" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
-              ACTIVIDADES Y PROYECTOS <span style={{ color: 'var(--ama-green)' }}>REALIZADOS</span>
-            </h2>
-          </div>
-
-          <div className="relative w-full">
-            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              {actividadesMerged.map((act, i) => (
-                <div key={act.title} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-auto snap-center md:snap-align-none">
-                  <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                    <img
-                      src={act.loading ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' : act.image}
-                      alt={act.title}
-                      className={`w-full h-full object-cover relative z-0 ${act.loading ? 'bg-gray-200 animate-pulse' : ''}`}
-                    />
-                    <div className="absolute top-3 right-3 z-20">
-                      <span className="bg-ama-black/70 text-white text-xs font-opensans px-3 py-1 rounded-full backdrop-blur-sm">
-                        {act.date}
+              <p className="font-opensans text-ama-gray-mid text-lg">
+                Las historias de nuestros beneficiados se mostrarán aquí pronto.
+              </p>
+              <button
+                onClick={() => openModal()}
+                className="mt-6 inline-flex items-center gap-2 font-quicksand font-bold text-sm px-6 py-3 rounded-none uppercase tracking-widest text-white hover:-translate-y-0.5 transition-all duration-300"
+                style={{ background: 'var(--ama-green)' }}
+              >
+                Sé parte del cambio
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {beneficiados.map((b, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-shadow relative overflow-hidden"
+                >
+                  <div
+                    className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"
+                    style={{ background: PROGRAMA_COLORS[b.programa] || 'var(--ama-green)' }}
+                  />
+                  <Quote size={28} className="mb-4 opacity-20" style={{ color: PROGRAMA_COLORS[b.programa] || 'var(--ama-green)' }} />
+                  <p className="font-opensans text-ama-gray-dark text-[15px] leading-[1.75] mb-6 italic">
+                    "{b.historia}"
+                  </p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    {b.foto_url ? (
+                      <img src={b.foto_url} alt={b.nombre} className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-gray-100" />
+                    ) : (
+                      <div
+                        className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-lg"
+                        style={{ background: PROGRAMA_COLORS[b.programa] || 'var(--ama-green)' }}
+                      >
+                        {b.nombre.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-opensans font-bold text-ama-black text-sm">{b.nombre}</p>
+                      <span
+                        className="inline-block text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mt-0.5"
+                        style={{ background: `${PROGRAMA_COLORS[b.programa]}20`, color: PROGRAMA_COLORS[b.programa] || 'var(--ama-green)' }}
+                      >
+                        Prog. {b.programa}
                       </span>
                     </div>
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-opensans-condensed font-bold text-lg mb-2" style={{ color: 'var(--ama-green)' }}>
-                      {act.title}
-                    </h3>
-                    <p className="font-opensans text-sm text-ama-gray-mid leading-relaxed mb-4">{act.desc}</p>
-                    <Button variant="primary" size="sm" pill>GALERÍA</Button>
-                  </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
     </main>

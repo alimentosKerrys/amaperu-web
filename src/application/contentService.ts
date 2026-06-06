@@ -6,7 +6,7 @@
 import { insforge } from '../lib/insforge'
 import type {
   HeroSlide, Noticia, Proyecto, MiembroEquipo,
-  Estadistica, Producto, Testimonio, Alianza
+  Estadistica, Producto, Testimonio, Alianza, Beneficiado
 } from '../domain/entities'
 
 // ---- HELPER: log de auditoría ----
@@ -386,4 +386,32 @@ export const alianzasService = {
       await insforge.database.from('alianzas').update({ orden: a.orden }).eq('id', a.id)
     }
   }
+}
+
+// =============================================
+// BENEFICIADOS (almacenado en configuracion_global como JSON)
+// Clave: 'beneficiados_programas'
+// =============================================
+export const CLAVE_BENEFICIADOS = 'beneficiados_programas'
+
+export const beneficiadosService = {
+  async getAll(): Promise<Beneficiado[]> {
+    const result = await insforge.database
+      .from('configuracion_global')
+      .select('valor')
+      .eq('clave', CLAVE_BENEFICIADOS)
+      .maybeSingle()
+    if (!result.data?.valor) return []
+    try { return JSON.parse(result.data.valor) as Beneficiado[] } catch { return [] }
+  },
+
+  async guardar(beneficiados: Beneficiado[]) {
+    const result = await insforge.database
+      .from('configuracion_global')
+      .upsert({ clave: CLAVE_BENEFICIADOS, valor: JSON.stringify(beneficiados), updated_at: new Date().toISOString() }, { onConflict: 'clave' })
+      .select()
+      .single()
+    if (result.data) await logAuditoria('editar', 'configuracion_global', CLAVE_BENEFICIADOS)
+    return result
+  },
 }

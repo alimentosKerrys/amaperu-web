@@ -36,7 +36,9 @@ export default function AdminProgramas() {
     setLoading(true)
     const { data, error } = await programasService.getAll()
     if (!error && data) {
-      setProyectos(data)
+      // Solo los 3 programas base (construye, conecta, asiste)
+      const PROGRAMAS_BASE = new Set(['construye', 'conecta', 'asiste'])
+      setProyectos(data.filter(p => PROGRAMAS_BASE.has(p.programa?.toLowerCase())))
     }
     setLoading(false)
   }

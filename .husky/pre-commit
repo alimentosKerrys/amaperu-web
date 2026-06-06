@@ -1,2 +1,2 @@
-npx graphify .
-git add graph.json
+graphify .
+git add graphify-out/graph.json

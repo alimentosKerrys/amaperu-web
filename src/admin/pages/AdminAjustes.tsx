@@ -7,6 +7,7 @@ const SECCIONES_PORTADAS = [
   { clave: 'portada_tienda', titulo: 'Tienda Solidaria' },
   { clave: 'portada_quienes_somos', titulo: '¿Quiénes Somos?' },
   { clave: 'portada_programas', titulo: 'Programas' },
+  { clave: 'portada_proyectos', titulo: 'Proyectos' },
   { clave: 'portada_unete', titulo: 'Únete' },
   { clave: 'portada_noticias', titulo: 'Noticias' },
   { clave: 'portada_contactanos', titulo: 'Contáctanos' },
@@ -397,14 +398,14 @@ export default function AdminAjustes() {
         </div>
       </div>
 
-      {/* Otras Imágenes (Programas y Únete) */}
+      {/* Otras Imágenes (Programas, Proyectos y Únete) */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
         <div className="p-6 border-b border-gray-100 bg-gray-50">
           <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
             <ImageIcon size={18} className="text-green-600" />
-            Imágenes de Secciones Internas (Programas y Únete)
+            Imágenes de Secciones Internas (Programas, Proyectos y Únete)
           </h2>
-          <p className="text-xs text-gray-500 mt-1">Sube las imágenes específicas para las secciones de las páginas Programas y Únete.</p>
+          <p className="text-xs text-gray-500 mt-1">Sube las imágenes específicas para las secciones de las páginas Programas, Proyectos y Únete.</p>
         </div>
         <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SECCIONES_OTRAS_IMAGENES.map(({ clave, titulo }) => {
