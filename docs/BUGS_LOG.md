@@ -197,6 +197,14 @@
 - **Solución:** Se agregó la propiedad opcional `estado` a la interfaz `Proyecto` y a la constante `PROYECTOS_STATIC`. Se implementó un badge secundario junto al título principal con colores condicionales (`bg-orange-500` para "En Proceso" y `bg-blue-600` para "Ejecutado").
 - **Archivos:** `src/domain/entities.ts`, `src/pages/Proyectos.tsx`
 
+### [S-30] Reestructuración de Proyectos y Mockups de Beneficiados en el Frontend
+- **Error/Problema:** Necesidad de estructurar la página `/proyectos` como "Banner -> Proyectos Ejecutados -> Proyectos en Obra -> Futuros Proyectos" de manera dinámica e integrar datos mockup de beneficiados en `/programas`.
+- **Causa:** Requisitos de negocio para un diseño premium y preparación del CMS dinámico.
+- **Solución:**
+  - `/proyectos`: Implementada la consulta dinámica usando `programasService.getActivos()`. Filtrados los programas base y agrupados según su estado en base de datos (`completado`, `activo`, `pausado`). Adicionado fallbacks estéticos con datos e imágenes para garantizar visibilidad premium sin registros.
+  - `/programas`: Inyectado array de fallbacks `MOCK_BENEFICIADOS` al fallar el query de la base de datos de InsForge.
+- **Archivos:** `src/pages/Proyectos.tsx`, `src/pages/Programas.tsx`
+
 ---
 
 ## ⚠️ PENDIENTE — Storage 403 (prioridad ALTA)

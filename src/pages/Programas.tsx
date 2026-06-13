@@ -33,6 +33,24 @@ const PROGRAMA_COLORS: Record<string, string> = {
   asiste: '#c67a3f',
 }
 
+const MOCK_BENEFICIADOS: Beneficiado[] = [
+  {
+    nombre: 'Valerie Espinoza',
+    historia: 'El nuevo campo deportivo le ha devuelto la sonrisa a mis hijos. Ahora tienen un lugar seguro donde jugar básquetbol con sus amigos por las tardes, lejos de los peligros de la calle.',
+    programa: 'construye'
+  },
+  {
+    nombre: 'Héctor Quispe',
+    historia: 'Gracias al apoyo de emergencia social del programa Asiste, pudimos reconstruir el techo de nuestro local comunal y continuar brindando almuerzos a más de 80 niños de la zona.',
+    programa: 'asiste'
+  },
+  {
+    nombre: 'Liliana Rojas',
+    historia: 'Los talleres de liderazgo y desarrollo comunitario me han ayudado a organizarme con mis vecinos. Hemos aprendido el valor de la unión y el trabajo colaborativo.',
+    programa: 'conecta'
+  }
+]
+
 export default function Programas() {
   const [openProg, setOpenProg] = useState<string>('conecta')
   const [beneficiados, setBeneficiados] = useState<Beneficiado[]>([])
@@ -46,7 +64,11 @@ export default function Programas() {
 
   useEffect(() => {
     beneficiadosService.getAll().then(data => {
-      setBeneficiados(data)
+      if (data && data.length > 0) {
+        setBeneficiados(data)
+      } else {
+        setBeneficiados(MOCK_BENEFICIADOS)
+      }
       setLoadingBenef(false)
     })
   }, [])

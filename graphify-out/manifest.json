@@ -135,9 +135,9 @@
     "semantic_hash": "8990f9c88d87c3022e163f63e7643f47"
   },
   "src/admin/pages/AdminAjustes.tsx": {
-    "mtime": 1780779456.0429928,
-    "ast_hash": "26c19ab39e95836442e7e83cbce266f1",
-    "semantic_hash": "26c19ab39e95836442e7e83cbce266f1"
+    "mtime": 1781372293.9364467,
+    "ast_hash": "d404df6ae9e3604b71924ee67c003b48",
+    "semantic_hash": ""
   },
   "src/admin/pages/AdminAlianzas.tsx": {
     "mtime": 1778810595.6436725,
@@ -340,8 +340,8 @@
     "semantic_hash": "d7977defb6b6573be6b2217920815f54"
   },
   "src/pages/Programas.tsx": {
-    "mtime": 1780780411.7146652,
-    "ast_hash": "4193e0fc527471c616da5ad003a17065",
+    "mtime": 1781371567.7650337,
+    "ast_hash": "5023a5e0217b480a2eaee3747b4eec24",
     "semantic_hash": ""
   },
   "src/pages/QuienesSomos.tsx": {
@@ -595,9 +595,9 @@
     "semantic_hash": "769a6a6a9b7ce402e3868eec022ea010"
   },
   "docs/BUGS_LOG.md": {
-    "mtime": 1780379917.938434,
-    "ast_hash": "54c73e1a6b0a083e6f250381520fc1ad",
-    "semantic_hash": "54c73e1a6b0a083e6f250381520fc1ad"
+    "mtime": 1781371611.1290762,
+    "ast_hash": "1f6e0bf343758bdb6cdb3ae5dbd08379",
+    "semantic_hash": ""
   },
   "docs/INSFORGE_SDK_GUIDE.md": {
     "mtime": 1778545809.955297,
@@ -660,8 +660,28 @@
     "semantic_hash": "d4240ffa59cec383323987448a91afb3"
   },
   "src/pages/Proyectos.tsx": {
-    "mtime": 1780780413.7242365,
-    "ast_hash": "4218ef991ab360df767cdca1d8408747",
+    "mtime": 1781371871.5444448,
+    "ast_hash": "375827c03babed26064bd8f73f8df990",
+    "semantic_hash": ""
+  },
+  "BACKUP_CAMBIOS_FRONTEND.md": {
+    "mtime": 1781371896.6645532,
+    "ast_hash": "af525fa5f6fe54d4adec39ad0853fa74",
+    "semantic_hash": ""
+  },
+  "docs/ARCHITECTURE.md": {
+    "mtime": 1780781601.7700434,
+    "ast_hash": "5e58d54f781f73ac1883b667948657a4",
+    "semantic_hash": ""
+  },
+  "docs/adr/0002-design-tokens-amaperu.md": {
+    "mtime": 1780339479.7684944,
+    "ast_hash": "e103319bf2866fbe1b00edede2a34038",
+    "semantic_hash": ""
+  },
+  "docs/adr/0003-restructuracion-proyectos-beneficiados-frontend.md": {
+    "mtime": 1781371602.7114515,
+    "ast_hash": "68b35b663844dd9e1c5ae1c62678391e",
     "semantic_hash": ""
   }
 }

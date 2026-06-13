@@ -14,21 +14,21 @@ const SECCIONES_PORTADAS = [
 ]
 
 const SECCIONES_OTRAS_IMAGENES = [
-  { clave: 'img_prog_construye', titulo: 'Programa: Construye' },
-  { clave: 'img_prog_conecta', titulo: 'Programa: Conecta' },
-  { clave: 'img_prog_asiste', titulo: 'Programa: Asiste' },
-  { clave: 'img_prog_nuevo_proy', titulo: 'Proyectos: Imagen Principal (Voluntario Casco)' },
-  { clave: 'img_prog_parque_apu', titulo: 'Proyectos: Parque Apu' },
-  { clave: 'img_prog_campo_qumir', titulo: 'Proyectos: Campo Qumir' },
-  { clave: 'img_prog_act_choco', titulo: 'Actividad: Chocolatada' },
-  { clave: 'img_prog_act_piedra_apu', titulo: 'Actividad: 1ra Piedra Parque Apu' },
-  { clave: 'img_prog_act_piedra_qumir', titulo: 'Actividad: 1ra Piedra Campo Qumir' },
-  { clave: 'img_unete_voluntariado', titulo: 'Únete: Voluntariado' },
-  { clave: 'img_unete_embajadora', titulo: 'Únete: Embajadores' },
-  { clave: 'img_unete_corporativa', titulo: 'Únete: Corporativa' },
-  { clave: 'img_quienes_mision', titulo: '¿Quiénes Somos?: Imagen Misión' },
-  { clave: 'img_quienes_vision', titulo: '¿Quiénes Somos?: Imagen Visión' },
-  { clave: 'img_quienes_valores', titulo: '¿Quiénes Somos?: Imagen Valores' },
+  { clave: 'img_prog_construye', titulo: 'Pág. Programas — Imagen del Programa "Construye"' },
+  { clave: 'img_prog_conecta', titulo: 'Pág. Programas — Imagen del Programa "Conecta"' },
+  { clave: 'img_prog_asiste', titulo: 'Pág. Programas — Imagen del Programa "Asiste"' },
+  { clave: 'img_prog_nuevo_proy', titulo: 'Pág. Proyectos — Imagen de Introducción (Voluntarios y planos)' },
+  { clave: 'img_prog_parque_apu', titulo: 'Pág. Proyectos — Foto de muestra: "Parque Apú" (Si no hay datos relacionales)' },
+  { clave: 'img_prog_campo_qumir', titulo: 'Pág. Proyectos — Foto de muestra: "Campo Deportivo Q\'umir Palao" (Si no hay datos relacionales)' },
+  { clave: 'img_prog_act_choco', titulo: 'Pág. Proyectos — Foto de Galería: Chocolatada Navideña' },
+  { clave: 'img_prog_act_piedra_apu', titulo: 'Pág. Proyectos — Foto de Galería: Primera Piedra Parque Apú' },
+  { clave: 'img_prog_act_piedra_qumir', titulo: 'Pág. Proyectos — Foto de Galería: Primera Piedra Campo Deportivo' },
+  { clave: 'img_unete_voluntariado', titulo: 'Pág. Únete — Imagen de la sección "Voluntariado"' },
+  { clave: 'img_unete_embajadora', titulo: 'Pág. Únete — Imagen de la sección "Embajadores"' },
+  { clave: 'img_unete_corporativa', titulo: 'Pág. Únete — Imagen de la sección "Empresas Aliadas"' },
+  { clave: 'img_quienes_mision', titulo: 'Pág. Quiénes Somos — Imagen para pestaña de "Misión"' },
+  { clave: 'img_quienes_vision', titulo: 'Pág. Quiénes Somos — Imagen para pestaña de "Visión"' },
+  { clave: 'img_quienes_valores', titulo: 'Pág. Quiénes Somos — Imagen para pestaña de "Valores"' },
 ]
 
 export default function AdminAjustes() {

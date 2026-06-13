@@ -1,16 +1,16 @@
-# Graph Report - PROYECTO PLANTILLA AMAPERU  (2026-06-06)
+# Graph Report - PROYECTO PLANTILLA AMAPERU  (2026-06-13)
 
 ## Corpus Check
-- 124 files · ~55,388 words
+- 128 files · ~58,602 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 538 nodes · 708 edges · 65 communities (40 shown, 25 thin omitted)
+- 576 nodes · 742 edges · 64 communities (39 shown, 25 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `805c4735`
+- Built from commit: `28b74c0e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -34,13 +34,13 @@
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 21|Community 21]]
 - [[_COMMUNITY_Community 22|Community 22]]
+- [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
 - [[_COMMUNITY_Community 29|Community 29]]
-- [[_COMMUNITY_Community 30|Community 30]]
 - [[_COMMUNITY_Community 31|Community 31]]
 - [[_COMMUNITY_Community 32|Community 32]]
 - [[_COMMUNITY_Community 33|Community 33]]
@@ -77,7 +77,7 @@
 - [[_COMMUNITY_Community 64|Community 64]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `✅ BUGS SOLUCIONADOS` - 24 edges
+1. `✅ BUGS SOLUCIONADOS` - 31 edges
 2. `useConfiguracion()` - 21 edges
 3. `compilerOptions` - 18 edges
 4. `useModal()` - 17 edges
@@ -93,33 +93,33 @@
   src/application/hooks/useConfiguracion.ts → src/pages/Contactanos.tsx
 - `useConfiguracion()` --calls--> `Donacion()`  [EXTRACTED]
   src/application/hooks/useConfiguracion.ts → src/pages/Donacion.tsx
-- `useConfiguracion()` --calls--> `Home()`  [EXTRACTED]
-  src/application/hooks/useConfiguracion.ts → src/pages/Home.tsx
-- `useConfiguracion()` --calls--> `Programas()`  [EXTRACTED]
-  src/application/hooks/useConfiguracion.ts → src/pages/Programas.tsx
-- `useConfiguracion()` --calls--> `QuienesSomos()`  [EXTRACTED]
-  src/application/hooks/useConfiguracion.ts → src/pages/QuienesSomos.tsx
+- `useConfiguracion()` --calls--> `TiendaSolidaria()`  [EXTRACTED]
+  src/application/hooks/useConfiguracion.ts → src/pages/TiendaSolidaria.tsx
+- `useConfiguracion()` --calls--> `Unete()`  [EXTRACTED]
+  src/application/hooks/useConfiguracion.ts → src/pages/Unete.tsx
+- `Footer()` --calls--> `useModal()`  [EXTRACTED]
+  src/components/layout/Footer.tsx → src/context/ModalContext.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (65 total, 25 thin omitted)
+## Communities (64 total, 25 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
 Nodes (38): alianzasService, configuracionService, equipoService, estadisticasService, heroSlidesService, noticiasService, productosService, programasService (+30 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.15
-Nodes (12): ModalPago(), TabType, useConfiguracion(), useNoticias(), Contactanos(), Donacion(), Noticias(), categories (+4 more)
+Cohesion: 0.05
+Nodes (43): beneficiadosService, ModalPago(), TabType, ModalContext, ModalContextType, useModal(), useConfiguracion(), useEquipo() (+35 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.10
-Nodes (12): NAV_ITEMS, AdminAuthContext, AdminAuthContextType, AdminAuthProvider(), AdminUser, useAdminAuth(), insforge, INSFORGE_ANON_KEY (+4 more)
+Cohesion: 0.07
+Nodes (13): NAV_ITEMS, AdminAuthContext, AdminAuthContextType, AdminAuthProvider(), AdminUser, useAdminAuth(), ModalProvider(), insforge (+5 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.24
-Nodes (7): useEstadisticas(), useHeroSlides(), useProgramas(), colaborar, Home(), PROGRAMAS_META, StatCardProps
+Cohesion: 0.20
+Nodes (9): 1. Extra Data Enrichment (Enriquecimiento Dinámico de Esquemas), 2. Skeletons Activos sin Flicker (Flicker Control), 3. Persistencia de Arreglos Complejos vía JSON en Ajustes, 🏛️ AMA PERÚ — Guía de Arquitectura del Sistema, 🗄️ Estrategias y Patrones de Datos Específicos, 🧱 Las 4 Capas del Proyecto, 🏗️ Módulos de Administración vs. Público, 🗺️ Patrón Arquitectónico: Arquitectura Hexagonal (+1 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.09
@@ -130,12 +130,12 @@ Cohesion: 0.06
 Nodes (33): husky.sh script, dependencies, framer-motion, @insforge/sdk, lucide-react, pptxgenjs, react, react-dom (+25 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.06
-Nodes (32): ⚠️ ADVERTENCIAS CONOCIDAS (NO son errores reales), 📋 AMA PERÚ — Log de Bugs Solucionados y Estado del Proyecto, 🏗️ ARQUITECTURA — Regla de oro, ✅ BUGS SOLUCIONADOS, El diagnóstico exacto:, 📊 ESTADO DE LA BASE DE DATOS, Lo que Kimi debe verificar:, ⚠️ PENDIENTE — Storage 403 (prioridad ALTA) (+24 more)
+Cohesion: 0.05
+Nodes (39): ⚠️ ADVERTENCIAS CONOCIDAS (NO son errores reales), 📋 AMA PERÚ — Log de Bugs Solucionados y Estado del Proyecto, 🏗️ ARQUITECTURA — Regla de oro, ✅ BUGS SOLUCIONADOS, El diagnóstico exacto:, 📊 ESTADO DE LA BASE DE DATOS, Lo que Kimi debe verificar:, ⚠️ PENDIENTE — Storage 403 (prioridad ALTA) (+31 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.19
-Nodes (9): ModalContext, ModalContextType, ModalProvider(), useModal(), Footer(), socialLinks, ACTIVIDADES_STATIC, Proyectos() (+1 more)
+Cohesion: 0.29
+Nodes (6): Consecuencias, Contexto, Decisión, 🎨 DESIGN TOKENS — COLORES DE MARCA, Design Tokens y Tipografía (Amaperú), 🗂️ TIPOGRAFÍA
 
 ### Community 8 - "Community 8"
 Cohesion: 0.23
@@ -169,6 +169,10 @@ Nodes (11): 1. Superficie de Ataque y Análisis de Seguridad, 2. Resumen de Conf
 Cohesion: 0.18
 Nodes (10): 1. El Puente de Recepción: Registros MX (Mail Exchange), 2. El Escudo Anti-Suplantación: Registro SPF (TXT), 3. La Firma Digital de Seguridad: Registro DKIM (TXT), 📋 FASE 1: Selección del Proveedor de Correo, 🛠️ FASE 2: Configuración Paso a Paso en Cloudflare, 👥 FASE 3: Escalabilidad y Gestión de los 10 Empleados, Guía Quirúrgica: Implementación de Correos Corporativos para AMAPERU, 🏗️ La Arquitectura del Sistema de Correos (+2 more)
 
+### Community 23 - "Community 23"
+Cohesion: 0.40
+Nodes (4): Contexto y Problema, Decisión Final, Opciones Consideradas, Reestructuración de Proyectos y Mockups de Beneficiados en el Frontend
+
 ### Community 24 - "Community 24"
 Cohesion: 0.22
 Nodes (8): 1. Análisis de Componentes Impactados, 2. Flujo de Datos, 3. Plan de Verificación (Testing/Handoff), 4. Instrucciones para el Developer Agent, Backend & Core Services, Diseño de Arquitectura: Íconos Personalizados en Estadísticas, Frontend (Panel de Administración), Frontend (Sitio Público)
@@ -178,8 +182,8 @@ Cohesion: 0.22
 Nodes (8): 1. Visión General, 2. Historias de Usuario (User Stories), 3. Flujos Principales, 4. Notas y Restricciones, Casos de Error (Edge Cases), Epic: Gestión Dinámica de Íconos de Estadísticas, Feature Plan: Íconos Personalizados en Estadísticas, Happy Path (Flujo Ideal)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.25
-Nodes (7): beneficiadosService, Beneficiado, actividades, PROGRAMA_COLORS, Programas(), PROGRAMAS_STATIC, proyectos
+Cohesion: 0.40
+Nodes (4): 1. Página de Proyectos (`src/pages/Proyectos.tsx`), 2. Página de Programas (`src/pages/Programas.tsx`), Backup de Cambios - Frontend AMA PERÚ, Historial de Cambios
 
 ### Community 27 - "Community 27"
 Cohesion: 0.25
@@ -192,10 +196,6 @@ Nodes (7): Consequences, Context, Contexto y Problema, Decision, Decisión Final
 ### Community 29 - "Community 29"
 Cohesion: 0.25
 Nodes (7): 1. Diseño Hexagonal Propuesto, 2. Firmas de Funciones y APIs, 3. Consideraciones de Graphify, ARCHITECTURE DESIGN, Capa de Aplicación (Casos de Uso), Capa de Dominio (Reglas Puras), Capa de Infraestructura (Adaptadores)
-
-### Community 30 - "Community 30"
-Cohesion: 0.29
-Nodes (5): useEquipo(), QuienesSomos(), TabId, tabs, TeamCardProps
 
 ### Community 31 - "Community 31"
 Cohesion: 0.33
@@ -246,24 +246,24 @@ Cohesion: 0.40
 Nodes (4): 1. Pruebas Creadas, 2. Resultados de Ejecución (Vitest), 3. Bugs o Edge Cases Detectados, TESTING REPORT
 
 ## Knowledge Gaps
-- **289 isolated node(s):** `husky.sh script`, `name`, `private`, `version`, `type` (+284 more)
+- **315 isolated node(s):** `husky.sh script`, `name`, `private`, `version`, `type` (+310 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useConfiguracion()` connect `Community 1` to `Community 0`, `Community 3`, `Community 7`, `Community 26`, `Community 30`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `useConfiguracion()` connect `Community 1` to `Community 0`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **Why does `🌿 AMA PERÚ — PLATAFORMA WEB DIGITAL` connect `Community 18` to `Community 19`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `🗺 ROADMAP COMPLETO DEL PROYECTO` connect `Community 19` to `Community 18`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `useModal()` connect `Community 1` to `Community 0`, `Community 8`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `husky.sh script`, `name`, `private` to the rest of the system?**
-  _289 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _315 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06164383561643835 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.062206572769953054 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.05223880597014925 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.09971509971509972 - nodes in this community are weakly interconnected._
-- **Should `Community 4` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07396870554765292 - nodes in this community are weakly interconnected._
